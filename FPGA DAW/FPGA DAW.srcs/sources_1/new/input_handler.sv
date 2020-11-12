@@ -51,6 +51,7 @@ module input_handler(
         if(rst_in) begin
             notes_out <= 88'b0;
             octave <= 4'b0;
+            done <= 1'b0;
         end else begin
             //TODO fix all of these being able to escape their octave (if a problem)
             if(done) begin

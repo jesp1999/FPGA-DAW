@@ -69,6 +69,13 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PSRCDIR/sources_1/new/debounce.sv">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sources_1/new/effects.sv">
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../Synthesizer Audio Workstation/Synthesizer Audio Workstation.srcs/sources_1/new/effects.sv"/>
@@ -109,6 +116,13 @@
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../Synthesizer Audio Workstation/Synthesizer Audio Workstation.srcs/sources_1/new/waveform_select.sv"/>
           <Attr Name="ImportTime" Val="1604529197"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/xvga.sv">
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>

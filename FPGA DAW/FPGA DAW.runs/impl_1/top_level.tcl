@@ -65,22 +65,19 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param tcl.collectionResultDisplayLimit 0
-  set_param chipscope.maxJobs 4
+  set_param chipscope.maxJobs 2
   set_param xicom.use_bs_reader 1
   create_project -in_memory -part xc7a100tcsg324-1
-  set_property board_part_repo_paths {C:/Users/jesp1/AppData/Roaming/Xilinx/Vivado/2019.2/xhub/board_store} [current_project]
-  set_property board_part digilentinc.com:nexys4_ddr:part0:1.1 [current_project]
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
-  set_property webtalk.parent_dir {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.cache/wt} [current_project]
-  set_property parent.project_path {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.xpr} [current_project]
-  set_property ip_output_repo {{G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.cache/ip}} [current_project]
+  set_property webtalk.parent_dir {C:/Users/natha/OneDrive/Desktop/MIT/F20/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.cache/wt} [current_project]
+  set_property parent.project_path {C:/Users/natha/OneDrive/Desktop/MIT/F20/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.xpr} [current_project]
+  set_property ip_output_repo {{C:/Users/natha/OneDrive/Desktop/MIT/F20/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.cache/ip}} [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES XPM_CDC [current_project]
-  add_files -quiet {{G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.runs/synth_1/top_level.dcp}}
-  read_ip -quiet {{G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz.xci}}
-  read_xdc {{G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/constrs_1/imports/6.111/nexys4_ddr_default.xdc}}
+  add_files -quiet {{C:/Users/natha/OneDrive/Desktop/MIT/F20/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/top_level.dcp}}
+  read_ip -quiet {{C:/Users/natha/OneDrive/Desktop/MIT/F20/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz.xci}}
+  read_xdc {{C:/Users/natha/OneDrive/Desktop/MIT/F20/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/constrs_1/imports/6.111/nexys4_ddr_default.xdc}}
   link_design -top top_level -part xc7a100tcsg324-1
   close_msg_db -file init_design.pb
 } RESULT]

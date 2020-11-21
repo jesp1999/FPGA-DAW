@@ -1,8 +1,8 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date             : Sat Nov 21 16:52:44 2020
-| Host             : DESKTOP-5PA8C12 running 64-bit major release  (build 9200)
+| Date             : Sat Nov 21 18:09:33 2020
+| Host             : LAPTOP-MNNJTF3D running 64-bit major release  (build 9200)
 | Command          : report_power -file top_level_power_routed.rpt -pb top_level_power_summary_routed.pb -rpx top_level_power_routed.rpx
 | Design           : top_level
 | Device           : xc7a100tcsg324-1
@@ -30,7 +30,7 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.231        |
+| Total On-Chip Power (W)  | 0.232        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
 | Dynamic (W)              | 0.134        |
@@ -54,17 +54,17 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.003 |        6 |       --- |             --- |
 | Slice Logic    |     0.004 |     2227 |       --- |             --- |
-|   LUT as Logic |     0.003 |     1068 |     63400 |            1.68 |
+|   LUT as Logic |     0.003 |     1065 |     63400 |            1.68 |
 |   CARRY4       |    <0.001 |      358 |     15850 |            2.26 |
-|   Register     |    <0.001 |      519 |    126800 |            0.41 |
+|   Register     |    <0.001 |      523 |    126800 |            0.41 |
 |   BUFG         |    <0.001 |        1 |        32 |            3.13 |
 |   Others       |     0.000 |       62 |       --- |             --- |
-| Signals        |     0.003 |     1553 |       --- |             --- |
+| Signals        |     0.003 |     1556 |       --- |             --- |
 | Block RAM      |    <0.001 |        3 |       135 |            2.22 |
 | MMCM           |     0.122 |        1 |         6 |           16.67 |
 | I/O            |     0.002 |       67 |       210 |           31.90 |
 | Static Power   |     0.098 |          |           |                 |
-| Total          |     0.231 |          |           |                 |
+| Total          |     0.232 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 

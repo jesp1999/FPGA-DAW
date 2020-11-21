@@ -93,21 +93,30 @@ module octave( input clk_in, input rst_in,
         notes[2] +
         notes[1] +
         notes[0];
+        
+    logic [3:0] note_multiplier;
+    always_comb begin
+        if (note_count <= 1) note_multiplier = 1;
+        else if (note_count <= 2) note_multiplier = 2;
+        else if (note_count <= 4) note_multiplier = 3;
+        else if (note_count <= 8) note_multiplier = 4;
+        else note_multiplier = 5;
+    end
          
     assign amp_out = 
-    notes[12] * (tone_C4>>note_count) + 
-    notes[11] * (tone_Cs4>>note_count) + 
-    notes[10] * (tone_D4>>note_count) + 
-    notes[9] * (tone_Ds4>>note_count) + 
-    notes[8] * (tone_E4>>note_count) + 
-    notes[7] * (tone_F4>>note_count) + 
-    notes[6] * (tone_Fs4>>note_count) + 
-    notes[5] * (tone_G4>>note_count) + 
-    notes[4] * (tone_Gs4>>note_count) + 
-    notes[3] * (tone_A4>>note_count) + 
-    notes[2] * (tone_As4>>note_count) + 
-    notes[1] * (tone_B4>>note_count) +
-    notes[0] * (tone_C5>>note_count); 
+    notes[12] * (tone_C4>>note_multiplier) + 
+    notes[11] * (tone_Cs4>>note_multiplier) + 
+    notes[10] * (tone_D4>>note_multiplier) + 
+    notes[9] * (tone_Ds4>>note_multiplier) + 
+    notes[8] * (tone_E4>>note_multiplier) + 
+    notes[7] * (tone_F4>>note_multiplier) + 
+    notes[6] * (tone_Fs4>>note_multiplier) + 
+    notes[5] * (tone_G4>>note_multiplier) + 
+    notes[4] * (tone_Gs4>>note_multiplier) + 
+    notes[3] * (tone_A4>>note_multiplier) + 
+    notes[2] * (tone_As4>>note_multiplier) + 
+    notes[1] * (tone_B4>>note_multiplier) +
+    notes[0] * (tone_C5>>note_multiplier); 
               
 endmodule
 

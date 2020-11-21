@@ -17,6 +17,7 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
+set_param tcl.collectionResultDisplayLimit 0
 set_param chipscope.maxJobs 4
 set_param xicom.use_bs_reader 1
 create_project -in_memory -part xc7a100tcsg324-1
@@ -27,7 +28,7 @@ set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
 set_property webtalk.parent_dir {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.cache/wt} [current_project]
 set_property parent.project_path {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.xpr} [current_project]
-set_property XPM_LIBRARIES XPM_CDC [current_project]
+set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property board_part_repo_paths {C:/Users/jesp1/AppData/Roaming/Xilinx/Vivado/2019.2/xhub/board_store} [current_project]
@@ -36,16 +37,15 @@ set_property ip_output_repo {g:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Pr
 set_property ip_cache_permissions {read write} [current_project]
 read_verilog -library xil_defaultlib -sv {
   {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/new/binary_to_seven_seg.sv}
-  {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv}
   {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/new/input_handler.sv}
   {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/new/seven_seg_controller.sv}
-  {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/new/xvga.sv}
   {G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv}
 }
-read_ip -quiet {{G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz.xci}}
-set_property used_in_implementation false [get_files -all {{g:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz_board.xdc}}]
-set_property used_in_implementation false [get_files -all {{g:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz.xdc}}]
-set_property used_in_implementation false [get_files -all {{g:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz_ooc.xdc}}]
+read_ip -quiet {{g:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/ila_0/ila_0.xci}}
+set_property used_in_synthesis false [get_files -all {{g:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/ila_0/ila_v6_2/constraints/ila_impl.xdc}}]
+set_property used_in_implementation false [get_files -all {{g:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/ila_0/ila_v6_2/constraints/ila_impl.xdc}}]
+set_property used_in_implementation false [get_files -all {{g:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/ila_0/ila_v6_2/constraints/ila.xdc}}]
+set_property used_in_implementation false [get_files -all {{g:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.srcs/sources_1/ip/ila_0/ila_0_ooc.xdc}}]
 
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the

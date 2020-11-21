@@ -64,7 +64,7 @@ module top_level(
     octave oc4 (.clk_in(clk_100mhz), .rst_in(btnc),
         .step_in(sample_trigger),
         .amp_out(octave_out),
-        .notes(sw[11:0]));    
+        .notes(sw[12:0]));    
  
     volume_control vc (.vol_in(sw[15:13]),
                        .signal_in(octave_out), .signal_out(vol_out));
@@ -106,7 +106,7 @@ module top_level(
     logic [11:0] rgb;
     
     xvga xvga_mod (.vclock_in(clk_65mhz), .hcount_out(hcount), .vcount_out(vcount), .vsync_out(vsync), .hsync_out(hsync), .blank_out(blank));
-    display display_mod (.clk_in(clk_100mhz), .rst_in(btnc), .keys(sw[11:0]), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
+    display display_mod (.clk_in(clk_100mhz), .rst_in(btnc), .keys(sw[12:0]), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
     
     logic border = (hcount==0 | hcount==1023 | vcount==0 | vcount==767 |
                    hcount == 512 | vcount == 384);

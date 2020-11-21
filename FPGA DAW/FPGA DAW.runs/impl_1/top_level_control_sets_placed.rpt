@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date         : Sat Nov 21 18:08:45 2020
+| Date         : Sat Nov 21 18:15:10 2020
 | Host         : LAPTOP-MNNJTF3D running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file top_level_control_sets_placed.rpt
 | Design       : top_level
@@ -58,10 +58,10 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              30 |           13 |
+| No           | No                    | No                     |              30 |           11 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |              51 |           15 |
-| Yes          | No                    | No                     |              49 |           22 |
+| Yes          | No                    | No                     |              49 |           19 |
 | Yes          | No                    | Yes                    |               0 |            0 |
 | Yes          | Yes                   | No                     |             393 |          100 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
@@ -73,22 +73,22 @@ Table of Contents
 +-------------------------------+-----------------------------------------+-----------------------------------------+------------------+----------------+
 |          Clock Signal         |              Enable Signal              |             Set/Reset Signal            | Slice Load Count | Bel Load Count |
 +-------------------------------+-----------------------------------------+-----------------------------------------+------------------+----------------+
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[3]_i_1_n_0 |                                         |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[6]_i_1_n_0 |                                         |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[2]_i_1_n_0 |                                         |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[4]_i_1_n_0 |                                         |                1 |              1 |
+|  clk_65mhz_mod/inst/clk_65mhz | xvga_mod/hreset                         | xvga_mod/vcount_out0                    |                1 |              1 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[7]         |                                         |                1 |              1 |
 | ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[5]_i_1_n_0 |                                         |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[7]       |                                         |                1 |              1 |
 | ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[0]_i_1_n_0 |                                         |                1 |              1 |
 | ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[1]_i_1_n_0 |                                         |                1 |              1 |
-|  clk_65mhz_mod/inst/clk_65mhz | xvga_mod/hreset                         | xvga_mod/vcount_out0                    |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/counter            | input_handler_mod/kh/counter[3]_i_1_n_0 |                1 |              4 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[2]_i_1_n_0 |                                         |                1 |              1 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[3]_i_1_n_0 |                                         |                1 |              1 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[4]_i_1_n_0 |                                         |                1 |              1 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[6]_i_1_n_0 |                                         |                1 |              1 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/counter[3]_i_2_n_0 | input_handler_mod/kh/counter[3]_i_1_n_0 |                1 |              4 |
 |  clk_100mhz_IBUF_BUFG         | seven_seg_mod/segment_state             | btnc_IBUF                               |                2 |              8 |
 |  clk_65mhz_mod/inst/clk_65mhz | xvga_mod/hreset                         |                                         |                3 |              9 |
 |  clk_65mhz_mod/inst/clk_65mhz |                                         | xvga_mod/hreset                         |                4 |             11 |
-|  clk_65mhz_mod/inst/clk_65mhz |                                         |                                         |                9 |             14 |
-|  clk_100mhz_IBUF_BUFG         |                                         |                                         |                4 |             16 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/dataprev           |                                         |               11 |             32 |
+|  clk_65mhz_mod/inst/clk_65mhz |                                         |                                         |                8 |             14 |
+|  clk_100mhz_IBUF_BUFG         |                                         |                                         |                3 |             16 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/dataprev           |                                         |                8 |             32 |
 |  clk_100mhz_IBUF_BUFG         |                                         | btnc_IBUF                               |               11 |             40 |
 |  clk_100mhz_IBUF_BUFG         | oc4/toneC/sample_counter_reg[0]         | btnc_IBUF                               |               96 |            380 |
 +-------------------------------+-----------------------------------------+-----------------------------------------+------------------+----------------+

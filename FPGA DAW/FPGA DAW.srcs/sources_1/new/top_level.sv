@@ -24,7 +24,9 @@ module top_level(
                     output logic cd,
                     output logic ce,
                     output logic cf,
-                    output logic cg);
+                    output logic cg,
+                    output logic aud_pwm,
+                    output logic aud_sd);
     
     parameter SAMPLE_COUNT = 2082;//gets approximately (will generate audio at approx 48 kHz sample rate.
  

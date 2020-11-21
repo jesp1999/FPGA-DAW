@@ -78,7 +78,7 @@ module top_level(
     
     
     logic [87:0] notes;
-    logic [31:0] value;
+    logic [31:0] raw_keyboard;
     
     logic clean_btnu, clean_btnd, clean_btnl, clean_btnr;
 
@@ -87,10 +87,10 @@ module top_level(
     debounce db_btnl (.clk_in(clk_100mhz), .rst_in(btnc), .noisy_in(btnl), .clean_out(clean_btnl));
     debounce db_btnr (.clk_in(clk_100mhz), .rst_in(btnc), .noisy_in(btnr), .clean_out(clean_btnr));
 
-    input_handler input_handler_mod (.clk_in(clk_100mhz), .rst_in(btnc), .data_clk_in(ps2_clk), .data_in(ps2_data), .notes_out(notes));
+    input_handler input_handler_mod (.clk_in(clk_100mhz), .rst_in(btnc), .data_clk_in(ps2_clk), .data_in(ps2_data), .notes_out(notes), .raw_out(raw_keyboard));
 //    waveform_select waveform_sel_mod ();
 //    mixer mixer_mod ();
-    seven_seg_controller seven_seg_mod (.clk_in(clk_100mhz), .rst_in(btnc), .val_in(notes[31:0]), .cat_out({cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
+    seven_seg_controller seven_seg_mod (.clk_in(clk_100mhz), .rst_in(btnc), .val_in(raw_keyboard), .cat_out({cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     

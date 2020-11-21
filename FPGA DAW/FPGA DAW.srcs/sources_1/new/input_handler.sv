@@ -45,7 +45,8 @@ module input_handler(
     keyboard_handler kh(.clk_in(clk_in), .rst_in(rst_in), .data_clk_in(data_clk_in), .data_in(data_in),
                         .done(done), .packet(packet));
                         
-    assign release_next = (packet == RELEASE_NEXT_SC) ? 1'b1 : 1'b0;
+    assign notes_out = (done) ? notes_out : {76'b0, packet};
+    /*assign release_next = (packet == RELEASE_NEXT_SC) ? 1'b1 : 1'b0;
     
     always_ff @(posedge clk_in) begin
         if(rst_in) begin
@@ -204,6 +205,7 @@ module input_handler(
             end
         end
     end
+        */
 
 endmodule
 
@@ -223,31 +225,36 @@ module keyboard_handler(
     logic reading;
     logic [8:0] shift_buffer;
     logic [3:0] counter;
+    logic prev_data_clk;
     
     always_ff @(posedge clk_in) begin
         if(rst_in) begin
             reading <= 1'b0;
             shift_buffer <= 9'b111_111_111;
+            prev_data_clk <= 1'b0;
             counter <= 4'b0000;
             done <= 1'b0;
         end else begin
-            if(reading) begin //if currently processing a packet
-                shift_buffer <= {shift_buffer[8:1], data_in};
-                if(counter < MESSAGE_LENGTH-1) begin
-                    counter <= counter + 4'b0001;
+            if(data_clk_in && ~prev_data_clk) begin
+                if(reading) begin //if currently processing a packet
+                    shift_buffer <= {shift_buffer[8:1], data_in};
+                    if(counter < MESSAGE_LENGTH-1) begin
+                        counter <= counter + 4'b0001;
+                    end else begin
+                        counter <= 4'b0000;
+                        packet <= shift_buffer[8:1];
+                        reading <= 1'b0;
+                        done <= 1'b1;
+                    end
                 end else begin
-                    counter <= 4'b0000;
-                    packet <= shift_buffer[8:1];
-                    reading <= 1'b0;
-                    done <= 1'b1;
-                end
-            end else begin
-                if(data_in == 1'b0) begin //start bit low
-                    counter <= 4'b1;
-                    reading <= 1'b1;
-                    shift_buffer <= 9'b111_111_111;
+                    if(data_in == 1'b0) begin //start bit low
+                        counter <= 4'b1;
+                        reading <= 1'b1;
+                        shift_buffer <= 9'b111_111_111;
+                    end
                 end
             end
+            prev_data_clk <= data_clk_in;
         end
     end
 endmodule

@@ -6,7 +6,6 @@ module input_handler(
                      input logic rst_in,
                      input logic data_clk_in,
                      input logic data_in,
-                     //output logic [87:0] notes_out,
                      output logic [12:0] notes_out,
                      output logic [3:0] octave,
                      output logic [31:0] raw_out
@@ -43,20 +42,10 @@ module input_handler(
     
     logic release_next;
     logic [31:0] data_out;
-    //logic [3:0] octave; //0-indexed, starting from first octave on the 88-key
     logic update;
     logic prev_update;
     
-//    logic kb_clk;
-    
-//    always_ff @(posedge clk_in) begin
-//        if(rst_in) begin
-//            kb_clk <= 1'b0;
-//        end
-//        kb_clk <= ~kb_clk;
-//    end
-    
-    keyboard_handler kh(.clk_in(clk_in), .rst_in(rst_in), .data_clk_in(data_clk_in), .data_in(data_in), .data_out(data_out), .update_out(update));
+    keyboard_handler kh(.data_clk_in(data_clk_in), .data_in(data_in), .data_out(data_out), .update_out(update));
        
     assign raw_out = data_out;
     
@@ -107,8 +96,6 @@ endmodule
 
 
 module keyboard_handler(
-                        input logic clk_in,
-                        input logic rst_in,
                         input logic data_clk_in,
                         input logic data_in,
                         output logic [31:0] data_out,
@@ -122,8 +109,6 @@ module keyboard_handler(
     
     assign data_clean = data_in;
     assign data_clk_clean = data_clk_in;
-//    debounce data_debounce (.clk_in(clk_in), .rst_in(rst_in), .noisy_in(data_in), .clean_out(data_clean));
-//    debounce data_clk_debounce (.clk_in(clk_in), .rst_in(rst_in), .noisy_in(data_clk_in), .clean_out(data_clk_clean));
 
     logic [7:0] datacur;
     logic [7:0] dataprev;

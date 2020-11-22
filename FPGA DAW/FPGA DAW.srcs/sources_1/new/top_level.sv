@@ -61,6 +61,7 @@ module top_level(
     logic [7:0] octave_out;
     logic [12:0] notes;
     logic instrument;
+    logic [3:0] octave;
  
     octave oc4 (.clk_in(clk_100mhz), .rst_in(btnc),
         .step_in(sample_trigger),
@@ -75,7 +76,6 @@ module top_level(
     assign aud_pwm = pwm_val?1'bZ:1'b0; 
     
 //    logic [87:0] notes;
-    logic [3:0] octave;
     logic [31:0] raw_keyboard;
     
     logic clean_btnu, clean_btnd, clean_btnl, clean_btnr;
@@ -92,15 +92,15 @@ module top_level(
     
     waveform_select waveform_sel_mod (.clk_in(clk_100mhz), .rst_in(btnc), .signal(waveform_select_signal), .instrument(instrument));
 //    mixer mixer_mod ();
-    seven_seg_controller seven_seg_mod (.clk_in(clk_100mhz), .rst_in(btnc), .val_in(raw_keyboard), .cat_out({cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
+    seven_seg_controller seven_seg_mod (.clk_in(clk_100mhz), .rst_in(btnc), .val_in(raw_keyboard), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     
     assign led[12:0] = notes;
     
     logic clk_65mhz;
-    
-    clk_wiz_65mhz clk_65mhz_mod(.clk_in1(clk_100mhz), .reset(btnc), .clk_65mhz(clk_65mhz));
+    logic clk_65mhz_locked;
+    clk_wiz_65mhz clk_65mhz_mod(.clk_in1(clk_100mhz), .reset(btnc), .clk_65mhz(clk_65mhz), .locked(clk_65mhz_locked));
     
     logic [10:0] hcount;    // pixel on current line
     logic [9:0] vcount;     // line number

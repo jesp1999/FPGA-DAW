@@ -11,8 +11,8 @@ def get_bin_string(x):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: {0} <image to convert>".format(sys.argv[0]))
+    if len(sys.argv) < 3:
+        print("Usage: {0} <image to convert> <COE filename prefix>".format(sys.argv[0]))
     else:
         fname = sys.argv[1]
         img = Image.open(fname)
@@ -24,23 +24,23 @@ if __name__ == "__main__":
             palette.append(tuple(raw_palette[i:i+3]))
         # print(palette, len(palette))
 
-        with open("ds_color_map_red.coe", "w") as f:
+        with open(sys.argv[2] + "_color_map_red.coe", "w") as f:
             f.write(coe_hdr)
             for i in range(256):
                 f.write(get_bin_string(palette[i][0]) + ",\n")
         
-        with open("ds_color_map_green.coe", "w") as f:
+        with open(sys.argv[2] + "_color_map_green.coe", "w") as f:
             f.write(coe_hdr)
             for i in range(256):
                 f.write(get_bin_string(palette[i][1]) + ",\n")
         
-        with open("ds_color_map_blue.coe", "w") as f:
+        with open(sys.argv[2] + "_color_map_blue.coe", "w") as f:
             f.write(coe_hdr)
             for i in range(256):
                 f.write(get_bin_string(palette[i][2]) + ",\n")
         
         (w, h) = cimg.size
-        with open("ds_image.coe", "w") as f:
+        with open(sys.argv[2] + "_image.coe", "w") as f:
             f.write(coe_hdr)
             for y in range(h):
                 for x in range(w):

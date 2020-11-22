@@ -301,7 +301,6 @@
     <FileSet Name="sinewave_rcm_rom" Type="BlockSrcs" RelSrcDir="$PSRCDIR/sinewave_rcm_rom">
       <File Path="$PSRCDIR/sources_1/ip/sinewave_rcm_rom/sinewave_rcm_rom.xci">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -328,7 +327,6 @@
     <FileSet Name="trngwave_rcm_rom" Type="BlockSrcs" RelSrcDir="$PSRCDIR/trngwave_rcm_rom">
       <File Path="$PSRCDIR/sources_1/ip/trngwave_rcm_rom/trngwave_rcm_rom.xci">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>

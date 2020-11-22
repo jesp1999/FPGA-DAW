@@ -76,7 +76,7 @@ module display(
         blob_ASharp (.x_in(KEYBOARD_ORIGIN_X + 5*(WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[2]), .pixel_in(BPix), .pixel_out(ASharpPix));
        
         selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_C2 (.x_in(KEYBOARD_ORIGIN_X + 7*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[0]), .pixel_in(ASharpPix), .pixel_out(sine_img_pixel));
+        blob_C2 (.x_in(KEYBOARD_ORIGIN_X + 7*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[0]), .pixel_in(ASharpPix), .pixel_out(pixel_reg1));
        
        
         //////////////////////////////////////
@@ -106,11 +106,11 @@ module display(
         selectable_blob  #(.WIDTH(WAVE_ICON_SELECTION_WIDTH), .HEIGHT(WAVE_ICON_SELECTION_HEIGHT), .COLOR(BACKGROUND_COLOR), .SELECTED_COLOR(WAVE_ICON_SELECTED_COLOR))
         blob_trngwave_selection (.x_in(TRNG_WAVE_ICON_ORIGIN_X - WAVE_ICON_SELECTION_OFFSET), .y_in(TRNG_WAVE_ICON_ORIGIN_Y - WAVE_ICON_SELECTION_OFFSET), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(waveform), .pixel_in(trng_icon_pixel), .pixel_out(pixel_out));
        
-//        always_ff @(posedge clk_in) begin
-//            pixel_out <= pixel_reg3;
+        always_ff @(posedge clk_in) begin
+            sine_img_pixel <= pixel_reg1;
 //            pixel_reg3 <= pixel_reg2;
 //            pixel_reg2 <= pixel_reg1;
-//        end
+        end
        
 endmodule
 
@@ -161,7 +161,7 @@ module sinewave_blob
     // use color map to create 4 bits R, 4 bits G, 4 bits B
     // since the image is greyscale, just replicate the red pixels
     // and not bother with the other two color maps.
-    sine_cm rcm (.clka(pixel_clk_in), .addra(image_bits), .douta(mapped));
+    sinewave_rcm_rom rcm (.clka(pixel_clk_in), .addra(image_bits), .douta(mapped));
     //green_coe gcm (.clka(pixel_clk_in), .addra(image_bits), .douta(green_mapped));
     //blue_coe bcm (.clka(pixel_clk_in), .addra(image_bits), .douta(blue_mapped));
     always_comb begin
@@ -200,7 +200,7 @@ module trngwave_blob
     // use color map to create 4 bits R, 4 bits G, 4 bits B
     // since the image is greyscale, just replicate the red pixels
     // and not bother with the other two color maps.
-    sine_cm rcm (.clka(pixel_clk_in), .addra(image_bits), .douta(mapped));
+    trngwave_rcm_rom rcm (.clka(pixel_clk_in), .addra(image_bits), .douta(mapped));
     //green_coe gcm (.clka(pixel_clk_in), .addra(image_bits), .douta(green_mapped));
     //blue_coe bcm (.clka(pixel_clk_in), .addra(image_bits), .douta(blue_mapped));
     always_comb begin

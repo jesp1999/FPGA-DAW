@@ -86,7 +86,11 @@ module top_level(
     debounce db_btnr (.clk_in(clk_100mhz), .rst_in(btnc), .noisy_in(btnr), .clean_out(clean_btnr));
 
     input_handler input_handler_mod (.clk_in(clk_100mhz), .rst_in(btnc), .data_clk_in(ps2_clk), .data_in(ps2_data), .notes_out(notes), .octave(octave), .raw_out(raw_keyboard));
-    waveform_select waveform_sel_mod (.clk_in(clk_100mhz), .rst_in(btnc), .signal(clean_btnd), .instrument(instrument));
+    
+    logic waveform_select_signal;
+    assign waveform_select_signal = clean_btnd;
+    
+    waveform_select waveform_sel_mod (.clk_in(clk_100mhz), .rst_in(btnc), .signal(waveform_select_signal), .instrument(instrument));
 //    mixer mixer_mod ();
     seven_seg_controller seven_seg_mod (.clk_in(clk_100mhz), .rst_in(btnc), .val_in(raw_keyboard), .cat_out({cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
@@ -105,7 +109,7 @@ module top_level(
     logic [11:0] rgb;
     
     xvga xvga_mod (.vclock_in(clk_65mhz), .hcount_out(hcount), .vcount_out(vcount), .vsync_out(vsync), .hsync_out(hsync), .blank_out(blank));
-    display display_mod (.clk_in(clk_100mhz), .rst_in(btnc), .keys(notes), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
+    display display_mod (.clk_in(clk_100mhz), .rst_in(btnc), .keys(notes), .waveform(waveform_select_signal), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
     
     logic border = (hcount==0 | hcount==1023 | vcount==0 | vcount==767 |
                    hcount == 512 | vcount == 384);

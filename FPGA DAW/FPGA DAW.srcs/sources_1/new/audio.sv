@@ -22,6 +22,8 @@ endmodule
 module octave( input clk_in, input rst_in,
                 input step_in,
                 input logic [12:0] notes,
+                input logic [3:0] octave,
+                input instrument,
                 output logic [7:0] amp_out);
                 
     logic[7:0] tone_C4;
@@ -39,47 +41,46 @@ module octave( input clk_in, input rst_in,
     logic[7:0] tone_C5;
 
     //C4
-    sine_generator  #(.PHASE_INCR(32'd23409859)) toneA(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd23409859)) toneA(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),
                                .step_in(step_in), .amp_out(tone_C4));  
     //C#4
-    sine_generator  #(.PHASE_INCR(32'd24801882)) toneAs(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd24801882)) toneAs(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument), 
                                .step_in(step_in), .amp_out(tone_Cs4));  
     //D4
-    sine_generator  #(.PHASE_INCR(32'd26276679)) toneB(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd26276679)) toneB(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_D4));
     //D#4
-    sine_generator  #(.PHASE_INCR(32'd27839171)) toneC(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd27839171)) toneC(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_Ds4));
     //E4
-    sine_generator  #(.PHASE_INCR(32'd29494575)) toneCs(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd29494575)) toneCs(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_E4));
     //F4
-    sine_generator  #(.PHASE_INCR(32'd31248413)) toneD(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd31248413)) toneD(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_F4));
     //Fs4
-    sine_generator  #(.PHASE_INCR(32'd33106541)) toneDs(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd33106541)) toneDs(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument), 
                                .step_in(step_in), .amp_out(tone_Fs4));
     //G4
-    sine_generator  #(.PHASE_INCR(32'd35075158)) toneE(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd35075158)) toneE(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_G4));
     //Gs4
-    sine_generator  #(.PHASE_INCR(32'd37160835)) toneF(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd37160835)) toneF(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_Gs4));
     //A4
-    sine_generator  #(.PHASE_INCR(32'd39370534)) toneFs(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd39370534)) toneFs(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_A4));
     //As4
-    sine_generator  #(.PHASE_INCR(32'd41711627)) toneG(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd41711627)) toneG(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_As4));
     //B4
-    sine_generator  #(.PHASE_INCR(32'd44191930)) toneGs(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd44191930)) toneGs(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_B4));                     
     //C5
-    sine_generator  #(.PHASE_INCR(32'd46819719)) toneC5(.clk_in(clk_in), .rst_in(rst_in), 
+    tone_generator  #(.PHASE_INCR(32'd46819719)) toneC5(.clk_in(clk_in), .rst_in(rst_in), .octave_in(octave), .instrument(instrument),  
                                .step_in(step_in), .amp_out(tone_C5));                             
    
     logic [3:0] note_count;
-    // TODO: need to actuall take log 2 of this...need module for that probably
     assign note_count = notes[12]+ 
         notes[11] +
         notes[10] + 
@@ -104,40 +105,44 @@ module octave( input clk_in, input rst_in,
     end
          
     assign amp_out = 
-    notes[12] * (tone_C4>>note_multiplier) + 
-    notes[11] * (tone_Cs4>>note_multiplier) + 
-    notes[10] * (tone_D4>>note_multiplier) + 
-    notes[9] * (tone_Ds4>>note_multiplier) + 
-    notes[8] * (tone_E4>>note_multiplier) + 
-    notes[7] * (tone_F4>>note_multiplier) + 
-    notes[6] * (tone_Fs4>>note_multiplier) + 
-    notes[5] * (tone_G4>>note_multiplier) + 
-    notes[4] * (tone_Gs4>>note_multiplier) + 
-    notes[3] * (tone_A4>>note_multiplier) + 
-    notes[2] * (tone_As4>>note_multiplier) + 
-    notes[1] * (tone_B4>>note_multiplier) +
-    notes[0] * (tone_C5>>note_multiplier); 
+    (notes[12] ? (tone_C4>>note_multiplier) : 0) + 
+    (notes[11] ? (tone_Cs4>>note_multiplier) : 0) + 
+    (notes[10] ? (tone_D4>>note_multiplier) : 0) + 
+    (notes[9] ? (tone_Ds4>>note_multiplier) : 0) + 
+    (notes[8] ? (tone_E4>>note_multiplier) : 0) + 
+    (notes[7] ? (tone_F4>>note_multiplier) : 0) + 
+    (notes[6] ? (tone_Fs4>>note_multiplier) : 0) + 
+    (notes[5] ? (tone_G4>>note_multiplier) : 0) + 
+    (notes[4] ? (tone_Gs4>>note_multiplier) : 0) + 
+    (notes[3] ? (tone_A4>>note_multiplier) : 0) + 
+    (notes[2] ? (tone_As4>>note_multiplier) : 0) + 
+    (notes[1] ? (tone_B4>>note_multiplier) : 0) +
+    (notes[0] ? (tone_C5>>note_multiplier): 0); 
               
 endmodule
 
-//Sine Wave Generator
-module sine_generator ( input clk_in, input rst_in, //clock and reset
+//tone Generator
+module tone_generator ( input clk_in, input rst_in, //clock and reset
                         input step_in, //trigger a phase step (rate at which you run sine generator)
+                        input instrument,
+                        input logic [3:0] octave_in,
                         output logic [7:0] amp_out); //output phase   
-    parameter PHASE_INCR = 32'b1000_0000_0000_0000_0000_0000_0000_0000>>5; //1/64th of 48 khz is 750 Hz
+    parameter PHASE_INCR = 32'b1000_0000_0000_0000_0000_0000_0000_0000>>5; 
+    logic [31:0] phase_incr_octave = (PHASE_INCR>>4)<<octave_in;
     logic [7:0] divider;
     logic [31:0] phase;
-    logic [7:0] amp;
+    logic [7:0] amp, amp_inst1, amp_inst2;
+    assign amp = instrument ? amp_inst2 : amp_inst1;
     assign amp_out = {~amp[7],amp[6:0]};
-    //sine_lut lut_1(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp));
-    triangle_lut lut_2(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp));
+    sine_lut lut_1(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp_inst1));
+    triangle_lut lut_2(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp_inst2));
     
     always_ff @(posedge clk_in)begin
         if (rst_in)begin
             divider <= 8'b0;
             phase <= 32'b0;
         end else if (step_in)begin
-            phase <= phase+PHASE_INCR;
+            phase <= phase+phase_incr_octave;
         end
     end
 endmodule

@@ -66,173 +66,29 @@ module input_handler(
     always_ff @(posedge clk_in) begin
         if(rst_in) begin
             //notes_out <= 88'b0;
-            octave <= 4'b0;
+            octave <= 4'b0100;
+//            update <= 1'b0;
+//            prev_update <= 1'b0;
+//            notes_out <= 12'b0;
         end else begin
             if(update && ~prev_update) begin
                 case(data_out[7:0])
                     RELEASE_NEXT_SC: begin end
-                    C_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b100_000_000_0000);
-//                            notes_out <= ~((~notes_out) | (1 << (NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b100_000_000_0000;
-//                            notes_out <= notes_out | (1 << (NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    C_SHARP_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b010_000_000_0000);
-//                            notes_out <= ~((~notes_out) | (1 << (1 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b010_000_000_0000;
-//                            notes_out <= notes_out | (1 << (1 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    D_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b001_000_000_0000);
-//                            notes_out <= ~((~notes_out) | (1 << (2 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b001_000_000_0000;
-//                            notes_out <= notes_out | (1 << (2 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    D_SHARP_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_100_000_0000);
-//                            notes_out <= ~((~notes_out) | (1 << (3 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_100_000_0000;
-//                            notes_out <= notes_out | (1 << (3 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    E_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_010_000_0000);
-//                            notes_out <= ~((~notes_out) | (1 << (4 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_010_000_0000;
-//                            notes_out <= notes_out | (1 << (4 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    F_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_001_000_0000);
-//                            notes_out <= ~((~notes_out) | (1 << (5 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_001_000_0000;
-//                            notes_out <= notes_out | (1 << (5 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    F_SHARP_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_000_100_0000);
-//                            notes_out <= ~((~notes_out) | (1 << (6 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_000_100_0000;
-//                            notes_out <= notes_out | (1 << (6 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    G_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_000_010_0000);
-//                            notes_out <= ~((~notes_out) | (1 << (7 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_000_010_0000;
-//                            notes_out <= notes_out | (1 << (7 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    G_SHARP_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_000_001_0000);
-//                            notes_out <= ~((~notes_out) | (1 << (8 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_000_001_0000;
-//                            notes_out <= notes_out | (1 << (8 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    A_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_000_000_1000);
-//                            notes_out <= ~((~notes_out) | (1 << (9 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_000_000_1000;
-//                            notes_out <= notes_out | (1 << (9 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    A_SHARP_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_000_000_0100);
-//                            notes_out <= ~((~notes_out) | (1 << (10 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_000_000_0100;
-//                            notes_out <= notes_out | (1 << (10 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    B_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_000_000_0010);
-//                            notes_out <= ~((~notes_out) | (1 << (11 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_000_000_0010;
-//                            notes_out <= notes_out | (1 << (11 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-                    C2_SC: begin
-                        if(release_next) begin
-                            notes_out <= ~((~notes_out) | 13'b000_000_000_0001);
-//                            notes_out <= ~((~notes_out) | (1 << (12 + NOTES_PER_OCTAVE*octave)));
-                        end else begin
-                            notes_out <= notes_out | 13'b000_000_000_0001;
-//                            notes_out <= notes_out | (1 << (12 + NOTES_PER_OCTAVE*octave));
-                        end
-                    end
-//                    C2_SHARP_SC: begin
-//                        if(release_next) begin
-//                            notes_out <= ~((~notes_out) | (1 << (13 + NOTES_PER_OCTAVE*octave)));
-//                        end else begin
-//                            notes_out <= notes_out | (1 << (13 + NOTES_PER_OCTAVE*octave));
-//                        end
-//                    end
-//                    D2_SC: begin
-//                        if(release_next) begin
-//                            notes_out <= ~((~notes_out) | (1 << (14 + NOTES_PER_OCTAVE*octave)));
-//                        end else begin
-//                            notes_out <= notes_out | (1 << (14 + NOTES_PER_OCTAVE*octave));
-//                        end
-//                    end
-//                    D2_SHARP_SC: begin
-//                        if(release_next) begin
-//                            notes_out <= ~((~notes_out) | (1 << (15 + NOTES_PER_OCTAVE*octave)));
-//                        end else begin
-//                            notes_out <= notes_out | (1 << (15 + NOTES_PER_OCTAVE*octave));
-//                        end
-//                    end
-//                    E2_SC: begin
-//                        if(release_next) begin
-//                            notes_out <= ~((~notes_out) | (1 << (16 + NOTES_PER_OCTAVE*octave)));
-//                        end else begin
-//                            notes_out <= notes_out | (1 << (16 + NOTES_PER_OCTAVE*octave));
-//                        end
-//                    end
-//                    F2_SC: begin
-//                        if(release_next) begin
-//                            notes_out <= ~((~notes_out) | (1 << (17 + NOTES_PER_OCTAVE*octave)));
-//                        end else begin
-//                            notes_out <= notes_out | (1 << (17 + NOTES_PER_OCTAVE*octave));
-//                        end
-//                    end
-                    OCTAVE_DOWN_SC: begin
-                        if(~release_next) begin
-                            octave <= (octave > LOWEST_OCTAVE) ? octave - 1 : LOWEST_OCTAVE;
-                        end
-                    end
-                    OCTAVE_UP_SC: begin
-                        if(~release_next) begin
-                            octave <= (octave < HIGHEST_OCTAVE) ? octave + 1 : HIGHEST_OCTAVE;
-                        end
-                    end
+                    C_SC: notes_out[12] <= ~notes_out[12];
+                    C_SHARP_SC: notes_out[11] <= ~notes_out[11];
+                    D_SC: notes_out[10] <= ~notes_out[10];
+                    D_SHARP_SC: notes_out[9] <= ~notes_out[9];
+                    E_SC: notes_out[8] <= ~notes_out[8];
+                    F_SC: notes_out[7] <= ~notes_out[7];
+                    F_SHARP_SC: notes_out[6] <= ~notes_out[6];
+                    G_SC: notes_out[5] <= ~notes_out[5];
+                    G_SHARP_SC: notes_out[4] <= ~notes_out[4];
+                    A_SC: notes_out[3] <= ~notes_out[3];
+                    A_SHARP_SC: notes_out[2] <= ~notes_out[2];
+                    B_SC: notes_out[1] <= ~notes_out[1];
+                    C2_SC: notes_out[0] <= ~notes_out[0];
+                    OCTAVE_DOWN_SC: if (~release_next) octave <= (octave > LOWEST_OCTAVE) ? octave - 1 : LOWEST_OCTAVE;
+                    OCTAVE_UP_SC: if (~release_next) octave <= (octave < HIGHEST_OCTAVE) ? octave + 1 : HIGHEST_OCTAVE;
                     VELOCITY_DOWN_SC: begin
                         //TODO add velocity
                     end

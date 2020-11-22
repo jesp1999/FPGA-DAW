@@ -44,7 +44,6 @@ module top_level(
  
     assign aud_sd = 1;
     //assign led = sw; //just to look pretty 
-    assign led[0] = btnu; // to know if i am trying to record
     assign sample_trigger = (sample_counter == SAMPLE_COUNT);
  
     always_ff @(posedge clk_100mhz)begin
@@ -60,25 +59,22 @@ module top_level(
     end
  
     logic [7:0] octave_out;
+    logic [12:0] notes;
+    logic instrument;
  
     octave oc4 (.clk_in(clk_100mhz), .rst_in(btnc),
         .step_in(sample_trigger),
         .amp_out(octave_out),
-        .notes(sw[12:0]));    
+        .notes(notes),
+        .octave(octave),
+        .instrument(instrument));    
  
     volume_control vc (.vol_in(sw[15:13]),
                        .signal_in(octave_out), .signal_out(vol_out));
     pwm (.clk_in(clk_100mhz), .rst_in(btnc), .level_in({~vol_out[7],vol_out[6:0]}), .pwm_out(pwm_val));
     assign aud_pwm = pwm_val?1'bZ:1'b0; 
     
-    
-    
-    
-    
-    
-    
 //    logic [87:0] notes;
-    logic [12:0] notes;
     logic [3:0] octave;
     logic [31:0] raw_keyboard;
     
@@ -90,12 +86,13 @@ module top_level(
     debounce db_btnr (.clk_in(clk_100mhz), .rst_in(btnc), .noisy_in(btnr), .clean_out(clean_btnr));
 
     input_handler input_handler_mod (.clk_in(clk_100mhz), .rst_in(btnc), .data_clk_in(ps2_clk), .data_in(ps2_data), .notes_out(notes), .octave(octave), .raw_out(raw_keyboard));
-//    waveform_select waveform_sel_mod ();
+    waveform_select waveform_sel_mod (.clk_in(clk_100mhz), .rst_in(btnc), .signal(clean_btnd), .instrument(instrument));
 //    mixer mixer_mod ();
     seven_seg_controller seven_seg_mod (.clk_in(clk_100mhz), .rst_in(btnc), .val_in(raw_keyboard), .cat_out({cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     
+    assign led[12:0] = notes;
     
     logic clk_65mhz;
     
@@ -108,7 +105,7 @@ module top_level(
     logic [11:0] rgb;
     
     xvga xvga_mod (.vclock_in(clk_65mhz), .hcount_out(hcount), .vcount_out(vcount), .vsync_out(vsync), .hsync_out(hsync), .blank_out(blank));
-    display display_mod (.clk_in(clk_100mhz), .rst_in(btnc), .keys(sw[12:0]), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
+    display display_mod (.clk_in(clk_100mhz), .rst_in(btnc), .keys(notes), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
     
     logic border = (hcount==0 | hcount==1023 | vcount==0 | vcount==767 |
                    hcount == 512 | vcount == 384);

@@ -11,16 +11,22 @@
 source top_level.tcl -notrace
 Command: synth_design -top top_level -part xc7a100tcsg324-1
 Starting synth_design
+WARNING: [Vivado_Tcl 4-393] The 'Synthesis' target of the following IPs are stale, please generate the output products using the generate_target or synth_ip command before running synth_design.
+G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_image_rom/sinewave_image_rom.xci
+G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_rcm_rom/sinewave_rcm_rom.xci
+G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/trngwave_image_rom/trngwave_image_rom.xci
+G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/trngwave_rcm_rom/trngwave_rcm_rom.xci
+
 INFO: [IP_Flow 19-2162] IP 'clk_wiz_65mhz' is locked:
 * This IP has board specific outputs. Current project board 'unset' and the board 'digilentinc.com:nexys4_ddr:part0:1.1' used to customize the IP 'clk_wiz_65mhz' do not match.
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Device 21-403] Loading part xc7a100tcsg324-1
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 12368 
+INFO: Helper process launched with PID 29164 
 WARNING: [Synth 8-992] octave is already implicitly declared earlier [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:78]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 803.242 ; gain = 239.316
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 803.430 ; gain = 239.836
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'top_level' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:4]
 	Parameter SAMPLE_COUNT bound to: 2082 - type: integer 
@@ -121,8 +127,8 @@ INFO: [Synth 8-226] default block is never used [G:/My Drive/Coursework/MIT/Fall
 INFO: [Synth 8-6155] done synthesizing module 'binary_to_seven_seg' (11#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/binary_to_seven_seg.sv:3]
 INFO: [Synth 8-6155] done synthesizing module 'seven_seg_controller' (12#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/seven_seg_controller.sv:3]
 WARNING: [Synth 8-689] width (7) of port connection 'cat_out' does not match port width (8) of module 'seven_seg_controller' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:95]
-INFO: [Synth 8-6157] synthesizing module 'clk_wiz_65mhz' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/clk_wiz_65mhz_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_65mhz' (13#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/clk_wiz_65mhz_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_65mhz' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/clk_wiz_65mhz_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_65mhz' (13#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/clk_wiz_65mhz_stub.v:5]
 WARNING: [Synth 8-7023] instance 'clk_65mhz_mod' of module 'clk_wiz_65mhz' has 4 connections declared, but only 3 given [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:103]
 INFO: [Synth 8-6157] synthesizing module 'xvga' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/xvga.sv:24]
 	Parameter DISPLAY_WIDTH bound to: 1024 - type: integer 
@@ -171,10 +177,10 @@ INFO: [Synth 8-6155] done synthesizing module 'selectable_blob__parameterized0' 
 INFO: [Synth 8-6157] synthesizing module 'sinewave_blob' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:143]
 	Parameter WIDTH bound to: 32 - type: integer 
 	Parameter HEIGHT bound to: 32 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'sinewave_image_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/sinewave_image_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'sinewave_image_rom' (16#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/sinewave_image_rom_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'sinewave_rcm_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/sinewave_rcm_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'sinewave_rcm_rom' (17#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/sinewave_rcm_rom_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'sinewave_image_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/sinewave_image_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'sinewave_image_rom' (16#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/sinewave_image_rom_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'sinewave_rcm_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/sinewave_rcm_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'sinewave_rcm_rom' (17#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/sinewave_rcm_rom_stub.v:6]
 INFO: [Synth 8-6155] done synthesizing module 'sinewave_blob' (18#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:143]
 INFO: [Synth 8-6157] synthesizing module 'selectable_blob__parameterized1' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:118]
 	Parameter WIDTH bound to: 48 - type: integer 
@@ -185,10 +191,10 @@ INFO: [Synth 8-6155] done synthesizing module 'selectable_blob__parameterized1' 
 INFO: [Synth 8-6157] synthesizing module 'trngwave_blob' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:182]
 	Parameter WIDTH bound to: 32 - type: integer 
 	Parameter HEIGHT bound to: 32 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'trngwave_image_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/trngwave_image_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'trngwave_image_rom' (19#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/trngwave_image_rom_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'trngwave_rcm_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/trngwave_rcm_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'trngwave_rcm_rom' (20#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-18904-DESKTOP-5PA8C12/realtime/trngwave_rcm_rom_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'trngwave_image_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/trngwave_image_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'trngwave_image_rom' (19#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/trngwave_image_rom_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'trngwave_rcm_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/trngwave_rcm_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'trngwave_rcm_rom' (20#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/trngwave_rcm_rom_stub.v:6]
 INFO: [Synth 8-6155] done synthesizing module 'trngwave_blob' (21#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:182]
 INFO: [Synth 8-6155] done synthesizing module 'display' (22#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:3]
 WARNING: [Synth 8-6014] Unused sequential element sampled_adc_data_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:56]
@@ -214,7 +220,7 @@ WARNING: [Synth 8-3331] design top_level has unconnected port sw[2]
 WARNING: [Synth 8-3331] design top_level has unconnected port sw[1]
 WARNING: [Synth 8-3331] design top_level has unconnected port sw[0]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 858.492 ; gain = 294.566
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 858.145 ; gain = 294.551
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -227,12 +233,12 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 858.492 ; gain = 294.566
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 858.145 ; gain = 294.551
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 858.492 ; gain = 294.566
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 858.145 ; gain = 294.551
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.037 . Memory (MB): peak = 858.492 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.037 . Memory (MB): peak = 858.145 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -253,24 +259,24 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/top_level_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 983.621 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 986.562 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 983.621 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 986.562 ; gain = 0.000
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'display_mod/blob_sineWaveform/rcm' at clock pin 'clka' is different from the actual clock period '15.385', this can lead to different synthesis results.
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'display_mod/blob_sineWaveform/rom' at clock pin 'clka' is different from the actual clock period '15.385', this can lead to different synthesis results.
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'display_mod/blob_trngWaveform/rcm' at clock pin 'clka' is different from the actual clock period '15.385', this can lead to different synthesis results.
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'display_mod/blob_trngWaveform/rom' at clock pin 'clka' is different from the actual clock period '15.385', this can lead to different synthesis results.
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 986.570 ; gain = 422.645
+Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 988.582 ; gain = 424.988
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a100tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 986.570 ; gain = 422.645
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 988.582 ; gain = 424.988
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -283,11 +289,11 @@ Applied set_property DONT_TOUCH = true for display_mod/blob_sineWaveform/rcm. (c
 Applied set_property DONT_TOUCH = true for display_mod/blob_trngWaveform/rom. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for display_mod/blob_trngWaveform/rcm. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 986.570 ; gain = 422.645
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 988.582 ; gain = 424.988
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5546] ROM "notes_out" won't be mapped to RAM because it is too sparse
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 986.570 ; gain = 422.645
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 988.582 ; gain = 424.988
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -601,7 +607,7 @@ INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[3]' (FD
 INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[4]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[4]'
 INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[5]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[5]'
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 986.570 ; gain = 422.645
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 988.582 ; gain = 424.988
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -652,13 +658,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 986.570 ; gain = 422.645
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 988.582 ; gain = 424.988
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:28 ; elapsed = 00:00:30 . Memory (MB): peak = 992.828 ; gain = 428.902
+Finished Timing Optimization : Time (s): cpu = 00:00:28 ; elapsed = 00:00:30 . Memory (MB): peak = 993.453 ; gain = 429.859
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -670,7 +676,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1014.738 ; gain = 450.812
+Finished Technology Mapping : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1013.754 ; gain = 450.160
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -694,13 +700,13 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.988 ; gain = 456.062
+Finished IO Insertion : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.848 ; gain = 456.254
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.988 ; gain = 456.062
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.848 ; gain = 456.254
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -719,25 +725,25 @@ Report Check Netlist:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:33 ; elapsed = 00:00:35 . Memory (MB): peak = 1019.988 ; gain = 456.062
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.848 ; gain = 456.254
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:33 ; elapsed = 00:00:35 . Memory (MB): peak = 1019.988 ; gain = 456.062
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.848 ; gain = 456.254
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:33 ; elapsed = 00:00:35 . Memory (MB): peak = 1020.211 ; gain = 456.285
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1020.066 ; gain = 456.473
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:33 ; elapsed = 00:00:35 . Memory (MB): peak = 1020.211 ; gain = 456.285
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1020.066 ; gain = 456.473
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -771,10 +777,10 @@ Report Cell Usage:
 |11    |LUT4               |   778|
 |12    |LUT5               |   127|
 |13    |LUT6               |   185|
-|14    |RAMB18E1_2         |     6|
+|14    |RAMB18E1_2         |     1|
 |15    |RAMB18E1_3         |     1|
 |16    |RAMB18E1_4         |     6|
-|17    |RAMB18E1_5         |     1|
+|17    |RAMB18E1_5         |     6|
 |18    |FDRE               |   623|
 |19    |FDSE               |     8|
 |20    |IBUF               |     7|
@@ -828,29 +834,29 @@ Report Instance Areas:
 |40    |  xvga_mod                  |xvga                               |   754|
 +------+----------------------------+-----------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:33 ; elapsed = 00:00:35 . Memory (MB): peak = 1020.211 ; gain = 456.285
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1020.066 ; gain = 456.473
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 18 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:32 . Memory (MB): peak = 1020.211 ; gain = 328.207
-Synthesis Optimization Complete : Time (s): cpu = 00:00:33 ; elapsed = 00:00:35 . Memory (MB): peak = 1020.211 ; gain = 456.285
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:31 . Memory (MB): peak = 1020.066 ; gain = 326.035
+Synthesis Optimization Complete : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1020.066 ; gain = 456.473
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.092 . Memory (MB): peak = 1031.844 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.093 . Memory (MB): peak = 1029.051 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 429 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-140] Inserted 1 IBUFs to IO ports without IO buffers.
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1031.844 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1029.090 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-117 Infos, 59 Warnings, 0 Critical Warnings and 0 Errors encountered.
+117 Infos, 60 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 1031.844 ; gain = 734.145
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1031.844 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:37 ; elapsed = 00:00:41 . Memory (MB): peak = 1029.090 ; gain = 731.270
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1029.090 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/top_level.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file top_level_utilization_synth.rpt -pb top_level_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sat Nov 21 21:40:57 2020...
+INFO: [Common 17-206] Exiting Vivado at Sat Nov 21 23:18:31 2020...

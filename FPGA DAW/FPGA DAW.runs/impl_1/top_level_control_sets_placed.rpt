@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date         : Sat Nov 21 21:41:47 2020
+| Date         : Sat Nov 21 23:19:21 2020
 | Host         : DESKTOP-5PA8C12 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file top_level_control_sets_placed.rpt
 | Design       : top_level
@@ -73,16 +73,16 @@ Table of Contents
 +-------------------------------+-----------------------------------------+----------------------------------+------------------+----------------+
 |          Clock Signal         |              Enable Signal              |         Set/Reset Signal         | Slice Load Count | Bel Load Count |
 +-------------------------------+-----------------------------------------+----------------------------------+------------------+----------------+
+|  clk_100mhz_IBUF_BUFG         | db_btnd/new_input_i_1_n_0               |                                  |                1 |              1 |
 | ~ps2_clk_IBUF_BUFG            |                                         |                                  |                1 |              1 |
 | ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[3]_i_1_n_0 |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[1]       |                                  |                1 |              1 |
 | ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[4]       |                                  |                1 |              1 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[2]       |                                  |                1 |              1 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[0]       |                                  |                1 |              1 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[5]       |                                  |                1 |              1 |
 | ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[6]       |                                  |                1 |              1 |
 | ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[7]       |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[0]       |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[2]       |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[5]       |                                  |                1 |              1 |
-|  clk_100mhz_IBUF_BUFG         | db_btnd/new_input_i_1_n_0               |                                  |                1 |              1 |
+| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[1]       |                                  |                1 |              1 |
 |  clk_65mhz_mod/inst/clk_65mhz | xvga_mod/hreset                         | xvga_mod/vcount_out0             |                1 |              1 |
 | ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/counter[3]_i_1_n_0 |                                  |                1 |              4 |
 |  clk_100mhz_IBUF_BUFG         | seven_seg_mod/segment_state             | btnc_IBUF                        |                2 |              8 |

@@ -1,0 +1,13 @@
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
+|       Launch Clock       |      Capture Clock       |                                                 Pin                                                      |
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
+|              sys_clk_pin |  clk_65mhz_clk_wiz_65mhz |                                                                                              rgb_reg[2]/D|
+|              sys_clk_pin |  clk_65mhz_clk_wiz_65mhz |                                                                                              rgb_reg[5]/D|
+|              sys_clk_pin |  clk_65mhz_clk_wiz_65mhz |                                                                                             rgb_reg[10]/D|
+|              sys_clk_pin |  clk_65mhz_clk_wiz_65mhz |                                                                                              rgb_reg[7]/D|
+|              sys_clk_pin |  clk_65mhz_clk_wiz_65mhz |                                                                                              rgb_reg[6]/D|
+|              sys_clk_pin |  clk_65mhz_clk_wiz_65mhz |                                                                                             rgb_reg[11]/D|
+|              sys_clk_pin |  clk_65mhz_clk_wiz_65mhz |                                                          display_mod/blob_trngWaveform/pixel_out_reg[7]/D|
+|              sys_clk_pin |  clk_65mhz_clk_wiz_65mhz |                                                          display_mod/blob_trngWaveform/pixel_out_reg[8]/D|
+|              sys_clk_pin |  clk_65mhz_clk_wiz_65mhz |                                                         display_mod/blob_trngWaveform/pixel_out_reg[10]/D|
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+

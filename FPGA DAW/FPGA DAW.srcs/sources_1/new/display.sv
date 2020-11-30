@@ -76,7 +76,7 @@ module display(
         blob_ASharp (.x_in(KEYBOARD_ORIGIN_X + 5*(WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[2]), .pixel_in(BPix), .pixel_out(ASharpPix));
        
         selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_C2 (.x_in(KEYBOARD_ORIGIN_X + 7*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[0]), .pixel_in(ASharpPix), .pixel_out(sine_icon_pixel));
+        blob_C2 (.x_in(KEYBOARD_ORIGIN_X + 7*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[0]), .pixel_in(ASharpPix), .pixel_out(sine_img_pixel));
        
        
         //////////////////////////////////////
@@ -96,13 +96,13 @@ module display(
         parameter WAVE_ICON_SELECTED_COLOR = 12'h00F;
        
        
-//        sinewave_blob blob_sineWaveform (.pixel_clk_in(clk_in), .hcount_in(hcount_in), .vcount_in(vcount_in), .x_in(SINE_WAVE_ICON_ORIGIN_X), .y_in(SINE_WAVE_ICON_ORIGIN_Y), .pixel_in(sine_img_pixel), .pixel_out(sine_icon_pixel));
+        sinewave_blob blob_sineWaveform (.pixel_clk_in(clk_in), .hcount_in(hcount_in), .vcount_in(vcount_in), .x_in(SINE_WAVE_ICON_ORIGIN_X), .y_in(SINE_WAVE_ICON_ORIGIN_Y), .pixel_in(sine_img_pixel), .pixel_out(sine_icon_pixel));
 
         
         selectable_blob  #(.WIDTH(WAVE_ICON_SELECTION_WIDTH), .HEIGHT(WAVE_ICON_SELECTION_HEIGHT), .COLOR(BACKGROUND_COLOR), .SELECTED_COLOR(WAVE_ICON_SELECTED_COLOR))
-        blob_sinewave_selection (.x_in(SINE_WAVE_ICON_ORIGIN_X - WAVE_ICON_SELECTION_OFFSET), .y_in(SINE_WAVE_ICON_ORIGIN_Y - WAVE_ICON_SELECTION_OFFSET), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(~waveform), .pixel_in(sine_icon_pixel), .pixel_out(trng_icon_pixel));
+        blob_sinewave_selection (.x_in(SINE_WAVE_ICON_ORIGIN_X - WAVE_ICON_SELECTION_OFFSET), .y_in(SINE_WAVE_ICON_ORIGIN_Y - WAVE_ICON_SELECTION_OFFSET), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(~waveform), .pixel_in(sine_icon_pixel), .pixel_out(trng_img_pixel));
        
-//        trngwave_blob blob_trngWaveform (.pixel_clk_in(clk_in), .hcount_in(hcount_in), .vcount_in(vcount_in), .x_in(TRNG_WAVE_ICON_ORIGIN_X), .y_in(TRNG_WAVE_ICON_ORIGIN_Y), .pixel_in(trng_img_pixel), .pixel_out(trng_icon_pixel));
+        trngwave_blob blob_trngWaveform (.pixel_clk_in(clk_in), .hcount_in(hcount_in), .vcount_in(vcount_in), .x_in(TRNG_WAVE_ICON_ORIGIN_X), .y_in(TRNG_WAVE_ICON_ORIGIN_Y), .pixel_in(trng_img_pixel), .pixel_out(trng_icon_pixel));
        
         selectable_blob  #(.WIDTH(WAVE_ICON_SELECTION_WIDTH), .HEIGHT(WAVE_ICON_SELECTION_HEIGHT), .COLOR(BACKGROUND_COLOR), .SELECTED_COLOR(WAVE_ICON_SELECTED_COLOR))
         blob_trngwave_selection (.x_in(TRNG_WAVE_ICON_ORIGIN_X - WAVE_ICON_SELECTION_OFFSET), .y_in(TRNG_WAVE_ICON_ORIGIN_Y - WAVE_ICON_SELECTION_OFFSET), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(waveform), .pixel_in(trng_icon_pixel), .pixel_out(pixel_out));
@@ -205,9 +205,9 @@ module trngwave_blob
     //green_coe gcm (.clka(pixel_clk_in), .addra(image_bits), .douta(green_mapped));
     //blue_coe bcm (.clka(pixel_clk_in), .addra(image_bits), .douta(blue_mapped));
     always_comb begin
-        red_blended = pixel_in[11:8] + (mapped[7:4] - pixel_in[11:8]);
-        green_blended = pixel_in[7:4] + (mapped[7:4] - pixel_in[7:4]);
-        blue_blended = pixel_in[3:0] + (mapped[7:4] - pixel_in[3:0]);
+        red_blended = mapped[7:4];
+        green_blended = mapped[7:4];
+        blue_blended = mapped[7:4];
     end
     // note the one clock cycle delay in pixel!
     always_ff @ (posedge pixel_clk_in) begin

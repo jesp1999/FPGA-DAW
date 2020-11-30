@@ -109,7 +109,7 @@ module top_level(
     logic [11:0] rgb;
     
     xvga xvga_mod (.vclock_in(clk_65mhz), .hcount_out(hcount), .vcount_out(vcount), .vsync_out(vsync), .hsync_out(hsync), .blank_out(blank));
-    display display_mod (.clk_in(clk_65mhz), .rst_in(btnc), .keys(notes), .waveform(waveform_select_signal), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
+    display display_mod (.clk_in(clk_65mhz), .rst_in(btnc), .keys(notes), .waveform(instrument), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
     
     logic border = (hcount==0 | hcount==1023 | vcount==0 | vcount==767 |
                    hcount == 512 | vcount == 384);

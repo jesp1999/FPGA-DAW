@@ -63,19 +63,32 @@ module input_handler(
             if(update && ~prev_update) begin
                 case(data_out[7:0])
                     RELEASE_NEXT_SC: begin end
-                    C_SC: notes_out[12] <= ~notes_out[12];
-                    C_SHARP_SC: notes_out[11] <= ~notes_out[11];
-                    D_SC: notes_out[10] <= ~notes_out[10];
-                    D_SHARP_SC: notes_out[9] <= ~notes_out[9];
-                    E_SC: notes_out[8] <= ~notes_out[8];
-                    F_SC: notes_out[7] <= ~notes_out[7];
-                    F_SHARP_SC: notes_out[6] <= ~notes_out[6];
-                    G_SC: notes_out[5] <= ~notes_out[5];
-                    G_SHARP_SC: notes_out[4] <= ~notes_out[4];
-                    A_SC: notes_out[3] <= ~notes_out[3];
-                    A_SHARP_SC: notes_out[2] <= ~notes_out[2];
-                    B_SC: notes_out[1] <= ~notes_out[1];
-                    C2_SC: notes_out[0] <= ~notes_out[0];
+//                    C_SC: notes_out[12] <= ~notes_out[12];
+//                    C_SHARP_SC: notes_out[11] <= ~notes_out[11];
+//                    D_SC: notes_out[10] <= ~notes_out[10];
+//                    D_SHARP_SC: notes_out[9] <= ~notes_out[9];
+//                    E_SC: notes_out[8] <= ~notes_out[8];
+//                    F_SC: notes_out[7] <= ~notes_out[7];
+//                    F_SHARP_SC: notes_out[6] <= ~notes_out[6];
+//                    G_SC: notes_out[5] <= ~notes_out[5];
+//                    G_SHARP_SC: notes_out[4] <= ~notes_out[4];
+//                    A_SC: notes_out[3] <= ~notes_out[3];
+//                    A_SHARP_SC: notes_out[2] <= ~notes_out[2];
+//                    B_SC: notes_out[1] <= ~notes_out[1];
+//                    C2_SC: notes_out[0] <= ~notes_out[0];
+                    C_SC: notes_out[12] <= ~release_next;
+                    C_SHARP_SC: notes_out[11] <= ~release_next;
+                    D_SC: notes_out[10] <= ~release_next;
+                    D_SHARP_SC: notes_out[9] <= ~release_next;
+                    E_SC: notes_out[8] <= ~release_next;
+                    F_SC: notes_out[7] <= ~release_next;
+                    F_SHARP_SC: notes_out[6] <= ~release_next;
+                    G_SC: notes_out[5] <= ~release_next;
+                    G_SHARP_SC: notes_out[4] <= ~release_next;
+                    A_SC: notes_out[3] <= ~release_next;
+                    A_SHARP_SC: notes_out[2] <= ~release_next;
+                    B_SC: notes_out[1] <= ~release_next;
+                    C2_SC: notes_out[0] <= ~release_next;
                     OCTAVE_DOWN_SC: if (~release_next) octave <= (octave > LOWEST_OCTAVE) ? octave - 1 : LOWEST_OCTAVE;
                     OCTAVE_UP_SC: if (~release_next) octave <= (octave < HIGHEST_OCTAVE) ? octave + 1 : HIGHEST_OCTAVE;
                     VELOCITY_DOWN_SC: begin

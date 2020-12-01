@@ -28,7 +28,7 @@ module top_level(
                     output logic aud_pwm,
                     output logic aud_sd);
     
-    parameter SAMPLE_COUNT = 2082;//gets approximately (will generate audio at approx 48 kHz sample rate.
+    parameter SAMPLE_COUNT = 1354;//gets approximately (will generate audio at approx 48 kHz sample rate.
  
     logic [15:0] sample_counter;
     logic [11:0] adc_data;
@@ -62,20 +62,32 @@ module top_level(
         end
     end
  
-    logic [7:0] octave_out;
-    logic [12:0] notes;
-    logic instrument;
+    logic [7:0] raw_audio_out;
+    logic [12:0] notes, notes_to_play;
+    logic instrument, instrument_to_play;
     logic [3:0] octave;
+    logic [7:0] beat_count;
+ 
+    recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc),
+        .notes_in(notes),
+        .octave_in(octave),
+        .instrument_in(instrument),
+        .record(sw[1]), // CHANGE LATER
+        .beat_count(beat_count),
+        .notes_out(notes_to_play),
+        .octave_out(octave_to_play),
+        .instrument_out(instrument_to_play));
+        
  
     octave oc4 (.clk_in(clk_65mhz), .rst_in(btnc),
         .step_in(sample_trigger),
-        .amp_out(octave_out),
-        .notes(notes),
-        .octave(octave),
-        .instrument(instrument));    
+        .amp_out(raw_audio_out),
+        .notes(notes_to_play),
+        .octave(octave_to_play),
+        .instrument(instrument_to_play));    
  
     volume_control vc (.vol_in(sw[15:13]),
-                       .signal_in(octave_out), .signal_out(vol_out));
+                       .signal_in(raw_audio_out), .signal_out(vol_out));
     pwm (.clk_in(clk_65mhz), .rst_in(btnc), .level_in({~vol_out[7],vol_out[6:0]}), .pwm_out(pwm_val));
     assign aud_pwm = pwm_val?1'bZ:1'b0; 
     
@@ -96,7 +108,7 @@ module top_level(
     
     waveform_select waveform_sel_mod (.clk_in(clk_65mhz), .rst_in(btnc), .signal(waveform_select_signal), .instrument(instrument));
 //    mixer mixer_mod ();
-    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(raw_keyboard), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
+    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : beat_count), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     

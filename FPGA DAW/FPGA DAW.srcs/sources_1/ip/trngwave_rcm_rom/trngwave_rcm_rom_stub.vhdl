@@ -1,9 +1,9 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
--- Date        : Sun Nov 22 14:26:15 2020
+-- Date        : Tue Dec  1 18:12:24 2020
 -- Host        : DESKTOP-5PA8C12 running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub {G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA
+-- Command     : write_vhdl -force -mode synth_stub {g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA
 --               DAW.srcs/sources_1/ip/trngwave_rcm_rom/trngwave_rcm_rom_stub.vhdl}
 -- Design      : trngwave_rcm_rom
 -- Purpose     : Stub declaration of top-level module interface

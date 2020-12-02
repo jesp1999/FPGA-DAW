@@ -66,6 +66,7 @@ module top_level(
     logic [12:0] notes, notes_to_play;
     logic instrument, instrument_to_play;
     logic [3:0] octave;
+    logic [3:0] octave_to_play;
     logic [7:0] beat_count;
  
     recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc),
@@ -108,7 +109,7 @@ module top_level(
     
     waveform_select waveform_sel_mod (.clk_in(clk_65mhz), .rst_in(btnc), .signal(waveform_select_signal), .instrument(instrument));
 //    mixer mixer_mod ();
-    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : beat_count), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
+    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {24'b0, beat_count}), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     
@@ -143,6 +144,6 @@ module top_level(
     assign vga_vs = ~vs;
     
     
-//    ila_0  ila_mod (.clk(clk_100mhz), .probe0(ps2_clk), .probe1(ps2_data));
+    //ila_0  ila_mod (.clk(clk_65mhz), .probe0(ps2_clk), .probe1(raw_keyboard));
     
 endmodule

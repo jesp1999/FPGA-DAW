@@ -1,10 +1,10 @@
 -- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
--- Date        : Sun Nov 22 14:25:12 2020
+-- Date        : Sun Nov 22 14:25:10 2020
 -- Host        : DESKTOP-5PA8C12 running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub {G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA
---               DAW.srcs/sources_1/ip/sinewave_rcm_rom/sinewave_rcm_rom_stub.vhdl}
+-- Command     : write_vhdl -force -mode synth_stub -rename_top sinewave_rcm_rom -prefix
+--               sinewave_rcm_rom_ sinewave_rcm_rom_stub.vhdl
 -- Design      : sinewave_rcm_rom
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a100tcsg324-1

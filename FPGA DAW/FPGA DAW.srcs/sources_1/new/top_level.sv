@@ -65,8 +65,7 @@ module top_level(
     logic [7:0] raw_audio_out;
     logic [12:0] notes, notes_to_play;
     logic instrument, instrument_to_play;
-    logic [3:0] octave;
-    logic [3:0] octave_to_play;
+    logic [3:0] octave, octave_to_play;
     logic [7:0] beat_count;
  
     recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc),

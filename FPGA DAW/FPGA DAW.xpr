@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="44" Path="G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.xpr">
+<Project Version="7" Minor="44" Path="C:/Users/natha/OneDrive/Desktop/MIT/F20/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="b111dc41dc524c18b8d235740fefd457"/>
@@ -17,8 +17,8 @@
     <Option Name="CompiledLibDirVCS" Val="$PCACHEDIR/compile_simlib/vcs"/>
     <Option Name="CompiledLibDirRiviera" Val="$PCACHEDIR/compile_simlib/riviera"/>
     <Option Name="CompiledLibDirActivehdl" Val="$PCACHEDIR/compile_simlib/activehdl"/>
-    <Option Name="BoardPart" Val="digilentinc.com:nexys4_ddr:part0:1.1"/>
-    <Option Name="BoardPartRepoPaths" Val="C:/Users/jesp1/AppData/Roaming/Xilinx/Vivado/2019.2/xhub/board_store"/>
+    <Option Name="BoardPart" Val=""/>
+    <Option Name="BoardPartRepoPaths" Val="$PPRDIR/../../../../../../../../jesp1/AppData/Roaming/Xilinx/Vivado/2019.2/xhub/board_store"/>
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
@@ -502,9 +502,7 @@
       <RQSFiles/>
     </Run>
   </Runs>
-  <Board>
-    <Jumpers/>
-  </Board>
+  <Board/>
   <DashboardSummary Version="1" Minor="0">
     <Dashboards>
       <Dashboard Name="default_dashboard">

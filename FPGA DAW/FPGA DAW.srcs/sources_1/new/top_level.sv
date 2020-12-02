@@ -107,7 +107,8 @@ module top_level(
     assign waveform_select_signal = clean_btnd;
     
     waveform_select waveform_sel_mod (.clk_in(clk_65mhz), .rst_in(btnc), .signal(waveform_select_signal), .instrument(instrument));
-//    mixer mixer_mod ();
+    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .audio1_enabled(1), .audio2_enabled(0), .audio3_enabled(0), .audio4_enabled(0),
+                     .metronome_enabled(0), .audio1_in(0), .audio2_in(0), .audio3_in(0), .audio4_in(0), .metronome_in(0), .audio_out(0));
     seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {24'b0, beat_count}), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     

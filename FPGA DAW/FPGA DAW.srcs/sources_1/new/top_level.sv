@@ -31,8 +31,6 @@ module top_level(
     parameter SAMPLE_COUNT = 1354;//gets approximately (will generate audio at approx 48 kHz sample rate.
  
     logic [15:0] sample_counter;
-    logic [11:0] adc_data;
-    logic [11:0] sampled_adc_data;
     logic sample_trigger;
     logic adc_ready;
     logic enable;
@@ -56,16 +54,16 @@ module top_level(
         end else begin
             sample_counter <= sample_counter + 16'b1;
         end
-        if (sample_trigger) begin
-            sampled_adc_data <= {~adc_data[11],adc_data[10:0]}; //convert to signed. incoming data is offset binary
-            //https://en.wikipedia.org/wiki/Offset_binary
-        end
     end
  
-    logic [7:0] raw_audio_out;
-    logic [12:0] notes, notes_to_play;
-    logic instrument, instrument_to_play;
-    logic [3:0] octave, octave_to_play;
+    logic [1:0] track;
+    logic [7:0] raw_audio_out [3:0];
+    logic [12:0] notes;
+    logic [12:0] notes_to_play [3:0];
+    logic instrument;
+    logic instrument_to_play [3:0];
+    logic [3:0] octave;
+    logic [3:0] octave_to_play [3:0];
     logic [7:0] beat_count;
  
     recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc),
@@ -73,21 +71,43 @@ module top_level(
         .octave_in(octave),
         .instrument_in(instrument),
         .record(sw[1]), // CHANGE LATER
+        .track(track),
         .beat_count(beat_count),
         .notes_out(notes_to_play),
         .octave_out(octave_to_play),
         .instrument_out(instrument_to_play));
         
  
-    octave oc4 (.clk_in(clk_65mhz), .rst_in(btnc),
+    octave track_0 (.clk_in(clk_65mhz), .rst_in(btnc),
         .step_in(sample_trigger),
-        .amp_out(raw_audio_out),
-        .notes(notes_to_play),
-        .octave(octave_to_play),
-        .instrument(instrument_to_play));    
+        .amp_out(raw_audio_out[0]),
+        .notes(notes_to_play[0]),
+        .octave(octave_to_play[0]),
+        .instrument(instrument_to_play[0]));    
+        
+    octave track_1 (.clk_in(clk_65mhz), .rst_in(btnc),
+        .step_in(sample_trigger),
+        .amp_out(raw_audio_out[1]),
+        .notes(notes_to_play[1]),
+        .octave(octave_to_play[1]),
+        .instrument(instrument_to_play[1])); 
  
-    volume_control vc (.vol_in(sw[15:13]),
-                       .signal_in(raw_audio_out), .signal_out(vol_out));
+     octave track_2 (.clk_in(clk_65mhz), .rst_in(btnc),
+        .step_in(sample_trigger),
+        .amp_out(raw_audio_out[2]),
+        .notes(notes_to_play[2]),
+        .octave(octave_to_play[2]),
+        .instrument(instrument_to_play[2])); 
+  
+      octave track_3 (.clk_in(clk_65mhz), .rst_in(btnc),
+        .step_in(sample_trigger),
+        .amp_out(raw_audio_out[3]),
+        .notes(notes_to_play[3]),
+        .octave(octave_to_play[3]),
+        .instrument(instrument_to_play[3])); 
+        
+//    volume_control vc (.vol_in(sw[15:13]),
+//                       .signal_in(raw_audio_out[0]), .signal_out(vol_out));
     pwm (.clk_in(clk_65mhz), .rst_in(btnc), .level_in({~vol_out[7],vol_out[6:0]}), .pwm_out(pwm_val));
     assign aud_pwm = pwm_val?1'bZ:1'b0; 
     
@@ -104,16 +124,27 @@ module top_level(
     input_handler input_handler_mod (.clk_in(clk_65mhz), .rst_in(btnc), .data_clk_in(ps2_clk), .data_in(ps2_data), .notes_out(notes), .octave(octave), .raw_out(raw_keyboard));
     
     logic waveform_select_signal;
+    logic track_select_signal;
     assign waveform_select_signal = clean_btnd;
+    assign track_select_signal = clean_btnu;
     
     waveform_select waveform_sel_mod (.clk_in(clk_65mhz), .rst_in(btnc), .signal(waveform_select_signal), .instrument(instrument));
-    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .audio1_enabled(1), .audio2_enabled(0), .audio3_enabled(0), .audio4_enabled(0),
-                     .metronome_enabled(0), .audio1_in(0), .audio2_in(0), .audio3_in(0), .audio4_in(0), .metronome_in(0), .audio_out(0));
+    
+    track_select track_sel_mod (.clk_in(clk_65mhz), .rst_in(btnc), .signal(track_select_signal), .track(track));
+    
+    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .audio0_enabled(1), .audio1_enabled(1), .audio2_enabled(0), .audio3_enabled(0),
+                     .metronome_enabled(0), 
+                     .audio0_in(raw_audio_out[0]), 
+                     .audio1_in(raw_audio_out[1]), 
+                     .audio2_in(raw_audio_out[2]), 
+                     .audio3_in(raw_audio_out[3]), 
+                     .metronome_in(0), .audio_out(vol_out));
+    
     seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {24'b0, beat_count}), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     
-    assign led[12:0] = notes_to_play;
+    assign led[12:0] = {10'b0,track};
     
     logic [10:0] hcount;    // pixel on current line
     logic [9:0] vcount;     // line number
@@ -122,7 +153,7 @@ module top_level(
     logic [11:0] rgb;
     
     xvga xvga_mod (.vclock_in(clk_65mhz), .hcount_out(hcount), .vcount_out(vcount), .vsync_out(vsync), .hsync_out(hsync), .blank_out(blank));
-    display display_mod (.clk_in(clk_65mhz), .rst_in(btnc), .keys(notes_to_play), .waveform(instrument), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
+    display display_mod (.clk_in(clk_65mhz), .rst_in(btnc), .keys(notes_to_play[track]), .waveform(instrument_to_play[track]), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
     
     logic border = (hcount==0 | hcount==1023 | vcount==0 | vcount==767 |
                    hcount == 512 | vcount == 384);

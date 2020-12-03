@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="44" Path="G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.xpr">
+<Project Version="7" Minor="44" Path="C:/Users/natha/OneDrive/Desktop/MIT/F20/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="b111dc41dc524c18b8d235740fefd457"/>
@@ -18,7 +18,7 @@
     <Option Name="CompiledLibDirRiviera" Val="$PCACHEDIR/compile_simlib/riviera"/>
     <Option Name="CompiledLibDirActivehdl" Val="$PCACHEDIR/compile_simlib/activehdl"/>
     <Option Name="BoardPart" Val=""/>
-    <Option Name="BoardPartRepoPaths" Val="C:/Users/jesp1/AppData/Roaming/Xilinx/Vivado/2019.2/xhub/board_store"/>
+    <Option Name="BoardPartRepoPaths" Val="$PPRDIR/../../../../../../../../jesp1/AppData/Roaming/Xilinx/Vivado/2019.2/xhub/board_store"/>
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
@@ -38,13 +38,13 @@
     <Option Name="WTVcsLaunchSim" Val="0"/>
     <Option Name="WTRivieraLaunchSim" Val="0"/>
     <Option Name="WTActivehdlLaunchSim" Val="0"/>
-    <Option Name="WTXSimExportSim" Val="21"/>
-    <Option Name="WTModelSimExportSim" Val="21"/>
-    <Option Name="WTQuestaExportSim" Val="20"/>
-    <Option Name="WTIesExportSim" Val="20"/>
-    <Option Name="WTVcsExportSim" Val="20"/>
-    <Option Name="WTRivieraExportSim" Val="20"/>
-    <Option Name="WTActivehdlExportSim" Val="20"/>
+    <Option Name="WTXSimExportSim" Val="22"/>
+    <Option Name="WTModelSimExportSim" Val="22"/>
+    <Option Name="WTQuestaExportSim" Val="21"/>
+    <Option Name="WTIesExportSim" Val="21"/>
+    <Option Name="WTVcsExportSim" Val="21"/>
+    <Option Name="WTRivieraExportSim" Val="21"/>
+    <Option Name="WTActivehdlExportSim" Val="21"/>
     <Option Name="GenerateIPUpgradeLog" Val="TRUE"/>
     <Option Name="XSimRadix" Val="hex"/>
     <Option Name="XSimTimeUnit" Val="ns"/>
@@ -142,6 +142,13 @@
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../Synthesizer Audio Workstation/Synthesizer Audio Workstation.srcs/sources_1/new/seven_seg_controller.sv"/>
           <Attr Name="ImportTime" Val="1604529132"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/track_select.sv">
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>

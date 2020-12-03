@@ -14,6 +14,10 @@
     </Object>
   </ObjectList>
   <ObjectList object_type="hw_ila" gui_info="">
+    <Object name="" gui_info="">
+      <Properties Property="CONTROL.TRIGGER_CONDITION" value="AND"/>
+      <Properties Property="CORE_REFRESH_RATE_MS" value="500"/>
+    </Object>
     <Object name="ila_mod" gui_info="">
       <Properties Property="CONTROL.TRIGGER_CONDITION" value="AND"/>
       <Properties Property="CORE_REFRESH_RATE_MS" value="500"/>
@@ -22,6 +26,7 @@
   <ObjectList object_type="hw_probe" gui_info="">
     <Object name="ps2_clk_IBUF" gui_info="Trigger Setup=0"/>
     <Object name="ps2_data_IBUF" gui_info="Trigger Setup=0"/>
+    <Object name="raw_keyboard[31:0]" gui_info="Trigger Setup=0"/>
   </ObjectList>
   <probeset name="hw project" active="false">
     <probe type="ila" busType="net" source="netlist" spec="ILA_V2_RT">
@@ -85,6 +90,58 @@
       </probeOptions>
       <nets>
         <net name="ps2_data_IBUF"/>
+      </nets>
+    </probe>
+    <probe type="ila" busType="net" source="netlist" spec="ILA_V2_RT">
+      <probeOptions Id="DebugProbeParams">
+        <Option Id="CAPTURE_COMPARE_VALUE" value="eq32&apos;hXXXX_XXXX"/>
+        <Option Id="COMPARE_VALUE.0" value="eq32&apos;hXXXX_XXXX"/>
+        <Option Id="DISPLAY_AS_ENUM" value="1"/>
+        <Option Id="DISPLAY_HINT" value=""/>
+        <Option Id="DISPLAY_RADIX" value="HEX"/>
+        <Option Id="DISPLAY_VISIBILITY" value=""/>
+        <Option Id="HW_ILA" value="hw_ila_1"/>
+        <Option Id="LINK_TO_WAVEFORM" value="1"/>
+        <Option Id="MAP" value="probe1[31:0]"/>
+        <Option Id="NAME.CUSTOM" value=""/>
+        <Option Id="NAME.SELECT" value="Long"/>
+        <Option Id="SOURCE" value="netlist"/>
+        <Option Id="TRIGGER_COMPARE_VALUE" value="eq32&apos;hXXXX_XXXX"/>
+        <Option Id="WAVEFORM_STYLE" value="Digital"/>
+      </probeOptions>
+      <nets>
+        <net name="raw_keyboard[31]"/>
+        <net name="raw_keyboard[30]"/>
+        <net name="raw_keyboard[29]"/>
+        <net name="raw_keyboard[28]"/>
+        <net name="raw_keyboard[27]"/>
+        <net name="raw_keyboard[26]"/>
+        <net name="raw_keyboard[25]"/>
+        <net name="raw_keyboard[24]"/>
+        <net name="raw_keyboard[23]"/>
+        <net name="raw_keyboard[22]"/>
+        <net name="raw_keyboard[21]"/>
+        <net name="raw_keyboard[20]"/>
+        <net name="raw_keyboard[19]"/>
+        <net name="raw_keyboard[18]"/>
+        <net name="raw_keyboard[17]"/>
+        <net name="raw_keyboard[16]"/>
+        <net name="raw_keyboard[15]"/>
+        <net name="raw_keyboard[14]"/>
+        <net name="raw_keyboard[13]"/>
+        <net name="raw_keyboard[12]"/>
+        <net name="raw_keyboard[11]"/>
+        <net name="raw_keyboard[10]"/>
+        <net name="raw_keyboard[9]"/>
+        <net name="raw_keyboard[8]"/>
+        <net name="raw_keyboard[7]"/>
+        <net name="raw_keyboard[6]"/>
+        <net name="raw_keyboard[5]"/>
+        <net name="raw_keyboard[4]"/>
+        <net name="raw_keyboard[3]"/>
+        <net name="raw_keyboard[2]"/>
+        <net name="raw_keyboard[1]"/>
+        <net name="raw_keyboard[0]"/>
       </nets>
     </probe>
   </probeset>

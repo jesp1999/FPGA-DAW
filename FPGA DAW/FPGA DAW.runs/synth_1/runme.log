@@ -11,89 +11,89 @@
 source top_level.tcl -notrace
 Command: synth_design -top top_level -part xc7a100tcsg324-1
 Starting synth_design
-WARNING: [Vivado_Tcl 4-393] The 'Synthesis' target of the following IPs are stale, please generate the output products using the generate_target or synth_ip command before running synth_design.
-G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_image_rom/sinewave_image_rom.xci
-G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_rcm_rom/sinewave_rcm_rom.xci
-G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/trngwave_image_rom/trngwave_image_rom.xci
-G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/trngwave_rcm_rom/trngwave_rcm_rom.xci
-
 INFO: [IP_Flow 19-2162] IP 'clk_wiz_65mhz' is locked:
 * This IP has board specific outputs. Current project board 'unset' and the board 'digilentinc.com:nexys4_ddr:part0:1.1' used to customize the IP 'clk_wiz_65mhz' do not match.
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
 INFO: [Device 21-403] Loading part xc7a100tcsg324-1
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 29164 
-WARNING: [Synth 8-992] octave is already implicitly declared earlier [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:78]
+INFO: Helper process launched with PID 12348 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 803.430 ; gain = 239.836
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 798.219 ; gain = 234.867
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'top_level' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:4]
-	Parameter SAMPLE_COUNT bound to: 2082 - type: integer 
+	Parameter SAMPLE_COUNT bound to: 1354 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_65mhz' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/clk_wiz_65mhz_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_65mhz' (1#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/clk_wiz_65mhz_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'recorder' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/recorder.sv:1]
+	Parameter METRONOME_MAX bound to: 16250000 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'blk_mem_gen_0' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'blk_mem_gen_0' (2#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/blk_mem_gen_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'recorder' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/recorder.sv:1]
 INFO: [Synth 8-6157] synthesizing module 'octave' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:22]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 23409859 - type: integer 
 INFO: [Synth 8-6157] synthesizing module 'sine_lut' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:151]
-INFO: [Synth 8-6155] done synthesizing module 'sine_lut' (1#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:151]
-INFO: [Synth 8-6157] synthesizing module 'triangle_lut' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:415]
-INFO: [Synth 8-6155] done synthesizing module 'triangle_lut' (2#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:415]
+INFO: [Synth 8-6155] done synthesizing module 'sine_lut' (4#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:151]
+INFO: [Synth 8-6157] synthesizing module 'saw_lut' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:415]
+INFO: [Synth 8-6155] done synthesizing module 'saw_lut' (5#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:415]
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized0' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 24801882 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized0' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized0' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized1' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 26276679 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized1' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized1' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized2' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 27839171 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized2' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized2' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized3' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 29494575 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized3' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized3' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized4' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 31248413 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized4' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized4' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized5' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 33106541 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized5' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized5' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized6' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 35075158 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized6' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized6' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized7' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 37160835 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized7' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized7' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized8' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 39370534 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized8' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized8' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized9' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 41711627 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized9' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized9' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized10' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 44191930 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized10' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized10' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 INFO: [Synth 8-6157] synthesizing module 'tone_generator__parameterized11' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
 	Parameter PHASE_INCR bound to: 46819719 - type: integer 
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:142]
-INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized11' (3#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
-INFO: [Synth 8-6155] done synthesizing module 'octave' (4#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:22]
+INFO: [Synth 8-6155] done synthesizing module 'tone_generator__parameterized11' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:125]
+INFO: [Synth 8-6155] done synthesizing module 'octave' (7#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:22]
 INFO: [Synth 8-6157] synthesizing module 'volume_control' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:2]
-INFO: [Synth 8-6155] done synthesizing module 'volume_control' (5#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'volume_control' (8#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:2]
 INFO: [Synth 8-6157] synthesizing module 'pwm' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:9]
-INFO: [Synth 8-6155] done synthesizing module 'pwm' (6#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:9]
+INFO: [Synth 8-6155] done synthesizing module 'pwm' (9#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/audio.sv:9]
 INFO: [Synth 8-6157] synthesizing module 'debounce' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/debounce.sv:3]
-INFO: [Synth 8-6155] done synthesizing module 'debounce' (7#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/debounce.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'debounce' (10#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/debounce.sv:3]
 INFO: [Synth 8-6157] synthesizing module 'input_handler' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/input_handler.sv:4]
 	Parameter RELEASE_NEXT_SC bound to: 8'b11110000 
 	Parameter C_SC bound to: 8'b00011100 
@@ -116,20 +116,18 @@ INFO: [Synth 8-6157] synthesizing module 'input_handler' [G:/My Drive/Coursework
 	Parameter NOTES_PER_OCTAVE bound to: 4'b1100 
 	Parameter LOWEST_OCTAVE bound to: 4'b0001 
 	Parameter HIGHEST_OCTAVE bound to: 4'b0111 
-INFO: [Synth 8-6157] synthesizing module 'keyboard_handler' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/input_handler.sv:109]
-INFO: [Synth 8-6155] done synthesizing module 'keyboard_handler' (8#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/input_handler.sv:109]
-INFO: [Synth 8-6155] done synthesizing module 'input_handler' (9#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/input_handler.sv:4]
+INFO: [Synth 8-6157] synthesizing module 'keyboard_handler' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/input_handler.sv:107]
+INFO: [Synth 8-6155] done synthesizing module 'keyboard_handler' (11#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/input_handler.sv:107]
+INFO: [Synth 8-6155] done synthesizing module 'input_handler' (12#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/input_handler.sv:4]
 INFO: [Synth 8-6157] synthesizing module 'waveform_select' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/waveform_select.sv:3]
-INFO: [Synth 8-6155] done synthesizing module 'waveform_select' (10#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/waveform_select.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'waveform_select' (13#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/waveform_select.sv:3]
 INFO: [Synth 8-6157] synthesizing module 'seven_seg_controller' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/seven_seg_controller.sv:3]
 INFO: [Synth 8-6157] synthesizing module 'binary_to_seven_seg' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/binary_to_seven_seg.sv:3]
 INFO: [Synth 8-226] default block is never used [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/binary_to_seven_seg.sv:9]
-INFO: [Synth 8-6155] done synthesizing module 'binary_to_seven_seg' (11#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/binary_to_seven_seg.sv:3]
-INFO: [Synth 8-6155] done synthesizing module 'seven_seg_controller' (12#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/seven_seg_controller.sv:3]
-WARNING: [Synth 8-689] width (7) of port connection 'cat_out' does not match port width (8) of module 'seven_seg_controller' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:95]
-INFO: [Synth 8-6157] synthesizing module 'clk_wiz_65mhz' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/clk_wiz_65mhz_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_65mhz' (13#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/clk_wiz_65mhz_stub.v:5]
-WARNING: [Synth 8-7023] instance 'clk_65mhz_mod' of module 'clk_wiz_65mhz' has 4 connections declared, but only 3 given [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:103]
+INFO: [Synth 8-6155] done synthesizing module 'binary_to_seven_seg' (14#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/binary_to_seven_seg.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'seven_seg_controller' (15#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/seven_seg_controller.sv:3]
+WARNING: [Synth 8-689] width (39) of port connection 'cat_out' does not match port width (8) of module 'seven_seg_controller' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:111]
+WARNING: [Synth 8-2900] ignoring illegal expression in output port connection [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:111]
 INFO: [Synth 8-6157] synthesizing module 'xvga' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/xvga.sv:24]
 	Parameter DISPLAY_WIDTH bound to: 1024 - type: integer 
 	Parameter DISPLAY_HEIGHT bound to: 768 - type: integer 
@@ -139,7 +137,7 @@ INFO: [Synth 8-6157] synthesizing module 'xvga' [G:/My Drive/Coursework/MIT/Fall
 	Parameter V_FP bound to: 3 - type: integer 
 	Parameter V_SYNC_PULSE bound to: 6 - type: integer 
 	Parameter V_BP bound to: 29 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'xvga' (14#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/xvga.sv:24]
+INFO: [Synth 8-6155] done synthesizing module 'xvga' (16#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/xvga.sv:24]
 INFO: [Synth 8-6157] synthesizing module 'display' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:3]
 	Parameter WHITE_KEY_WIDTH bound to: 30 - type: integer 
 	Parameter WHITE_KEY_HEIGHT bound to: 96 - type: integer 
@@ -162,47 +160,45 @@ INFO: [Synth 8-6157] synthesizing module 'display' [G:/My Drive/Coursework/MIT/F
 	Parameter TRNG_WAVE_ICON_ORIGIN_X bound to: 32 - type: integer 
 	Parameter TRNG_WAVE_ICON_ORIGIN_Y bound to: 96 - type: integer 
 	Parameter WAVE_ICON_SELECTED_COLOR bound to: 12'b000000001111 
-INFO: [Synth 8-6157] synthesizing module 'selectable_blob' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:118]
+INFO: [Synth 8-6157] synthesizing module 'selectable_blob' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:119]
 	Parameter WIDTH bound to: 30 - type: integer 
 	Parameter HEIGHT bound to: 96 - type: integer 
 	Parameter COLOR bound to: 12'b111111111111 
 	Parameter SELECTED_COLOR bound to: 12'b111100000000 
-INFO: [Synth 8-6155] done synthesizing module 'selectable_blob' (15#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:118]
-INFO: [Synth 8-6157] synthesizing module 'selectable_blob__parameterized0' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:118]
+INFO: [Synth 8-6155] done synthesizing module 'selectable_blob' (17#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:119]
+INFO: [Synth 8-6157] synthesizing module 'selectable_blob__parameterized0' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:119]
 	Parameter WIDTH bound to: 14 - type: integer 
 	Parameter HEIGHT bound to: 64 - type: integer 
 	Parameter COLOR bound to: 12'b000000000000 
 	Parameter SELECTED_COLOR bound to: 12'b000000001111 
-INFO: [Synth 8-6155] done synthesizing module 'selectable_blob__parameterized0' (15#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:118]
-INFO: [Synth 8-6157] synthesizing module 'sinewave_blob' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:143]
-	Parameter WIDTH bound to: 32 - type: integer 
-	Parameter HEIGHT bound to: 32 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'sinewave_image_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/sinewave_image_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'sinewave_image_rom' (16#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/sinewave_image_rom_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'sinewave_rcm_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/sinewave_rcm_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'sinewave_rcm_rom' (17#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/sinewave_rcm_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'sinewave_blob' (18#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:143]
-INFO: [Synth 8-6157] synthesizing module 'selectable_blob__parameterized1' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:118]
+INFO: [Synth 8-6155] done synthesizing module 'selectable_blob__parameterized0' (17#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:119]
+INFO: [Synth 8-6157] synthesizing module 'selectable_blob__parameterized1' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:119]
 	Parameter WIDTH bound to: 48 - type: integer 
 	Parameter HEIGHT bound to: 48 - type: integer 
 	Parameter COLOR bound to: 12'b110111100011 
 	Parameter SELECTED_COLOR bound to: 12'b000000001111 
-INFO: [Synth 8-6155] done synthesizing module 'selectable_blob__parameterized1' (18#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:118]
-INFO: [Synth 8-6157] synthesizing module 'trngwave_blob' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:182]
+INFO: [Synth 8-6155] done synthesizing module 'selectable_blob__parameterized1' (17#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:119]
+INFO: [Synth 8-6157] synthesizing module 'sinewave_blob' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:144]
 	Parameter WIDTH bound to: 32 - type: integer 
 	Parameter HEIGHT bound to: 32 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'trngwave_image_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/trngwave_image_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'trngwave_image_rom' (19#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/trngwave_image_rom_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'trngwave_rcm_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/trngwave_rcm_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'trngwave_rcm_rom' (20#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-5740-DESKTOP-5PA8C12/realtime/trngwave_rcm_rom_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'trngwave_blob' (21#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:182]
-INFO: [Synth 8-6155] done synthesizing module 'display' (22#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:3]
-WARNING: [Synth 8-6014] Unused sequential element sampled_adc_data_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:56]
-INFO: [Synth 8-6155] done synthesizing module 'top_level' (23#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:4]
+INFO: [Synth 8-6157] synthesizing module 'sinewave_image_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/sinewave_image_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'sinewave_image_rom' (18#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/sinewave_image_rom_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'sinewave_rcm_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/sinewave_rcm_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'sinewave_rcm_rom' (19#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/sinewave_rcm_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'sinewave_blob' (20#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:144]
+INFO: [Synth 8-6157] synthesizing module 'trngwave_blob' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:175]
+	Parameter WIDTH bound to: 32 - type: integer 
+	Parameter HEIGHT bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'trngwave_image_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/trngwave_image_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'trngwave_image_rom' (21#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/trngwave_image_rom_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'trngwave_rcm_rom' [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/trngwave_rcm_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'trngwave_rcm_rom' (22#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/.Xil/Vivado-32280-DESKTOP-5PA8C12/realtime/trngwave_rcm_rom_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'trngwave_blob' (23#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:175]
+INFO: [Synth 8-6155] done synthesizing module 'display' (24#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/display.sv:3]
+WARNING: [Synth 8-6014] Unused sequential element sampled_adc_data_reg was removed.  [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:60]
+INFO: [Synth 8-6155] done synthesizing module 'top_level' (25#1) [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/new/top_level.sv:4]
 WARNING: [Synth 8-3917] design top_level has port aud_sd driven by constant 1
 WARNING: [Synth 8-3331] design display has unconnected port rst_in
-WARNING: [Synth 8-3331] design keyboard_handler has unconnected port clk_in
-WARNING: [Synth 8-3331] design keyboard_handler has unconnected port rst_in
 WARNING: [Synth 8-3331] design top_level has unconnected port led[15]
 WARNING: [Synth 8-3331] design top_level has unconnected port led[14]
 WARNING: [Synth 8-3331] design top_level has unconnected port led[13]
@@ -217,10 +213,8 @@ WARNING: [Synth 8-3331] design top_level has unconnected port sw[5]
 WARNING: [Synth 8-3331] design top_level has unconnected port sw[4]
 WARNING: [Synth 8-3331] design top_level has unconnected port sw[3]
 WARNING: [Synth 8-3331] design top_level has unconnected port sw[2]
-WARNING: [Synth 8-3331] design top_level has unconnected port sw[1]
-WARNING: [Synth 8-3331] design top_level has unconnected port sw[0]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 858.145 ; gain = 294.551
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 875.707 ; gain = 312.355
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -233,67 +227,73 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 858.145 ; gain = 294.551
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 875.707 ; gain = 312.355
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 858.145 ; gain = 294.551
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 875.707 ; gain = 312.355
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.037 . Memory (MB): peak = 858.145 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.039 . Memory (MB): peak = 875.707 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz/clk_wiz_65mhz_in_context.xdc] for cell 'clk_65mhz_mod'
-Finished Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz/clk_wiz_65mhz_in_context.xdc] for cell 'clk_65mhz_mod'
-Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_image_rom/sinewave_image_rom/sinewave_image_rom_in_context.xdc] for cell 'display_mod/blob_sineWaveform/rom'
-Finished Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_image_rom/sinewave_image_rom/sinewave_image_rom_in_context.xdc] for cell 'display_mod/blob_sineWaveform/rom'
-Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_rcm_rom/sinewave_rcm_rom/sinewave_rcm_rom_in_context.xdc] for cell 'display_mod/blob_sineWaveform/rcm'
-Finished Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_rcm_rom/sinewave_rcm_rom/sinewave_rcm_rom_in_context.xdc] for cell 'display_mod/blob_sineWaveform/rcm'
 Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/trngwave_image_rom/trngwave_image_rom/trngwave_image_rom_in_context.xdc] for cell 'display_mod/blob_trngWaveform/rom'
 Finished Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/trngwave_image_rom/trngwave_image_rom/trngwave_image_rom_in_context.xdc] for cell 'display_mod/blob_trngWaveform/rom'
+Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_rcm_rom/sinewave_rcm_rom/sinewave_rcm_rom_in_context.xdc] for cell 'display_mod/blob_sineWaveform/rcm'
+Finished Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_rcm_rom/sinewave_rcm_rom/sinewave_rcm_rom_in_context.xdc] for cell 'display_mod/blob_sineWaveform/rcm'
+Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_image_rom_1/sinewave_image_rom/sinewave_image_rom_in_context.xdc] for cell 'display_mod/blob_sineWaveform/rom'
+Finished Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/sinewave_image_rom_1/sinewave_image_rom/sinewave_image_rom_in_context.xdc] for cell 'display_mod/blob_sineWaveform/rom'
+Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz/clk_wiz_65mhz_in_context.xdc] for cell 'clk_65mhz_mod'
+Finished Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz/clk_wiz_65mhz_in_context.xdc] for cell 'clk_65mhz_mod'
 Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/trngwave_rcm_rom/trngwave_rcm_rom/trngwave_rcm_rom_in_context.xdc] for cell 'display_mod/blob_trngWaveform/rcm'
 Finished Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/trngwave_rcm_rom/trngwave_rcm_rom/trngwave_rcm_rom_in_context.xdc] for cell 'display_mod/blob_trngWaveform/rcm'
+Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0/blk_mem_gen_0_in_context.xdc] for cell 'my_rec/rec_bram'
+Finished Parsing XDC File [g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/blk_mem_gen_0/blk_mem_gen_0/blk_mem_gen_0_in_context.xdc] for cell 'my_rec/rec_bram'
 Parsing XDC File [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/constrs_1/imports/6.111/nexys4_ddr_default.xdc]
 Finished Parsing XDC File [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/constrs_1/imports/6.111/nexys4_ddr_default.xdc]
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/constrs_1/imports/6.111/nexys4_ddr_default.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_level_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/top_level_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/dont_touch.xdc]
+Finished Parsing XDC File [G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 986.562 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 987.137 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 986.562 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 987.137 ; gain = 0.000
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'display_mod/blob_sineWaveform/rcm' at clock pin 'clka' is different from the actual clock period '15.385', this can lead to different synthesis results.
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'display_mod/blob_sineWaveform/rom' at clock pin 'clka' is different from the actual clock period '15.385', this can lead to different synthesis results.
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'display_mod/blob_trngWaveform/rcm' at clock pin 'clka' is different from the actual clock period '15.385', this can lead to different synthesis results.
 WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'display_mod/blob_trngWaveform/rom' at clock pin 'clka' is different from the actual clock period '15.385', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '20.000' specified during out-of-context synthesis of instance 'my_rec/rec_bram' at clock pin 'clka' is different from the actual clock period '15.385', this can lead to different synthesis results.
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 988.582 ; gain = 424.988
+Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 990.184 ; gain = 426.832
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a100tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 988.582 ; gain = 424.988
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 990.184 ; gain = 426.832
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property IO_BUFFER_TYPE = NONE for clk_100mhz. (constraint file  {g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz/clk_wiz_65mhz_in_context.xdc}, line 3).
 Applied set_property CLOCK_BUFFER_TYPE = NONE for clk_100mhz. (constraint file  {g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/clk_wiz_65mhz/clk_wiz_65mhz/clk_wiz_65mhz_in_context.xdc}, line 4).
-Applied set_property DONT_TOUCH = true for clk_65mhz_mod. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for display_mod/blob_sineWaveform/rom. (constraint file  auto generated constraint, line ).
-Applied set_property DONT_TOUCH = true for display_mod/blob_sineWaveform/rcm. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for display_mod/blob_trngWaveform/rom. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for display_mod/blob_sineWaveform/rcm. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for display_mod/blob_sineWaveform/rom. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for clk_65mhz_mod. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for display_mod/blob_trngWaveform/rcm. (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for my_rec/rec_bram. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 988.582 ; gain = 424.988
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 990.184 ; gain = 426.832
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5546] ROM "notes_out" won't be mapped to RAM because it is too sparse
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 988.582 ; gain = 424.988
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 990.184 ; gain = 426.832
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -307,42 +307,45 @@ Start RTL Component Statistics
 Detailed RTL Component Info : 
 +---Adders : 
 	   2 Input     32 Bit       Adders := 1     
+	   2 Input     24 Bit       Adders := 1     
 	   2 Input     16 Bit       Adders := 1     
 	   3 Input     13 Bit       Adders := 17    
 	   3 Input     12 Bit       Adders := 17    
 	   2 Input     11 Bit       Adders := 1     
 	   2 Input     10 Bit       Adders := 1     
 	   3 Input     10 Bit       Adders := 2     
+	   2 Input      8 Bit       Adders := 2     
 	  13 Input      8 Bit       Adders := 1     
-	   2 Input      8 Bit       Adders := 1     
 	  13 Input      4 Bit       Adders := 1     
 	   2 Input      4 Bit       Adders := 2     
-	   4 Input      4 Bit       Adders := 6     
 	   2 Input      3 Bit       Adders := 1     
 +---Registers : 
 	               32 Bit    Registers := 2     
+	               24 Bit    Registers := 1     
 	               16 Bit    Registers := 1     
 	               13 Bit    Registers := 1     
-	               12 Bit    Registers := 4     
+	               12 Bit    Registers := 3     
 	               11 Bit    Registers := 1     
 	               10 Bit    Registers := 1     
-	                8 Bit    Registers := 30    
+	                8 Bit    Registers := 31    
 	                4 Bit    Registers := 2     
-	                1 Bit    Registers := 20    
+	                1 Bit    Registers := 25    
 +---ROMs : 
 	                              ROMs := 26    
 +---Muxes : 
-	   2 Input     32 Bit        Muxes := 1     
-	  21 Input     13 Bit        Muxes := 1     
+	   2 Input     32 Bit        Muxes := 2     
+	   2 Input     24 Bit        Muxes := 1     
+	   2 Input     13 Bit        Muxes := 1     
+	  20 Input     13 Bit        Muxes := 1     
 	   3 Input     12 Bit        Muxes := 10    
 	   2 Input     12 Bit        Muxes := 7     
 	   2 Input      8 Bit        Muxes := 26    
-	   2 Input      4 Bit        Muxes := 5     
+	   2 Input      4 Bit        Muxes := 6     
 	   5 Input      3 Bit        Muxes := 1     
 	   2 Input      3 Bit        Muxes := 1     
-	   2 Input      1 Bit        Muxes := 21    
-	  12 Input      1 Bit        Muxes := 1     
-	  11 Input      1 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 29    
+	   3 Input      1 Bit        Muxes := 1     
+	  12 Input      1 Bit        Muxes := 3     
 	  19 Input      1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
@@ -360,14 +363,29 @@ Detailed RTL Component Info :
 	               12 Bit    Registers := 1     
 	                1 Bit    Registers := 3     
 +---Muxes : 
+	   2 Input     32 Bit        Muxes := 1     
 	   2 Input      4 Bit        Muxes := 3     
+Module recorder 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     24 Bit       Adders := 1     
+	   2 Input      8 Bit       Adders := 1     
++---Registers : 
+	               24 Bit    Registers := 1     
+	                8 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     24 Bit        Muxes := 1     
+	   2 Input     13 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 2     
 Module sine_lut 
 Detailed RTL Component Info : 
 +---Registers : 
 	                8 Bit    Registers := 1     
 +---ROMs : 
 	                              ROMs := 1     
-Module triangle_lut 
+Module saw_lut 
 Detailed RTL Component Info : 
 +---Registers : 
 	                8 Bit    Registers := 1     
@@ -456,9 +474,8 @@ Detailed RTL Component Info :
 	                1 Bit    Registers := 1     
 +---Muxes : 
 	   2 Input      4 Bit        Muxes := 1     
-	   2 Input      1 Bit        Muxes := 2     
-	  12 Input      1 Bit        Muxes := 1     
-	  11 Input      1 Bit        Muxes := 1     
+	   3 Input      1 Bit        Muxes := 1     
+	  12 Input      1 Bit        Muxes := 3     
 Module input_handler 
 Detailed RTL Component Info : 
 +---Adders : 
@@ -469,7 +486,7 @@ Detailed RTL Component Info :
 	                4 Bit    Registers := 1     
 	                1 Bit    Registers := 1     
 +---Muxes : 
-	  21 Input     13 Bit        Muxes := 1     
+	  20 Input     13 Bit        Muxes := 1     
 	   2 Input      4 Bit        Muxes := 1     
 	   2 Input      3 Bit        Muxes := 1     
 	   2 Input      1 Bit        Muxes := 1     
@@ -512,17 +529,6 @@ Detailed RTL Component Info :
 	   3 Input     12 Bit       Adders := 1     
 +---Muxes : 
 	   2 Input     12 Bit        Muxes := 1     
-Module sinewave_blob 
-Detailed RTL Component Info : 
-+---Adders : 
-	   3 Input     13 Bit       Adders := 1     
-	   3 Input     12 Bit       Adders := 1     
-	   3 Input     10 Bit       Adders := 1     
-	   4 Input      4 Bit       Adders := 3     
-+---Registers : 
-	               12 Bit    Registers := 1     
-+---Muxes : 
-	   2 Input     12 Bit        Muxes := 1     
 Module selectable_blob__parameterized1 
 Detailed RTL Component Info : 
 +---Adders : 
@@ -530,21 +536,26 @@ Detailed RTL Component Info :
 	   3 Input     12 Bit       Adders := 1     
 +---Muxes : 
 	   3 Input     12 Bit        Muxes := 1     
+Module sinewave_blob 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     13 Bit       Adders := 1     
+	   3 Input     12 Bit       Adders := 1     
+	   3 Input     10 Bit       Adders := 1     
++---Registers : 
+	               12 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     12 Bit        Muxes := 1     
 Module trngwave_blob 
 Detailed RTL Component Info : 
 +---Adders : 
 	   3 Input     13 Bit       Adders := 1     
 	   3 Input     12 Bit       Adders := 1     
 	   3 Input     10 Bit       Adders := 1     
-	   4 Input      4 Bit       Adders := 3     
 +---Registers : 
 	               12 Bit    Registers := 1     
 +---Muxes : 
 	   2 Input     12 Bit        Muxes := 1     
-Module display 
-Detailed RTL Component Info : 
-+---Registers : 
-	               12 Bit    Registers := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Hierarchical Component Statistics
 ---------------------------------------------------------------------------------
@@ -577,14 +588,6 @@ WARNING: [Synth 8-3331] design top_level has unconnected port sw[5]
 WARNING: [Synth 8-3331] design top_level has unconnected port sw[4]
 WARNING: [Synth 8-3331] design top_level has unconnected port sw[3]
 WARNING: [Synth 8-3331] design top_level has unconnected port sw[2]
-WARNING: [Synth 8-3331] design top_level has unconnected port sw[1]
-WARNING: [Synth 8-3331] design top_level has unconnected port sw[0]
-INFO: [Synth 8-3886] merging instance 'display_mod/sine_img_pixel_reg[5]' (FD) to 'display_mod/sine_img_pixel_reg[6]'
-INFO: [Synth 8-3886] merging instance 'display_mod/sine_img_pixel_reg[6]' (FD) to 'display_mod/sine_img_pixel_reg[7]'
-INFO: [Synth 8-3886] merging instance 'display_mod/sine_img_pixel_reg[0]' (FD) to 'display_mod/sine_img_pixel_reg[1]'
-INFO: [Synth 8-3886] merging instance 'display_mod/sine_img_pixel_reg[2]' (FD) to 'display_mod/sine_img_pixel_reg[3]'
-INFO: [Synth 8-3886] merging instance 'display_mod/sine_img_pixel_reg[8]' (FD) to 'display_mod/sine_img_pixel_reg[10]'
-INFO: [Synth 8-3886] merging instance 'display_mod/sine_img_pixel_reg[10]' (FD) to 'display_mod/sine_img_pixel_reg[11]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (oc4/i_6/\toneC/phase_reg[1] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (oc4/i_3/\toneB/phase_reg[1] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (oc4/i_36/\toneA/phase_reg[1] )
@@ -598,16 +601,16 @@ INFO: [Synth 8-3333] propagating constant 0 across sequential element (oc4/i_27/
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (oc4/i_27/\toneG/phase_reg[6] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (oc4/i_21/\toneF/phase_reg[1] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (oc4/i_21/\toneF/phase_reg[2] )
-INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[6]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[6]'
-INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[7]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[7]'
 INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[0]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[0]'
-INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[1]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[1]'
-INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[2]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[2]'
-INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[3]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[3]'
 INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[4]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[4]'
+INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[1]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[1]'
 INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[5]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[5]'
+INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[2]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[2]'
+INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[6]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[6]'
+INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[3]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[3]'
+INFO: [Synth 8-3886] merging instance 'input_handler_mod/kh/dataprev_reg[7]' (FDE_1) to 'input_handler_mod/kh/data_out_reg[7]'
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 988.582 ; gain = 424.988
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 990.184 ; gain = 426.832
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -658,13 +661,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 988.582 ; gain = 424.988
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:28 ; elapsed = 00:00:30 . Memory (MB): peak = 990.184 ; gain = 426.832
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:28 ; elapsed = 00:00:30 . Memory (MB): peak = 993.453 ; gain = 429.859
+Finished Timing Optimization : Time (s): cpu = 00:00:31 ; elapsed = 00:00:33 . Memory (MB): peak = 1012.141 ; gain = 448.789
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -676,7 +679,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:29 ; elapsed = 00:00:31 . Memory (MB): peak = 1013.754 ; gain = 450.160
+Finished Technology Mapping : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1031.781 ; gain = 468.430
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -700,13 +703,13 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.848 ; gain = 456.254
+Finished IO Insertion : Time (s): cpu = 00:00:35 ; elapsed = 00:00:37 . Memory (MB): peak = 1038.055 ; gain = 474.703
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.848 ; gain = 456.254
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:35 ; elapsed = 00:00:37 . Memory (MB): peak = 1038.055 ; gain = 474.703
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -725,25 +728,25 @@ Report Check Netlist:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.848 ; gain = 456.254
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:35 ; elapsed = 00:00:38 . Memory (MB): peak = 1038.055 ; gain = 474.703
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1019.848 ; gain = 456.254
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:35 ; elapsed = 00:00:38 . Memory (MB): peak = 1038.055 ; gain = 474.703
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1020.066 ; gain = 456.473
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1038.070 ; gain = 474.719
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1020.066 ; gain = 456.473
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1038.070 ; gain = 474.719
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -758,105 +761,111 @@ Report BlackBoxes:
 |3     |sinewave_rcm_rom   |         1|
 |4     |trngwave_image_rom |         1|
 |5     |trngwave_rcm_rom   |         1|
+|6     |blk_mem_gen_0      |         1|
 +------+-------------------+----------+
 
 Report Cell Usage: 
 +------+-------------------+------+
 |      |Cell               |Count |
 +------+-------------------+------+
-|1     |clk_wiz_65mhz      |     1|
-|2     |sinewave_image_rom |     1|
-|3     |sinewave_rcm_rom   |     1|
-|4     |trngwave_image_rom |     1|
-|5     |trngwave_rcm_rom   |     1|
-|6     |BUFG               |     1|
-|7     |CARRY4             |   415|
-|8     |LUT1               |   246|
-|9     |LUT2               |   523|
-|10    |LUT3               |   252|
-|11    |LUT4               |   778|
-|12    |LUT5               |   127|
-|13    |LUT6               |   185|
-|14    |RAMB18E1_2         |     1|
-|15    |RAMB18E1_3         |     1|
-|16    |RAMB18E1_4         |     6|
-|17    |RAMB18E1_5         |     6|
-|18    |FDRE               |   623|
-|19    |FDSE               |     8|
-|20    |IBUF               |     7|
-|21    |OBUF               |    43|
-|22    |OBUFT              |     4|
+|1     |blk_mem_gen_0      |     1|
+|2     |clk_wiz_65mhz      |     1|
+|3     |sinewave_image_rom |     1|
+|4     |sinewave_rcm_rom   |     1|
+|5     |trngwave_image_rom |     1|
+|6     |trngwave_rcm_rom   |     1|
+|7     |BUFG               |     1|
+|8     |CARRY4             |   431|
+|9     |LUT1               |   251|
+|10    |LUT2               |   538|
+|11    |LUT3               |   128|
+|12    |LUT4               |   121|
+|13    |LUT5               |   361|
+|14    |LUT6               |   891|
+|15    |RAMB18E1_4         |     5|
+|16    |RAMB18E1_5         |     1|
+|17    |RAMB18E1_6         |     5|
+|18    |RAMB18E1_7         |     1|
+|19    |RAMB18E1_8         |     1|
+|20    |RAMB18E1_9         |     1|
+|21    |FDRE               |   684|
+|22    |FDSE               |     2|
+|23    |IBUF               |     9|
+|24    |OBUF               |    43|
+|25    |OBUFT              |     4|
 +------+-------------------+------+
 
 Report Instance Areas: 
 +------+----------------------------+-----------------------------------+------+
 |      |Instance                    |Module                             |Cells |
 +------+----------------------------+-----------------------------------+------+
-|1     |top                         |                                   |  3260|
+|1     |top                         |                                   |  3532|
 |2     |  db_btnd                   |debounce                           |    35|
-|3     |  display_mod               |display                            |   249|
-|4     |    blob_A                  |selectable_blob                    |     7|
-|5     |    blob_ASharp             |selectable_blob__parameterized0    |     7|
-|6     |    blob_B                  |selectable_blob_0                  |     8|
-|7     |    blob_C                  |selectable_blob_1                  |     7|
-|8     |    blob_C2                 |selectable_blob_2                  |    10|
-|9     |    blob_CSharp             |selectable_blob__parameterized0_3  |     9|
-|10    |    blob_D                  |selectable_blob_4                  |     7|
-|11    |    blob_DSharp             |selectable_blob__parameterized0_5  |     7|
-|12    |    blob_E                  |selectable_blob_6                  |     9|
-|13    |    blob_F                  |selectable_blob_7                  |    13|
-|14    |    blob_FSharp             |selectable_blob__parameterized0_8  |    17|
-|15    |    blob_G                  |selectable_blob_9                  |     8|
-|16    |    blob_GSharp             |selectable_blob__parameterized0_10 |     9|
-|17    |    blob_sineWaveform       |sinewave_blob                      |    50|
-|18    |    blob_sinewave_selection |selectable_blob__parameterized1    |     8|
-|19    |    blob_trngWaveform       |trngwave_blob                      |    49|
-|20    |    blob_trngwave_selection |selectable_blob__parameterized1_11 |    18|
-|21    |  input_handler_mod         |input_handler                      |  1084|
-|22    |    kh                      |keyboard_handler                   |   102|
-|23    |  nolabel_line74            |pwm                                |    36|
-|24    |  oc4                       |octave                             |   704|
-|25    |    toneA                   |tone_generator                     |    54|
-|26    |    toneAs                  |tone_generator__parameterized0     |    56|
-|27    |    toneB                   |tone_generator__parameterized1     |    52|
-|28    |    toneC                   |tone_generator__parameterized2     |    54|
-|29    |    toneC5                  |tone_generator__parameterized11    |    53|
-|30    |    toneCs                  |tone_generator__parameterized3     |    55|
-|31    |    toneD                   |tone_generator__parameterized4     |    56|
-|32    |    toneDs                  |tone_generator__parameterized5     |    54|
-|33    |    toneE                   |tone_generator__parameterized6     |    56|
-|34    |    toneF                   |tone_generator__parameterized7     |    50|
-|35    |    toneFs                  |tone_generator__parameterized8     |    55|
-|36    |    toneG                   |tone_generator__parameterized9     |    48|
-|37    |    toneGs                  |tone_generator__parameterized10    |    61|
-|38    |  seven_seg_mod             |seven_seg_controller               |   106|
-|39    |  waveform_sel_mod          |waveform_select                    |   153|
-|40    |  xvga_mod                  |xvga                               |   754|
+|3     |  display_mod               |display                            |   180|
+|4     |    blob_A                  |selectable_blob                    |     6|
+|5     |    blob_ASharp             |selectable_blob__parameterized0    |     6|
+|6     |    blob_B                  |selectable_blob_2                  |     6|
+|7     |    blob_C                  |selectable_blob_3                  |     6|
+|8     |    blob_C2                 |selectable_blob_4                  |     7|
+|9     |    blob_CSharp             |selectable_blob__parameterized0_5  |     6|
+|10    |    blob_D                  |selectable_blob_6                  |     6|
+|11    |    blob_DSharp             |selectable_blob__parameterized0_7  |     6|
+|12    |    blob_E                  |selectable_blob_8                  |     6|
+|13    |    blob_F                  |selectable_blob_9                  |     6|
+|14    |    blob_FSharp             |selectable_blob__parameterized0_10 |     6|
+|15    |    blob_G                  |selectable_blob_11                 |     6|
+|16    |    blob_GSharp             |selectable_blob__parameterized0_12 |     6|
+|17    |    blob_sineWaveform       |sinewave_blob                      |    38|
+|18    |    blob_sinewave_selection |selectable_blob__parameterized1    |     6|
+|19    |    blob_trngWaveform       |trngwave_blob                      |    38|
+|20    |    blob_trngwave_selection |selectable_blob__parameterized1_13 |    19|
+|21    |  input_handler_mod         |input_handler                      |  1004|
+|22    |    kh                      |keyboard_handler                   |   162|
+|23    |      data_clk_db           |debounce_0                         |    35|
+|24    |      data_db               |debounce_1                         |    35|
+|25    |  my_rec                    |recorder                           |   287|
+|26    |  nolabel_line91            |pwm                                |    36|
+|27    |  oc4                       |octave                             |   711|
+|28    |    toneA                   |tone_generator                     |    54|
+|29    |    toneAs                  |tone_generator__parameterized0     |    56|
+|30    |    toneB                   |tone_generator__parameterized1     |    54|
+|31    |    toneC                   |tone_generator__parameterized2     |    54|
+|32    |    toneC5                  |tone_generator__parameterized11    |    53|
+|33    |    toneCs                  |tone_generator__parameterized3     |    55|
+|34    |    toneD                   |tone_generator__parameterized4     |    58|
+|35    |    toneDs                  |tone_generator__parameterized5     |    55|
+|36    |    toneE                   |tone_generator__parameterized6     |    56|
+|37    |    toneF                   |tone_generator__parameterized7     |    53|
+|38    |    toneFs                  |tone_generator__parameterized8     |    55|
+|39    |    toneG                   |tone_generator__parameterized9     |    47|
+|40    |    toneGs                  |tone_generator__parameterized10    |    61|
+|41    |  seven_seg_mod             |seven_seg_controller               |   125|
+|42    |  waveform_sel_mod          |waveform_select                    |   201|
+|43    |  xvga_mod                  |xvga                               |   812|
 +------+----------------------------+-----------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1020.066 ; gain = 456.473
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1038.070 ; gain = 474.719
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 18 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:25 ; elapsed = 00:00:31 . Memory (MB): peak = 1020.066 ; gain = 326.035
-Synthesis Optimization Complete : Time (s): cpu = 00:00:32 ; elapsed = 00:00:34 . Memory (MB): peak = 1020.066 ; gain = 456.473
+Synthesis finished with 0 errors, 0 critical warnings and 16 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:28 ; elapsed = 00:00:35 . Memory (MB): peak = 1038.070 ; gain = 360.242
+Synthesis Optimization Complete : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 1038.070 ; gain = 474.719
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.093 . Memory (MB): peak = 1029.051 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 429 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.107 . Memory (MB): peak = 1050.137 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 445 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
-INFO: [Opt 31-140] Inserted 1 IBUFs to IO ports without IO buffers.
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1029.090 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1050.137 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-117 Infos, 60 Warnings, 0 Critical Warnings and 0 Errors encountered.
+114 Infos, 53 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:37 ; elapsed = 00:00:41 . Memory (MB): peak = 1029.090 ; gain = 731.270
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1029.090 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:41 ; elapsed = 00:00:45 . Memory (MB): peak = 1050.137 ; gain = 752.520
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1050.137 ; gain = 0.000
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint 'G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/synth_1/top_level.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file top_level_utilization_synth.rpt -pb top_level_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sat Nov 21 23:18:31 2020...
+INFO: [Common 17-206] Exiting Vivado at Tue Dec  1 19:45:17 2020...

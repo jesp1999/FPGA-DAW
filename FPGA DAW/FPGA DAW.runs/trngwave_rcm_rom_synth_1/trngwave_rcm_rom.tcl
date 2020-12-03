@@ -18,6 +18,7 @@ proc create_report { reportName command } {
   }
 }
 set_param chipscope.maxJobs 4
+set_param xicom.use_bs_reader 1
 set_param project.vivado.isBlockSynthRun true
 set_msg_config -msgmgr_mode ooc_run
 create_project -in_memory -part xc7a100tcsg324-1
@@ -31,6 +32,8 @@ set_property parent.project_path {G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPG
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
+set_property board_part_repo_paths {C:/Users/jesp1/AppData/Roaming/Xilinx/Vivado/2019.2/xhub/board_store} [current_project]
+set_property board_part digilentinc.com:nexys4_ddr:part0:1.1 [current_project]
 set_property ip_output_repo {g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.cache/ip} [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_ip -quiet {{g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.srcs/sources_1/ip/trngwave_rcm_rom/trngwave_rcm_rom.xci}}

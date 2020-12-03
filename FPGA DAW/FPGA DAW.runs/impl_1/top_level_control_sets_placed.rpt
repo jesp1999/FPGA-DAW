@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date         : Sat Nov 21 23:19:21 2020
+| Date         : Tue Dec  1 19:46:07 2020
 | Host         : DESKTOP-5PA8C12 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file top_level_control_sets_placed.rpt
 | Design       : top_level
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    22 |
-|    Minimum number of control sets                        |    22 |
+| Total control sets                                       |    17 |
+|    Minimum number of control sets                        |    17 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |   121 |
+| Unused register locations in slices containing registers |    71 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    22 |
-| >= 0 to < 4        |    11 |
+| Total control sets |    17 |
+| >= 0 to < 4        |     3 |
 | >= 4 to < 6        |     1 |
 | >= 6 to < 8        |     0 |
-| >= 8 to < 10       |     2 |
-| >= 10 to < 12      |     1 |
+| >= 8 to < 10       |     3 |
+| >= 10 to < 12      |     2 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     1 |
-| >= 16              |     6 |
+| >= 16              |     7 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,43 +58,38 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              68 |           40 |
+| No           | No                    | No                     |              63 |           27 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |              86 |           33 |
-| Yes          | No                    | No                     |              54 |           25 |
+| No           | Yes                   | No                     |             107 |           30 |
+| Yes          | No                    | No                     |              35 |           14 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |             423 |          118 |
+| Yes          | Yes                   | No                     |             484 |          136 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+-------------------------------+-----------------------------------------+----------------------------------+------------------+----------------+
-|          Clock Signal         |              Enable Signal              |         Set/Reset Signal         | Slice Load Count | Bel Load Count |
-+-------------------------------+-----------------------------------------+----------------------------------+------------------+----------------+
-|  clk_100mhz_IBUF_BUFG         | db_btnd/new_input_i_1_n_0               |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            |                                         |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur[3]_i_1_n_0 |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[4]       |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[2]       |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[0]       |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[5]       |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[6]       |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[7]       |                                  |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/datacur_0[1]       |                                  |                1 |              1 |
-|  clk_65mhz_mod/inst/clk_65mhz | xvga_mod/hreset                         | xvga_mod/vcount_out0             |                1 |              1 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/counter[3]_i_1_n_0 |                                  |                1 |              4 |
-|  clk_100mhz_IBUF_BUFG         | seven_seg_mod/segment_state             | btnc_IBUF                        |                2 |              8 |
-|  clk_65mhz_mod/inst/clk_65mhz | xvga_mod/hreset                         |                                  |                4 |              9 |
-|  clk_65mhz_mod/inst/clk_65mhz |                                         | xvga_mod/hreset                  |                4 |             11 |
-|  clk_100mhz_IBUF_BUFG         |                                         | oc4/toneGs/sample_counter_reg[0] |                4 |             15 |
-|  clk_100mhz_IBUF_BUFG         |                                         |                                  |               14 |             17 |
-|  clk_100mhz_IBUF_BUFG         | db_btnd/count                           | db_btnd/new_input_i_1_n_0        |                5 |             20 |
-| ~ps2_clk_IBUF_BUFG            | input_handler_mod/kh/dataprev           |                                  |               11 |             32 |
-|  clk_65mhz_mod/inst/clk_65mhz |                                         |                                  |               25 |             50 |
-|  clk_100mhz_IBUF_BUFG         |                                         | btnc_IBUF                        |               25 |             60 |
-|  clk_100mhz_IBUF_BUFG         | oc4/toneGs/sample_counter_reg[0]        | btnc_IBUF                        |              110 |            394 |
-+-------------------------------+-----------------------------------------+----------------------------------+------------------+----------------+
++-------------------------------+-------------------------------------------------------+-------------------------------------------------------+------------------+----------------+
+|          Clock Signal         |                     Enable Signal                     |                    Set/Reset Signal                   | Slice Load Count | Bel Load Count |
++-------------------------------+-------------------------------------------------------+-------------------------------------------------------+------------------+----------------+
+|  clk_65mhz_mod/inst/clk_65mhz | db_btnd/new_input_i_1_n_0                             |                                                       |                1 |              1 |
+|  clk_65mhz_mod/inst/clk_65mhz | input_handler_mod/kh/data_clk_db/new_input_i_1__0_n_0 |                                                       |                1 |              1 |
+|  clk_65mhz_mod/inst/clk_65mhz | input_handler_mod/kh/data_db/new_input_i_1__1_n_0     |                                                       |                1 |              1 |
+| ~clk_BUFG                     | input_handler_mod/kh/counter                          | input_handler_mod/kh/counter[3]_i_1_n_0               |                1 |              4 |
+|  clk_65mhz_mod/inst/clk_65mhz | my_rec/beat_ctr                                       | btnc_IBUF                                             |                2 |              8 |
+|  clk_65mhz_mod/inst/clk_65mhz | seven_seg_mod/segment_state_1                         | btnc_IBUF                                             |                3 |              8 |
+| ~clk_BUFG                     |                                                       |                                                       |                3 |              9 |
+|  clk_65mhz_mod/inst/clk_65mhz | xvga_mod/hreset                                       | xvga_mod/vcount_out0                                  |                3 |             10 |
+|  clk_65mhz_mod/inst/clk_65mhz |                                                       | xvga_mod/hreset                                       |                3 |             11 |
+|  clk_65mhz_mod/inst/clk_65mhz |                                                       | oc4/toneGs/sample_counter_reg[0]                      |                4 |             15 |
+|  clk_65mhz_mod/inst/clk_65mhz | db_btnd/count                                         | db_btnd/new_input_i_1_n_0                             |                5 |             20 |
+|  clk_65mhz_mod/inst/clk_65mhz | input_handler_mod/kh/data_clk_db/count                | input_handler_mod/kh/data_clk_db/new_input_i_1__0_n_0 |                5 |             20 |
+|  clk_65mhz_mod/inst/clk_65mhz | input_handler_mod/kh/data_db/count                    | input_handler_mod/kh/data_db/new_input_i_1__1_n_0     |                5 |             20 |
+| ~clk_BUFG                     | input_handler_mod/kh/dataprev                         |                                                       |               11 |             32 |
+|  clk_65mhz_mod/inst/clk_65mhz |                                                       |                                                       |               24 |             54 |
+|  clk_65mhz_mod/inst/clk_65mhz |                                                       | btnc_IBUF                                             |               23 |             81 |
+|  clk_65mhz_mod/inst/clk_65mhz | oc4/toneGs/sample_counter_reg[0]                      | btnc_IBUF                                             |              112 |            394 |
++-------------------------------+-------------------------------------------------------+-------------------------------------------------------+------------------+----------------+
 
 

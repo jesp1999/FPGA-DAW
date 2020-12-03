@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-| Date             : Sat Nov 21 23:20:02 2020
+| Date             : Tue Dec  1 19:46:53 2020
 | Host             : DESKTOP-5PA8C12 running 64-bit major release  (build 9200)
 | Command          : report_power -file top_level_power_routed.rpt -pb top_level_power_summary_routed.pb -rpx top_level_power_routed.rpx
 | Design           : top_level
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.235        |
+| Total On-Chip Power (W)  | 0.238        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.137        |
+| Dynamic (W)              | 0.140        |
 | Device Static (W)        | 0.098        |
 | Effective TJA (C/W)      | 4.6          |
 | Max Ambient (C)          | 83.9         |
@@ -52,19 +52,19 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.004 |        6 |       --- |             --- |
-| Slice Logic    |     0.005 |     3246 |       --- |             --- |
-|   LUT as Logic |     0.004 |     1771 |     63400 |            2.79 |
-|   CARRY4       |    <0.001 |      415 |     15850 |            2.62 |
-|   Register     |    <0.001 |      636 |    126800 |            0.50 |
-|   BUFG         |    <0.001 |        1 |        32 |            3.13 |
-|   Others       |     0.000 |       77 |       --- |             --- |
-| Signals        |     0.003 |     2069 |       --- |             --- |
-| Block RAM      |     0.003 |        9 |       135 |            6.67 |
+| Clocks         |     0.003 |        8 |       --- |             --- |
+| Slice Logic    |     0.004 |     3498 |       --- |             --- |
+|   LUT as Logic |     0.003 |     1975 |     63400 |            3.12 |
+|   CARRY4       |    <0.001 |      431 |     15850 |            2.72 |
+|   Register     |    <0.001 |      689 |    126800 |            0.54 |
+|   Others       |     0.000 |       85 |       --- |             --- |
+|   BUFG         |     0.000 |        1 |        32 |            3.13 |
+| Signals        |     0.003 |     2229 |       --- |             --- |
+| Block RAM      |     0.003 |      9.5 |       135 |            7.04 |
 | MMCM           |     0.122 |        1 |         6 |           16.67 |
-| I/O            |    <0.001 |       55 |       210 |           26.19 |
+| I/O            |     0.006 |       57 |       210 |           27.14 |
 | Static Power   |     0.098 |          |           |                 |
-| Total          |     0.235 |          |           |                 |
+| Total          |     0.238 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,9 +74,9 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.030 |       0.015 |      0.016 |
+| Vccint    |       1.000 |     0.028 |       0.012 |      0.016 |
 | Vccaux    |       1.800 |     0.086 |       0.068 |      0.018 |
-| Vcco33    |       3.300 |     0.004 |       0.000 |      0.004 |
+| Vcco33    |       3.300 |     0.006 |       0.002 |      0.004 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
@@ -127,14 +127,16 @@ Table of Contents
 2.2 Clock Constraints
 ---------------------
 
-+-------------------------+--------------------------------------------+-----------------+
-| Clock                   | Domain                                     | Constraint (ns) |
-+-------------------------+--------------------------------------------+-----------------+
-| clk_65mhz_clk_wiz_65mhz | clk_65mhz_mod/inst/clk_65mhz_clk_wiz_65mhz |            15.4 |
-| clkfbout_clk_wiz_65mhz  | clk_65mhz_mod/inst/clkfbout_clk_wiz_65mhz  |            50.0 |
-| sys_clk_pin             | clk_100mhz                                 |            10.0 |
-| sys_clk_pin             | clk_100mhz_IBUF_BUFG                       |            10.0 |
-+-------------------------+--------------------------------------------+-----------------+
++---------------------------+--------------------------------------------+-----------------+
+| Clock                     | Domain                                     | Constraint (ns) |
++---------------------------+--------------------------------------------+-----------------+
+| clk_100mhz                | clk_100mhz                                 |            10.0 |
+| clk_65mhz_clk_wiz_65mhz   | clk_65mhz_mod/inst/clk_65mhz_clk_wiz_65mhz |            15.4 |
+| clk_65mhz_clk_wiz_65mhz_1 | clk_65mhz_mod/inst/clk_65mhz_clk_wiz_65mhz |            15.4 |
+| clkfbout_clk_wiz_65mhz    | clk_65mhz_mod/inst/clkfbout_clk_wiz_65mhz  |            50.0 |
+| clkfbout_clk_wiz_65mhz_1  | clk_65mhz_mod/inst/clkfbout_clk_wiz_65mhz  |            50.0 |
+| sys_clk_pin               | clk_100mhz                                 |            10.0 |
++---------------------------+--------------------------------------------+-----------------+
 
 
 3. Detailed Reports
@@ -146,15 +148,15 @@ Table of Contents
 +-----------------------+-----------+
 | Name                  | Power (W) |
 +-----------------------+-----------+
-| top_level             |     0.137 |
+| top_level             |     0.140 |
 |   clk_65mhz_mod       |     0.122 |
 |     inst              |     0.122 |
 |   display_mod         |     0.003 |
-|     blob_sineWaveform |     0.002 |
-|     blob_trngWaveform |     0.002 |
-|   input_handler_mod   |     0.004 |
-|   oc4                 |     0.004 |
-|   xvga_mod            |     0.002 |
+|     blob_sineWaveform |     0.001 |
+|     blob_trngWaveform |     0.001 |
+|   input_handler_mod   |     0.003 |
+|   oc4                 |     0.002 |
+|   xvga_mod            |     0.001 |
 +-----------------------+-----------+
 
 

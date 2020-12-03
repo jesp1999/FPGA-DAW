@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='G:/My Drive/Coursework/MIT/Fall 2020/6.111/Final Project/FPGA DAW/FPGA DAW.runs/ila_0_synth_1'
+HD_PWD='G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA DAW.runs/ila_0_synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

@@ -32,7 +32,6 @@ module top_level(
  
     logic [15:0] sample_counter;
     logic sample_trigger;
-    logic adc_ready;
     logic enable;
     logic [7:0] recorder_data;             
     logic [7:0] vol_out;
@@ -42,7 +41,7 @@ module top_level(
     
     logic clk_65mhz;
     logic clk_65mhz_locked;
-    clk_wiz_65mhz clk_65mhz_mod(.clk_in1(clk_100mhz), .reset(btnc), .clk_65mhz(clk_65mhz), .locked(clk_65mhz_locked));
+    clk_wiz_65mhz clk_65mhz_mod(.clk_in1(clk_100mhz), .reset(0), .clk_65mhz(clk_65mhz), .locked(clk_65mhz_locked));
  
     assign aud_sd = 1;
     //assign led = sw; //just to look pretty 
@@ -71,7 +70,7 @@ module top_level(
     assign volume_to_play[2] = 3'b0;
     assign volume_to_play[3] = 3'b0;
  
-    recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc),
+    recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc), .rst_beat_count(btnl),
         .notes_in(notes),
         .octave_in(octave),
         .instrument_in(instrument),
@@ -137,7 +136,7 @@ module top_level(
     
     track_select track_sel_mod (.clk_in(clk_65mhz), .rst_in(btnc), .signal(track_select_signal), .track(track));
     
-    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .audio0_enabled(1), .audio1_enabled(1), .audio2_enabled(1), .audio3_enabled(1),
+    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .audio0_vol(sw[15:13]), .audio1_vol(sw[12:10]), .audio2_vol(sw[9:7]), .audio3_vol(sw[6:4]),
                      .metronome_enabled(0), 
                      .audio0_in(raw_audio_out[0]), 
                      .audio1_in(raw_audio_out[1]), 
@@ -145,7 +144,7 @@ module top_level(
                      .audio3_in(raw_audio_out[3]), 
                      .metronome_in(0), .audio_out(vol_out));
     
-    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {24'b0, beat_count}), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
+    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {vol_out, 16'b0, beat_count}), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     

@@ -7,7 +7,7 @@ module input_handler(
                      input logic data_clk_in,
                      input logic data_in,
                      output logic [12:0] notes_out,
-                     output logic [3:0] octave,
+                     output logic [2:0] octave,
                      output logic [31:0] raw_out
                      );
 
@@ -37,8 +37,8 @@ module input_handler(
     
     parameter NOTES_PER_OCTAVE = 4'd12;
     
-    parameter LOWEST_OCTAVE = 4'd1;
-    parameter HIGHEST_OCTAVE = 4'd7;
+    parameter LOWEST_OCTAVE = 3'd1;
+    parameter HIGHEST_OCTAVE = 3'd7;
     
     logic release_next;
     logic [31:0] data_out;
@@ -53,7 +53,7 @@ module input_handler(
     
     always_ff @(posedge clk_in) begin
         if(rst_in) begin
-            octave <= 4'b0100;
+            octave <= 4'b100;
             notes_out <= 12'b0;
         end else begin
             if(update && ~prev_update) begin

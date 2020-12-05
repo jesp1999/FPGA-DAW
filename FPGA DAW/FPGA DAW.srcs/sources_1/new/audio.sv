@@ -128,14 +128,14 @@ module tone_generator ( input clk_in, input rst_in, //clock and reset
     
     always_comb begin
         case(instrument)
-            000: amp = amp_inst0;
-            001: amp = amp_inst1;
-            010: amp = amp_inst2;
-            011: amp = amp_inst3;
-            100: amp = amp_inst4;
-            101: amp = amp_inst5;
-            110: amp = amp_inst6;
-            111: amp = amp_inst7;
+            3'b000: amp = amp_inst0;
+            3'b001: amp = amp_inst1;
+            3'b010: amp = amp_inst2;
+            3'b011: amp = amp_inst3;
+            3'b100: amp = amp_inst4;
+            3'b101: amp = amp_inst5;
+            3'b110: amp = amp_inst6;
+            3'b111: amp = amp_inst7;
             default: amp = amp_inst0;
         endcase
     end

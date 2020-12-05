@@ -65,10 +65,10 @@ module top_level(
     logic [2:0] octave_to_play [3:0];
     logic [7:0] beat_count;
     logic [2:0] volume_to_play [3:0];
-    assign volume_to_play[0] = 3'b0;
-    assign volume_to_play[1] = 3'b0;
-    assign volume_to_play[2] = 3'b0;
-    assign volume_to_play[3] = 3'b0;
+    assign volume_to_play[0] = sw[15:13];
+    assign volume_to_play[1] = sw[12:10];
+    assign volume_to_play[2] = sw[9:7];
+    assign volume_to_play[3] = sw[6:4];
  
     recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc), .rst_beat_count(btnl),
         .notes_in(notes),
@@ -136,15 +136,15 @@ module top_level(
     
     track_select track_sel_mod (.clk_in(clk_65mhz), .rst_in(btnc), .signal(track_select_signal), .track(track));
     
-    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .audio0_vol(sw[15:13]), .audio1_vol(sw[12:10]), .audio2_vol(sw[9:7]), .audio3_vol(sw[6:4]),
-                     .metronome_enabled(0), 
+    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .volume(volume_to_play),
+                     .metronome_enabled(1'b0), 
                      .audio0_in(raw_audio_out[0]), 
                      .audio1_in(raw_audio_out[1]), 
                      .audio2_in(raw_audio_out[2]), 
                      .audio3_in(raw_audio_out[3]), 
-                     .metronome_in(0), .audio_out(vol_out));
+                     .metronome_in(8'b0), .audio_out(vol_out));
     
-    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {vol_out, 16'b0, beat_count}), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
+    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {vol_out, 16'b0, beat_count}), .cat_out({1'b0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     

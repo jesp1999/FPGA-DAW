@@ -37,9 +37,6 @@ module input_handler(
     
     parameter NOTES_PER_OCTAVE = 4'd12;
     
-    parameter LOWEST_OCTAVE = 3'd1;
-    parameter HIGHEST_OCTAVE = 3'd7;
-    
     logic release_next;
     logic [31:0] data_out;
     logic update;
@@ -85,8 +82,8 @@ module input_handler(
                     A_SHARP_SC: notes_out[2] <= ~release_next;
                     B_SC: notes_out[1] <= ~release_next;
                     C2_SC: notes_out[0] <= ~release_next;
-                    OCTAVE_DOWN_SC: if (~release_next) octave <= (octave > LOWEST_OCTAVE) ? octave - 1 : LOWEST_OCTAVE;
-                    OCTAVE_UP_SC: if (~release_next) octave <= (octave < HIGHEST_OCTAVE) ? octave + 1 : HIGHEST_OCTAVE;
+                    OCTAVE_DOWN_SC: if (~release_next) octave <= octave - 3'b001;
+                    OCTAVE_UP_SC: if (~release_next) octave <= octave + 3'b001;
                     VELOCITY_DOWN_SC: begin
                         //TODO add velocity
                     end

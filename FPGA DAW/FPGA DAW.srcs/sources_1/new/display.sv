@@ -205,78 +205,78 @@ module track_config_blob
         logic [11:0] vol_0_pix, vol_1_pix, vol_2_pix, vol_3_pix, vol_4_pix, vol_5_pix, vol_6_pix, vol_7_pix;
          
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
-        blob_8ve_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==000), .pixel_in(pixel_in), .pixel_out(octave_0_pix));
+        blob_8ve_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b000), .pixel_in(pixel_in), .pixel_out(octave_0_pix));
         
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
-        blob_8ve_1 (.x_in(KEYBOARD_ORIGIN_X + (3*WHITE_KEY_WIDTH + 2*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==001), .pixel_in(octave_0_pix), .pixel_out(octave_1_pix));
+        blob_8ve_1 (.x_in(KEYBOARD_ORIGIN_X + (3*WHITE_KEY_WIDTH + 2*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b001), .pixel_in(octave_0_pix), .pixel_out(octave_1_pix));
         
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
-        blob_8ve_2 (.x_in(KEYBOARD_ORIGIN_X + (5*WHITE_KEY_WIDTH + 4*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==010), .pixel_in(octave_1_pix), .pixel_out(octave_2_pix));
+        blob_8ve_2 (.x_in(KEYBOARD_ORIGIN_X + (5*WHITE_KEY_WIDTH + 4*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b010), .pixel_in(octave_1_pix), .pixel_out(octave_2_pix));
          
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
-        blob_8ve_3 (.x_in(KEYBOARD_ORIGIN_X + (7*WHITE_KEY_WIDTH + 6*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==011), .pixel_in(octave_2_pix), .pixel_out(octave_3_pix));
+        blob_8ve_3 (.x_in(KEYBOARD_ORIGIN_X + (7*WHITE_KEY_WIDTH + 6*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b011), .pixel_in(octave_2_pix), .pixel_out(octave_3_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
-        blob_8ve_4 (.x_in(KEYBOARD_ORIGIN_X + (9*WHITE_KEY_WIDTH + 8*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==100), .pixel_in(octave_3_pix), .pixel_out(octave_4_pix));
+        blob_8ve_4 (.x_in(KEYBOARD_ORIGIN_X + (9*WHITE_KEY_WIDTH + 8*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b100), .pixel_in(octave_3_pix), .pixel_out(octave_4_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
-        blob_8ve_5 (.x_in(KEYBOARD_ORIGIN_X + (11*WHITE_KEY_WIDTH + 10*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==101), .pixel_in(octave_4_pix), .pixel_out(octave_5_pix));
+        blob_8ve_5 (.x_in(KEYBOARD_ORIGIN_X + (11*WHITE_KEY_WIDTH + 10*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b101), .pixel_in(octave_4_pix), .pixel_out(octave_5_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
-        blob_8ve_6 (.x_in(KEYBOARD_ORIGIN_X + (13*WHITE_KEY_WIDTH + 12*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==110), .pixel_in(octave_5_pix), .pixel_out(octave_6_pix));
+        blob_8ve_6 (.x_in(KEYBOARD_ORIGIN_X + (13*WHITE_KEY_WIDTH + 12*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b110), .pixel_in(octave_5_pix), .pixel_out(octave_6_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
-        blob_8ve_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==111), .pixel_in(octave_6_pix), .pixel_out(octave_7_pix));
+        blob_8ve_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b111), .pixel_in(octave_6_pix), .pixel_out(octave_7_pix));
         
         
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
-        blob_inst_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==000), .pixel_in(octave_7_pix), .pixel_out(inst_0_pix));
+        blob_inst_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b000), .pixel_in(octave_7_pix), .pixel_out(inst_0_pix));
         
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
-        blob_inst_1 (.x_in(KEYBOARD_ORIGIN_X + (3*WHITE_KEY_WIDTH + 2*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==001), .pixel_in(inst_0_pix), .pixel_out(inst_1_pix));
+        blob_inst_1 (.x_in(KEYBOARD_ORIGIN_X + (3*WHITE_KEY_WIDTH + 2*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b001), .pixel_in(inst_0_pix), .pixel_out(inst_1_pix));
         
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
-        blob_inst_2 (.x_in(KEYBOARD_ORIGIN_X + (5*WHITE_KEY_WIDTH + 4*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==010), .pixel_in(inst_1_pix), .pixel_out(inst_2_pix));
+        blob_inst_2 (.x_in(KEYBOARD_ORIGIN_X + (5*WHITE_KEY_WIDTH + 4*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b010), .pixel_in(inst_1_pix), .pixel_out(inst_2_pix));
          
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
-        blob_inst_3 (.x_in(KEYBOARD_ORIGIN_X + (7*WHITE_KEY_WIDTH + 6*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==011), .pixel_in(inst_2_pix), .pixel_out(inst_3_pix));
+        blob_inst_3 (.x_in(KEYBOARD_ORIGIN_X + (7*WHITE_KEY_WIDTH + 6*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b011), .pixel_in(inst_2_pix), .pixel_out(inst_3_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
-        blob_inst_4 (.x_in(KEYBOARD_ORIGIN_X + (9*WHITE_KEY_WIDTH + 8*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==100), .pixel_in(inst_3_pix), .pixel_out(inst_4_pix));
+        blob_inst_4 (.x_in(KEYBOARD_ORIGIN_X + (9*WHITE_KEY_WIDTH + 8*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b100), .pixel_in(inst_3_pix), .pixel_out(inst_4_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
-        blob_inst_5 (.x_in(KEYBOARD_ORIGIN_X + (11*WHITE_KEY_WIDTH + 10*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==101), .pixel_in(inst_4_pix), .pixel_out(inst_5_pix));
+        blob_inst_5 (.x_in(KEYBOARD_ORIGIN_X + (11*WHITE_KEY_WIDTH + 10*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b101), .pixel_in(inst_4_pix), .pixel_out(inst_5_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
-        blob_inst_6 (.x_in(KEYBOARD_ORIGIN_X + (13*WHITE_KEY_WIDTH + 12*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==110), .pixel_in(inst_5_pix), .pixel_out(inst_6_pix));
+        blob_inst_6 (.x_in(KEYBOARD_ORIGIN_X + (13*WHITE_KEY_WIDTH + 12*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b110), .pixel_in(inst_5_pix), .pixel_out(inst_6_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
-        blob_inst_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==111), .pixel_in(inst_6_pix), .pixel_out(inst_7_pix));
+        blob_inst_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b111), .pixel_in(inst_6_pix), .pixel_out(inst_7_pix));
         
         
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
-        blob_vol_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==000), .pixel_in(inst_7_pix), .pixel_out(vol_0_pix));
+        blob_vol_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b000), .pixel_in(inst_7_pix), .pixel_out(vol_0_pix));
         
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
-        blob_vol_1 (.x_in(KEYBOARD_ORIGIN_X + (3*WHITE_KEY_WIDTH + 2*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==001), .pixel_in(vol_0_pix), .pixel_out(vol_1_pix));
+        blob_vol_1 (.x_in(KEYBOARD_ORIGIN_X + (3*WHITE_KEY_WIDTH + 2*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b001), .pixel_in(vol_0_pix), .pixel_out(vol_1_pix));
         
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
-        blob_vol_2 (.x_in(KEYBOARD_ORIGIN_X + (5*WHITE_KEY_WIDTH + 4*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==010), .pixel_in(vol_1_pix), .pixel_out(vol_2_pix));
+        blob_vol_2 (.x_in(KEYBOARD_ORIGIN_X + (5*WHITE_KEY_WIDTH + 4*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b010), .pixel_in(vol_1_pix), .pixel_out(vol_2_pix));
          
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
-        blob_vol_3 (.x_in(KEYBOARD_ORIGIN_X + (7*WHITE_KEY_WIDTH + 6*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==011), .pixel_in(vol_2_pix), .pixel_out(vol_3_pix));
+        blob_vol_3 (.x_in(KEYBOARD_ORIGIN_X + (7*WHITE_KEY_WIDTH + 6*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b011), .pixel_in(vol_2_pix), .pixel_out(vol_3_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
-        blob_vol_4 (.x_in(KEYBOARD_ORIGIN_X + (9*WHITE_KEY_WIDTH + 8*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==100), .pixel_in(vol_3_pix), .pixel_out(vol_4_pix));
+        blob_vol_4 (.x_in(KEYBOARD_ORIGIN_X + (9*WHITE_KEY_WIDTH + 8*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b100), .pixel_in(vol_3_pix), .pixel_out(vol_4_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
-        blob_vol_5 (.x_in(KEYBOARD_ORIGIN_X + (11*WHITE_KEY_WIDTH + 10*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==101), .pixel_in(vol_4_pix), .pixel_out(vol_5_pix));
+        blob_vol_5 (.x_in(KEYBOARD_ORIGIN_X + (11*WHITE_KEY_WIDTH + 10*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b101), .pixel_in(vol_4_pix), .pixel_out(vol_5_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
-        blob_vol_6 (.x_in(KEYBOARD_ORIGIN_X + (13*WHITE_KEY_WIDTH + 12*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==110), .pixel_in(vol_5_pix), .pixel_out(vol_6_pix));
+        blob_vol_6 (.x_in(KEYBOARD_ORIGIN_X + (13*WHITE_KEY_WIDTH + 12*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b110), .pixel_in(vol_5_pix), .pixel_out(vol_6_pix));
        
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
-        blob_vol_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==111), .pixel_in(vol_6_pix), .pixel_out(vol_7_pix));
+        blob_vol_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b111), .pixel_in(vol_6_pix), .pixel_out(vol_7_pix));
         
         assign pixel_out = vol_7_pix;
         

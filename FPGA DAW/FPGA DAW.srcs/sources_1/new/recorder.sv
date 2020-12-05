@@ -1,4 +1,4 @@
-module recorder( input clk_in, input rst_in,
+module recorder( input clk_in, input rst_in, input rst_beat_count,
                 input logic [12:0] notes_in,
                 input logic [3:0] octave_in,
                 input instrument_in,
@@ -48,9 +48,10 @@ module recorder( input clk_in, input rst_in,
      assign beat_count = beat_ctr;
  
      always_ff @(posedge clk_in) begin
-        if (rst_in) begin
+        if (rst_in || rst_beat_count) begin
             metronome_ctr <= 0;
             beat_ctr <= 0;
+            // NEED MORE LOGIC HERE FOR CLEARING POINTERS WHEN ITS RESET AND NOT JUST BEAT COUNT RESET
         end else if (metronome_ctr == METRONOME_MAX) begin
             metronome_ctr <= 0;
             beat_ctr <= beat_ctr + 1;

@@ -185,7 +185,7 @@ module color_picker (input logic [2:0] selector_in,
                      output logic [11:0] color_out);
     always_comb begin
         case(selector_in)
-        3'b000: color_out = 12'h444;
+        3'b000: color_out = 12'h777;
         3'b001: color_out = 12'h00F;
         3'b010: color_out = 12'h7EF;
         3'b011: color_out = 12'h0F0;
@@ -193,7 +193,7 @@ module color_picker (input logic [2:0] selector_in,
         3'b101: color_out = 12'hF70;
         3'b110: color_out = 12'hF00;
         3'b111: color_out = 12'hD43;
-        default: color_out = 12'h444;
+        default: color_out = 12'h777;
         endcase
     end
 endmodule

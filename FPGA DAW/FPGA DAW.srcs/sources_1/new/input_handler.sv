@@ -115,8 +115,8 @@ module keyboard_handler(
     logic data_clean;
     logic data_clk_clean;
     
-    debounce data_clk_db (.clk_in(clk_in), .rst_in(rst_in), .noisy_in(data_clk_in), .clean_out(data_clk_clean));
-    debounce data_db (.clk_in(clk_in), .rst_in(rst_in), .noisy_in(data_in), .clean_out(data_clean));
+    debounce #(.DEBOUNCE_COUNT(10)) data_clk_db (.clk_in(clk_in), .rst_in(rst_in), .noisy_in(data_clk_in), .clean_out(data_clk_clean));
+    debounce #(.DEBOUNCE_COUNT(10)) data_db (.clk_in(clk_in), .rst_in(rst_in), .noisy_in(data_in), .clean_out(data_clean));
 
     logic [7:0] datacur;
     logic [7:0] dataprev;

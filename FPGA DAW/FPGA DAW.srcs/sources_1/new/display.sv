@@ -7,6 +7,7 @@ module display(
                input logic [9:0] vcount_next_in,
                input logic [10:0] hcount_curr_in,
                input logic [9:0] vcount_curr_in,
+               input logic [7:0] beat,
                input logic [2:0] octave [3:0],
                input logic [2:0] instrument [3:0],
                input logic [2:0] volume [3:0],
@@ -33,6 +34,8 @@ module display(
         keyboard_blob #(.KEYBOARD_ORIGIN_X(64 + 4 + 666 + 54), .KEYBOARD_ORIGIN_Y(350))
         blob_keyboard_track3 (.keys(keys[3]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track3_pixel));
        
+       
+       
         logic [11:0] config_track0_pixel, config_track1_pixel, config_track2_pixel, config_track3_pixel;
         track_config_blob #(.KEYBOARD_ORIGIN_X(64 + 4), .KEYBOARD_ORIGIN_Y(350))
         blob_config_track0 (.octave(octave[0]), .instrument(instrument[0]), .volume(volume[0]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(config_track0_pixel));
@@ -45,6 +48,13 @@ module display(
         
         track_config_blob #(.KEYBOARD_ORIGIN_X(64 + 4 + 666 + 54), .KEYBOARD_ORIGIN_Y(350))
         blob_config_track3 (.octave(octave[3]), .instrument(instrument[3]), .volume(volume[3]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(config_track3_pixel));
+      
+      
+      
+        logic [11:0] waveform_pixel;
+        waveform_blob #(.WAVEFORM_ORIGIN_X(128), .WAVEFORM_ORIGIN_Y(64), .BEAT_BAR_ORIGIN_Y(32), .BEAT_BAR_HEIGHT(176))
+        blob_waveform (.clk_in(clk_in), .rst_in(rst_in), .beat(beat), .notes(keys), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(waveform_pixel));
+      
       
       
         logic [11:0] octave_text_pixel, instrument_text_pixel, volume_text_pixel;
@@ -74,16 +84,117 @@ module display(
                 pixel_out <= config_track2_pixel;
             end else if (config_track3_pixel != BACKGROUND_COLOR) begin
                 pixel_out <= config_track3_pixel;
-            end else if (volume_text_pixel != BACKGROUND_COLOR) begin
-                pixel_out <= volume_text_pixel;
+            end else if (volume_text_pixel_reg2 != BACKGROUND_COLOR) begin
+                pixel_out <= volume_text_pixel_reg2;
+            end else if (waveform_pixel != BACKGROUND_COLOR) begin
+                pixel_out <= waveform_pixel;
             end else begin
                 pixel_out <= BACKGROUND_COLOR;
             end
-//            volume_text_pixel_reg2 <= volume_text_pixel_reg1;
-//            volume_text_pixel_reg1 <= volume_text_pixel;
+            volume_text_pixel_reg2 <= volume_text_pixel_reg1;
+            volume_text_pixel_reg1 <= volume_text_pixel;
         end
        
 endmodule
+
+
+module waveform_blob
+   #(parameter WAVEFORM_ORIGIN_X = 0,
+               WAVEFORM_ORIGIN_Y = 0,
+               BEAT_BAR_ORIGIN_Y = 0,
+               BEAT_BAR_HEIGHT = 176,
+               NOTE_SPACING = 0,
+               NOTE_WIDTH = 2,
+               WAVEFORM_THICKNESS = 4,
+               WAVEFORM_SPACING = 32,
+               BEAT_BAR_COLOR = 12'h333)
+   (input logic clk_in,
+    input logic rst_in,
+    input logic [7:0] beat,
+    input logic [12:0] notes [3:0],
+    input logic [10:0] hcount_in,
+    input logic [9:0] vcount_in,
+    input logic [11:0] pixel_in,
+    output logic [11:0] pixel_out);
+    
+    
+    logic [2:0] notes_buffer [255:0][3:0];
+    logic [7:0] selected_beat;
+    logic [11:0] note_colors [3:0];
+    logic [3:0] track0_note_sum, track1_note_sum, track2_note_sum, track3_note_sum;
+    
+    sum13 track0_summer (.bit_vector(notes[0]), .sum(track0_note_sum));
+    sum13 track1_summer (.bit_vector(notes[1]), .sum(track1_note_sum));
+    sum13 track2_summer (.bit_vector(notes[2]), .sum(track2_note_sum));
+    sum13 track3_summer (.bit_vector(notes[3]), .sum(track3_note_sum));
+    
+    assign selected_beat = {hcount_in - WAVEFORM_ORIGIN_X}[8:1];
+    
+    color_picker track0_color (.selector_in(notes_buffer[0][selected_beat]), .background_color_in(pixel_in), .color_out(note_colors[0]));
+    color_picker track1_color (.selector_in(notes_buffer[1][selected_beat]), .background_color_in(pixel_in), .color_out(note_colors[1]));
+    color_picker track2_color (.selector_in(notes_buffer[2][selected_beat]), .background_color_in(pixel_in), .color_out(note_colors[2]));
+    color_picker track3_color (.selector_in(notes_buffer[3][selected_beat]), .background_color_in(pixel_in), .color_out(note_colors[3]));
+    
+    always_ff @(posedge clk_in) begin
+        if (rst_in) begin
+                for (integer i = 0; i < 4; i = i + 1) begin
+                    for (integer j = 0; j < 256; j = j + 1) begin
+                        notes_buffer[i][j] <= 3'b0;
+                    end
+                end
+        end else begin
+            notes_buffer[0][beat] <= track0_note_sum[2:0];
+            notes_buffer[1][beat] <= track1_note_sum[2:0];
+            notes_buffer[2][beat] <= track2_note_sum[2:0];
+            notes_buffer[3][beat] <= track3_note_sum[2:0];
+            
+//            if (hcount_in == WAVEFORM_ORIGIN_X + NOTE_WIDTH*beat + NOTE_SPACING*(beat-1)) begin //TODO optimize this
+            if (vcount_in >= BEAT_BAR_ORIGIN_Y && vcount_in < (BEAT_BAR_ORIGIN_Y + BEAT_BAR_HEIGHT) &&
+                hcount_in == WAVEFORM_ORIGIN_X + beat + (beat << 1) - 2) begin
+                //vertical bar at note
+                pixel_out <= BEAT_BAR_COLOR;
+            end else if (hcount_in >= WAVEFORM_ORIGIN_X && hcount_in < WAVEFORM_ORIGIN_X + 256*NOTE_WIDTH) begin
+                if (vcount_in >= (WAVEFORM_ORIGIN_Y) && vcount_in < (WAVEFORM_ORIGIN_Y + WAVEFORM_THICKNESS)) begin
+                    //track 0 beat
+                    pixel_out <= note_colors[0];
+                end else if (vcount_in >= (WAVEFORM_ORIGIN_Y + WAVEFORM_THICKNESS + WAVEFORM_SPACING) && vcount_in < (WAVEFORM_ORIGIN_Y + 2*WAVEFORM_THICKNESS + WAVEFORM_SPACING)) begin
+                    //track 1 beat
+                    pixel_out <= note_colors[1];
+                end else if (vcount_in >= (WAVEFORM_ORIGIN_Y + 2*WAVEFORM_THICKNESS + 2*WAVEFORM_SPACING) && vcount_in < (WAVEFORM_ORIGIN_Y + 3*WAVEFORM_THICKNESS + 2*WAVEFORM_SPACING)) begin
+                    //track 2 beat
+                    pixel_out <= note_colors[2];
+                end else if (vcount_in >= (WAVEFORM_ORIGIN_Y + 3*WAVEFORM_THICKNESS + 3*WAVEFORM_SPACING) && vcount_in < (WAVEFORM_ORIGIN_Y + 4*WAVEFORM_THICKNESS + 3*WAVEFORM_SPACING)) begin
+                    //track 3 beat
+                    pixel_out <= note_colors[3];
+                end else begin
+                    pixel_out <= pixel_in;
+                end
+            end else begin
+                pixel_out <= pixel_in;
+            end
+        end
+    end
+endmodule
+
+
+module color_picker (input logic [2:0] selector_in,
+                     input logic [11:0] background_color_in,
+                     output logic [11:0] color_out);
+    always_comb begin
+        case(selector_in)
+        3'b000: color_out = background_color_in;
+        3'b001: color_out = 12'hF00;
+        3'b010: color_out = 12'hF70;
+        3'b011: color_out = 12'hFF0;
+        3'b100: color_out = 12'h0F0;
+        3'b101: color_out = 12'h00F;
+        3'b110: color_out = 12'h408;
+        3'b111: color_out = 12'h90D;
+        default: color_out = background_color_in;
+        endcase
+    end
+endmodule
+
 
 module keyboard_blob
    #(parameter KEYBOARD_ORIGIN_X = 0,

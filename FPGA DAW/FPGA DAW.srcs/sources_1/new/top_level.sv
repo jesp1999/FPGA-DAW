@@ -169,7 +169,7 @@ module top_level(
     logic [11:0] rgb;
     
     xvga xvga_mod (.vclock_in(clk_65mhz), .hcount_out(hcount_t_plus_2), .vcount_out(vcount_t_plus_2), .vsync_out(vsync), .hsync_out(hsync), .blank_out(blank));
-    display display_mod (.clk_in(clk_65mhz), .rst_in(btnc), .keys(notes_to_play), .octave(octave_to_play), .volume(volume_to_play), .instrument(instrument_to_play),
+    display display_mod (.clk_in(clk_65mhz), .rst_in(btnc), .keys(notes_to_play), .beat(beat_count), .octave(octave_to_play), .volume(volume_to_play), .instrument(instrument_to_play),
                          .vcount_curr_in(vcount_t), .hcount_curr_in(hcount_t), .vcount_next_in(vcount_t_plus_2), .hcount_next_in(hcount_t_plus_2), .pixel_out(pixel));
     
     logic border = (hcount_t==0 | hcount_t==1023 | vcount_t==0 | vcount_t==767 |

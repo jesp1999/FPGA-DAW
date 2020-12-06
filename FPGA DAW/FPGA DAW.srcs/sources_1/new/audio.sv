@@ -16,7 +16,7 @@ module octave( input clk_in, input rst_in,
                 input step_in,
                 input logic [12:0] notes,
                 input logic [3:0] octave,
-                input instrument,
+                input logic [2:0] instrument,
                 output logic [7:0] amp_out);
                 
     logic[7:0] tone_C4;
@@ -117,18 +117,38 @@ endmodule
 //tone Generator
 module tone_generator ( input clk_in, input rst_in, //clock and reset
                         input step_in, //trigger a phase step (rate at which you run sine generator)
-                        input instrument,
+                        input [2:0] instrument,
                         input logic [3:0] octave_in,
                         output logic [7:0] amp_out); //output phase   
     parameter PHASE_INCR = 32'b1000_0000_0000_0000_0000_0000_0000_0000>>5; 
     logic [31:0] phase_incr_octave = (PHASE_INCR>>4)<<octave_in;
     logic [7:0] divider;
     logic [31:0] phase;
-    logic [7:0] amp, amp_inst1, amp_inst2;
-    assign amp = instrument ? amp_inst2 : amp_inst1;
+    logic [7:0] amp, amp_inst0, amp_inst1, amp_inst2, amp_inst3, amp_inst4, amp_inst5, amp_inst6, amp_inst7;
+    
+    always_comb begin
+        case(instrument)
+            3'b000: amp = amp_inst0;
+            3'b001: amp = amp_inst1;
+            3'b010: amp = amp_inst2;
+            3'b011: amp = amp_inst3;
+            3'b100: amp = amp_inst4;
+            3'b101: amp = amp_inst5;
+            3'b110: amp = amp_inst6;
+            3'b111: amp = amp_inst7;
+            default: amp = amp_inst0;
+        endcase
+    end
+    
     assign amp_out = {~amp[7],amp[6:0]};
-    sine_lut lut_1(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp_inst1));
-    saw_lut lut_2(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp_inst2));
+    sine_lut lut_1(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp_inst0));
+    saw_lut lut_2(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp_inst1));
+    assign amp_inst2 = amp_inst0;
+    assign amp_inst3 = amp_inst1;
+    assign amp_inst4 = amp_inst0;
+    assign amp_inst5 = amp_inst1; // TODO route these to LUTs or something
+    assign amp_inst6 = amp_inst0;
+    assign amp_inst7 = amp_inst1;
     
     always_ff @(posedge clk_in)begin
         if (rst_in)begin

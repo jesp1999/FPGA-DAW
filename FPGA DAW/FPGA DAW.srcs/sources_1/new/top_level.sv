@@ -59,11 +59,16 @@ module top_level(
     logic [7:0] raw_audio_out [3:0];
     logic [12:0] notes;
     logic [12:0] notes_to_play [3:0];
-    logic instrument;
-    logic instrument_to_play [3:0];
-    logic [3:0] octave;
-    logic [3:0] octave_to_play [3:0];
+    logic [2:0] instrument;
+    logic [2:0] instrument_to_play [3:0];
+    logic [2:0] octave;
+    logic [2:0] octave_to_play [3:0];
     logic [7:0] beat_count;
+    logic [2:0] volume_to_play [3:0];
+    assign volume_to_play[0] = sw[15:13];
+    assign volume_to_play[1] = sw[12:10];
+    assign volume_to_play[2] = sw[9:7];
+    assign volume_to_play[3] = sw[6:4];
  
     recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc), .rst_beat_count(btnl),
         .notes_in(notes),
@@ -103,7 +108,7 @@ module top_level(
         .amp_out(raw_audio_out[3]),
         .notes(notes_to_play[3]),
         .octave(octave_to_play[3]),
-        .instrument(instrument_to_play[3])); 
+        .instrument(instrument_to_play[3]));
         
 //    volume_control vc (.vol_in(sw[15:13]),
 //                       .signal_in(raw_audio_out[0]), .signal_out(vol_out));
@@ -131,34 +136,41 @@ module top_level(
     
     track_select track_sel_mod (.clk_in(clk_65mhz), .rst_in(btnc), .signal(track_select_signal), .track(track));
     
-    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .audio0_vol(sw[15:13]), .audio1_vol(sw[12:10]), .audio2_vol(sw[9:7]), .audio3_vol(sw[6:4]),
-                     .metronome_enabled(0), 
+    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .volume(volume_to_play),
+                     .metronome_enabled(1'b0), 
                      .audio0_in(raw_audio_out[0]), 
                      .audio1_in(raw_audio_out[1]), 
                      .audio2_in(raw_audio_out[2]), 
                      .audio3_in(raw_audio_out[3]), 
-                     .metronome_in(0), .audio_out(vol_out));
+                     .metronome_in(8'b0), .audio_out(vol_out));
     
-    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {vol_out, 16'b0, beat_count}), .cat_out({0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
+    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {vol_out, 16'b0, beat_count}), .cat_out({1'b0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     
     assign led[12:0] = {10'b0,track};
     
-    logic [10:0] hcount;    // pixel on current line
-    logic [9:0] vcount;     // line number
+    // hcount represents hcount 2 ticks in the future, hcount_reg2 is the current hcount (actually displayed)
+    // this allows to predict what the image should be and initiate a rom read early
+    logic [10:0] hcount_t_plus_2, hcount_t_plus_1, hcount_t;    // pixel on current line
+    logic [9:0] vcount_t_plus_2, vcount_t_plus_1, vcount_t;     // line number
     logic hsync, vsync;
     logic [11:0] pixel;
     logic [11:0] rgb;
     
-    xvga xvga_mod (.vclock_in(clk_65mhz), .hcount_out(hcount), .vcount_out(vcount), .vsync_out(vsync), .hsync_out(hsync), .blank_out(blank));
-    display display_mod (.clk_in(clk_65mhz), .rst_in(btnc), .keys(notes_to_play), .waveform(instrument_to_play[track]), .vcount_in(vcount), .hcount_in(hcount), .pixel_out(pixel));
+    xvga xvga_mod (.vclock_in(clk_65mhz), .hcount_out(hcount_t_plus_2), .vcount_out(vcount_t_plus_2), .vsync_out(vsync), .hsync_out(hsync), .blank_out(blank));
+    display display_mod (.clk_in(clk_65mhz), .rst_in(btnc), .keys(notes_to_play), .octave(octave_to_play), .volume(volume_to_play), .instrument(instrument_to_play),
+                         .vcount_curr_in(vcount_t), .hcount_curr_in(hcount_t), .vcount_next_in(vcount_t_plus_2), .hcount_next_in(hcount_t_plus_2), .pixel_out(pixel));
     
-    logic border = (hcount==0 | hcount==1023 | vcount==0 | vcount==767 |
-                   hcount == 512 | vcount == 384);
+    logic border = (hcount_t==0 | hcount_t==1023 | vcount_t==0 | vcount_t==767 |
+                   hcount_t == 512 | vcount_t == 384);
 
     logic b,hs,vs;
     always_ff @(posedge clk_65mhz) begin
+        hcount_t <= hcount_t_plus_1;
+        hcount_t_plus_1 <= hcount_t_plus_2;
+        vcount_t <= vcount_t_plus_1;
+        vcount_t_plus_1 <= vcount_t_plus_2;
         hs <= hsync;
         vs <= vsync;
         b <= blank;

@@ -3,17 +3,16 @@
 module display(
                input logic clk_in,
                input logic rst_in,
-               input logic [10:0] hcount_in,
-               input logic [9:0] vcount_in,
+               input logic [10:0] hcount_next_in,
+               input logic [9:0] vcount_next_in,
+               input logic [10:0] hcount_curr_in,
+               input logic [9:0] vcount_curr_in,
+               input logic [2:0] octave [3:0],
+               input logic [2:0] instrument [3:0],
+               input logic [2:0] volume [3:0],
                input logic [12:0] keys [3:0],
-               input logic waveform,
                output logic [11:0] pixel_out
                );
-        
-        //registers for pipelining pixels across different clock cycles
-        logic [11:0] pixel_reg1;
-        logic [11:0] pixel_reg2;
-        logic [11:0] pixel_reg3;
         
         parameter BACKGROUND_COLOR = 12'hDE3;
         
@@ -22,45 +21,40 @@ module display(
         ///////////////////////////
         
         logic [11:0] keyboard_track0_pixel, keyboard_track1_pixel, keyboard_track2_pixel, keyboard_track3_pixel;
-        keyboard_blob #(.KEYBOARD_ORIGIN_X(4), .KEYBOARD_ORIGIN_Y(600))
-        blob_keyboard_track0 (.keys(keys[0]), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track0_pixel));
+        keyboard_blob #(.KEYBOARD_ORIGIN_X(64 + 4), .KEYBOARD_ORIGIN_Y(350))
+        blob_keyboard_track0 (.keys(keys[0]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track0_pixel));
         
-        keyboard_blob #(.KEYBOARD_ORIGIN_X(4 + 238 + 18), .KEYBOARD_ORIGIN_Y(600))
-        blob_keyboard_track1 (.keys(keys[1]), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track1_pixel));
+        keyboard_blob #(.KEYBOARD_ORIGIN_X(64 + 4 + 222 + 18), .KEYBOARD_ORIGIN_Y(350))
+        blob_keyboard_track1 (.keys(keys[1]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track1_pixel));
         
-        keyboard_blob #(.KEYBOARD_ORIGIN_X(4 + 476 + 36), .KEYBOARD_ORIGIN_Y(600))
-        blob_keyboard_track2 (.keys(keys[2]), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track2_pixel));
+        keyboard_blob #(.KEYBOARD_ORIGIN_X(64 + 4 + 444 + 36), .KEYBOARD_ORIGIN_Y(350))
+        blob_keyboard_track2 (.keys(keys[2]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track2_pixel));
         
-        keyboard_blob #(.KEYBOARD_ORIGIN_X(4 + 714 + 54), .KEYBOARD_ORIGIN_Y(600))
-        blob_keyboard_track3 (.keys(keys[3]), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track3_pixel));
+        keyboard_blob #(.KEYBOARD_ORIGIN_X(64 + 4 + 666 + 54), .KEYBOARD_ORIGIN_Y(350))
+        blob_keyboard_track3 (.keys(keys[3]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track3_pixel));
        
-       
-        //////////////////////////////////////
-        //WAVEFORM//SELECTION//DRAWING//CODE//
-        //////////////////////////////////////
-       
-//        parameter WAVE_ICON_SELECTION_WIDTH = 48;
-//        parameter WAVE_ICON_SELECTION_HEIGHT = 48;
-       
-//        parameter WAVE_ICON_SELECTION_OFFSET = 16;
-       
-//        parameter SINE_WAVE_ICON_ORIGIN_X = 32;
-//        parameter SINE_WAVE_ICON_ORIGIN_Y = 32;
-//        parameter TRNG_WAVE_ICON_ORIGIN_X = 32;
-//        parameter TRNG_WAVE_ICON_ORIGIN_Y = 96;
-       
-//        parameter WAVE_ICON_SELECTED_COLOR = 12'h00F;
-       
-       
-//        selectable_blob  #(.WIDTH(WAVE_ICON_SELECTION_WIDTH), .HEIGHT(WAVE_ICON_SELECTION_HEIGHT), .COLOR(BACKGROUND_COLOR), .SELECTED_COLOR(WAVE_ICON_SELECTED_COLOR))
-//        blob_sinewave_selection (.x_in(SINE_WAVE_ICON_ORIGIN_X - WAVE_ICON_SELECTION_OFFSET), .y_in(SINE_WAVE_ICON_ORIGIN_Y - WAVE_ICON_SELECTION_OFFSET), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(~waveform), .pixel_in(sine_icon_pixel), .pixel_out(sine_img_pixel));
+        logic [11:0] config_track0_pixel, config_track1_pixel, config_track2_pixel, config_track3_pixel;
+        track_config_blob #(.KEYBOARD_ORIGIN_X(64 + 4), .KEYBOARD_ORIGIN_Y(350))
+        blob_config_track0 (.octave(octave[0]), .instrument(instrument[0]), .volume(volume[0]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(config_track0_pixel));
+        
+        track_config_blob #(.KEYBOARD_ORIGIN_X(64 + 4 + 222 + 18), .KEYBOARD_ORIGIN_Y(350))
+        blob_config_track1 (.octave(octave[1]), .instrument(instrument[1]), .volume(volume[1]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(config_track1_pixel));
+        
+        track_config_blob #(.KEYBOARD_ORIGIN_X(64 + 4 + 444 + 36), .KEYBOARD_ORIGIN_Y(350))
+        blob_config_track2 (.octave(octave[2]), .instrument(instrument[2]), .volume(volume[2]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(config_track2_pixel));
+        
+        track_config_blob #(.KEYBOARD_ORIGIN_X(64 + 4 + 666 + 54), .KEYBOARD_ORIGIN_Y(350))
+        blob_config_track3 (.octave(octave[3]), .instrument(instrument[3]), .volume(volume[3]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(config_track3_pixel));
       
-//        sinewave_blob blob_sineWaveform (.pixel_clk_in(clk_in), .hcount_in(hcount_in), .vcount_in(vcount_in), .x_in(SINE_WAVE_ICON_ORIGIN_X), .y_in(SINE_WAVE_ICON_ORIGIN_Y), .pixel_in(sine_img_pixel), .pixel_out(trng_icon_pixel));
+      
+        logic [11:0] octave_text_pixel, instrument_text_pixel, volume_text_pixel;
+        logic [11:0] volume_text_pixel_reg1, volume_text_pixel_reg2;
+        
+        octave_text_blob blob_octave_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .x_in(2), .y_in(350 + 96 + 32 + 2), .pixel_in(BACKGROUND_COLOR), .pixel_out(octave_text_pixel));
 
-//        selectable_blob  #(.WIDTH(WAVE_ICON_SELECTION_WIDTH), .HEIGHT(WAVE_ICON_SELECTION_HEIGHT), .COLOR(BACKGROUND_COLOR), .SELECTED_COLOR(WAVE_ICON_SELECTED_COLOR))
-//        blob_trngwave_selection (.x_in(TRNG_WAVE_ICON_ORIGIN_X - WAVE_ICON_SELECTION_OFFSET), .y_in(TRNG_WAVE_ICON_ORIGIN_Y - WAVE_ICON_SELECTION_OFFSET), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(waveform), .pixel_in(trng_icon_pixel), .pixel_out(trng_img_pixel));
-       
-//        trngwave_blob blob_trngWaveform (.pixel_clk_in(clk_in), .hcount_in(hcount_in), .vcount_in(vcount_in), .x_in(TRNG_WAVE_ICON_ORIGIN_X), .y_in(TRNG_WAVE_ICON_ORIGIN_Y), .pixel_in(trng_img_pixel), .pixel_out(pixel_out));
+        instrument_text_blob blob_instrument_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .x_in(2), .y_in(350 + 96 + 64 + 2), .pixel_in(octave_text_pixel), .pixel_out(instrument_text_pixel));
+
+        volume_text_blob blob_volume_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .x_in(2), .y_in(350 + 96 + 96 + 2), .pixel_in(instrument_text_pixel), .pixel_out(volume_text_pixel));
        
         
         always_ff @(posedge clk_in) begin
@@ -72,12 +66,21 @@ module display(
                 pixel_out <= keyboard_track2_pixel;
             end else if (keyboard_track3_pixel != BACKGROUND_COLOR) begin
                 pixel_out <= keyboard_track3_pixel;
+            end else if (config_track0_pixel != BACKGROUND_COLOR) begin
+                pixel_out <= config_track0_pixel;
+            end else if (config_track1_pixel != BACKGROUND_COLOR) begin
+                pixel_out <= config_track1_pixel;
+            end else if (config_track2_pixel != BACKGROUND_COLOR) begin
+                pixel_out <= config_track2_pixel;
+            end else if (config_track3_pixel != BACKGROUND_COLOR) begin
+                pixel_out <= config_track3_pixel;
+            end else if (volume_text_pixel != BACKGROUND_COLOR) begin
+                pixel_out <= volume_text_pixel;
             end else begin
                 pixel_out <= BACKGROUND_COLOR;
             end
-//            sine_img_pixel <= pixel_reg1;
-//            pixel_reg3 <= pixel_reg2;
-//            pixel_reg2 <= pixel_reg1;
+//            volume_text_pixel_reg2 <= volume_text_pixel_reg1;
+//            volume_text_pixel_reg1 <= volume_text_pixel;
         end
        
 endmodule
@@ -85,7 +88,7 @@ endmodule
 module keyboard_blob
    #(parameter KEYBOARD_ORIGIN_X = 0,
                KEYBOARD_ORIGIN_Y = 0,
-               WHITE_KEY_WIDTH = 28,
+               WHITE_KEY_WIDTH = 26,
                WHITE_KEY_HEIGHT = 96,
                BLACK_KEY_WIDTH = 14,
                BLACK_KEY_HEIGHT = 64,
@@ -148,6 +151,115 @@ module keyboard_blob
         
 endmodule
    
+   
+module track_config_blob
+   #(parameter KEYBOARD_ORIGIN_X = 0,
+               KEYBOARD_ORIGIN_Y = 0,
+               WHITE_KEY_WIDTH = 26,
+               WHITE_KEY_HEIGHT = 96,
+               KEY_SPACING = 2,
+               ICON_WIDTH = 16,
+               ICON_HEIGHT = 16,
+               ICON_SPACING = 16,
+               OCTAVE_SELECTED_COLOR = 12'h00F,
+               OCTAVE_DESELECTED_COLOR = 12'hBBB,
+               INSTRUMENT_SELECTED_COLOR = 12'h0F0,
+               INSTRUMENT_DESELECTED_COLOR = 12'hBBB,
+               VOLUME_SELECTED_COLOR = 12'hF00,
+               VOLUME_DESELECTED_COLOR = 12'hBBB,
+               TEXT_DISPLAY = 1'b0)
+   (input logic [2:0] octave,
+    input logic [2:0] instrument,
+    input logic [2:0] volume,
+    input logic [10:0] hcount_in,
+    input logic [9:0] vcount_in,
+    input logic [11:0] pixel_in,
+    output logic [11:0] pixel_out);
+   
+    localparam BLACK_KEY_OFFSET = 3 * (WHITE_KEY_WIDTH + KEY_SPACING) / 4;
+    
+    
+        logic [11:0] octave_0_pix, octave_1_pix, octave_2_pix, octave_3_pix, octave_4_pix, octave_5_pix, octave_6_pix, octave_7_pix;
+        logic [11:0] inst_0_pix, inst_1_pix, inst_2_pix, inst_3_pix, inst_4_pix, inst_5_pix, inst_6_pix, inst_7_pix;
+        logic [11:0] vol_0_pix, vol_1_pix, vol_2_pix, vol_3_pix, vol_4_pix, vol_5_pix, vol_6_pix, vol_7_pix;
+        
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
+        blob_8ve_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b000), .pixel_in(pixel_in), .pixel_out(octave_0_pix));
+        
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
+        blob_8ve_1 (.x_in(KEYBOARD_ORIGIN_X + (3*WHITE_KEY_WIDTH + 2*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b001), .pixel_in(octave_0_pix), .pixel_out(octave_1_pix));
+        
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
+        blob_8ve_2 (.x_in(KEYBOARD_ORIGIN_X + (5*WHITE_KEY_WIDTH + 4*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b010), .pixel_in(octave_1_pix), .pixel_out(octave_2_pix));
+         
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
+        blob_8ve_3 (.x_in(KEYBOARD_ORIGIN_X + (7*WHITE_KEY_WIDTH + 6*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b011), .pixel_in(octave_2_pix), .pixel_out(octave_3_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
+        blob_8ve_4 (.x_in(KEYBOARD_ORIGIN_X + (9*WHITE_KEY_WIDTH + 8*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b100), .pixel_in(octave_3_pix), .pixel_out(octave_4_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
+        blob_8ve_5 (.x_in(KEYBOARD_ORIGIN_X + (11*WHITE_KEY_WIDTH + 10*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b101), .pixel_in(octave_4_pix), .pixel_out(octave_5_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
+        blob_8ve_6 (.x_in(KEYBOARD_ORIGIN_X + (13*WHITE_KEY_WIDTH + 12*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b110), .pixel_in(octave_5_pix), .pixel_out(octave_6_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
+        blob_8ve_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b111), .pixel_in(octave_6_pix), .pixel_out(octave_7_pix));
+        
+        
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
+        blob_inst_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b000), .pixel_in(octave_7_pix), .pixel_out(inst_0_pix));
+        
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
+        blob_inst_1 (.x_in(KEYBOARD_ORIGIN_X + (3*WHITE_KEY_WIDTH + 2*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b001), .pixel_in(inst_0_pix), .pixel_out(inst_1_pix));
+        
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
+        blob_inst_2 (.x_in(KEYBOARD_ORIGIN_X + (5*WHITE_KEY_WIDTH + 4*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b010), .pixel_in(inst_1_pix), .pixel_out(inst_2_pix));
+         
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
+        blob_inst_3 (.x_in(KEYBOARD_ORIGIN_X + (7*WHITE_KEY_WIDTH + 6*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b011), .pixel_in(inst_2_pix), .pixel_out(inst_3_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
+        blob_inst_4 (.x_in(KEYBOARD_ORIGIN_X + (9*WHITE_KEY_WIDTH + 8*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b100), .pixel_in(inst_3_pix), .pixel_out(inst_4_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
+        blob_inst_5 (.x_in(KEYBOARD_ORIGIN_X + (11*WHITE_KEY_WIDTH + 10*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b101), .pixel_in(inst_4_pix), .pixel_out(inst_5_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
+        blob_inst_6 (.x_in(KEYBOARD_ORIGIN_X + (13*WHITE_KEY_WIDTH + 12*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b110), .pixel_in(inst_5_pix), .pixel_out(inst_6_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
+        blob_inst_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b111), .pixel_in(inst_6_pix), .pixel_out(inst_7_pix));
+        
+        
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
+        blob_vol_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b000), .pixel_in(inst_7_pix), .pixel_out(vol_0_pix));
+        
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
+        blob_vol_1 (.x_in(KEYBOARD_ORIGIN_X + (3*WHITE_KEY_WIDTH + 2*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b001), .pixel_in(vol_0_pix), .pixel_out(vol_1_pix));
+        
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
+        blob_vol_2 (.x_in(KEYBOARD_ORIGIN_X + (5*WHITE_KEY_WIDTH + 4*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b010), .pixel_in(vol_1_pix), .pixel_out(vol_2_pix));
+         
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
+        blob_vol_3 (.x_in(KEYBOARD_ORIGIN_X + (7*WHITE_KEY_WIDTH + 6*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b011), .pixel_in(vol_2_pix), .pixel_out(vol_3_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
+        blob_vol_4 (.x_in(KEYBOARD_ORIGIN_X + (9*WHITE_KEY_WIDTH + 8*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b100), .pixel_in(vol_3_pix), .pixel_out(vol_4_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
+        blob_vol_5 (.x_in(KEYBOARD_ORIGIN_X + (11*WHITE_KEY_WIDTH + 10*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b101), .pixel_in(vol_4_pix), .pixel_out(vol_5_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
+        blob_vol_6 (.x_in(KEYBOARD_ORIGIN_X + (13*WHITE_KEY_WIDTH + 12*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b110), .pixel_in(vol_5_pix), .pixel_out(vol_6_pix));
+       
+        selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
+        blob_vol_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b111), .pixel_in(vol_6_pix), .pixel_out(vol_7_pix));
+        
+        assign pixel_out = vol_7_pix;
+        
+endmodule
 
 module selectable_blob
    #(parameter WIDTH = 64,               // default width: 64 pixels
@@ -173,10 +285,9 @@ module selectable_blob
     end
 endmodule
 
-
-module sinewave_blob
-   #(parameter WIDTH = 32,     // default picture width
-               HEIGHT = 32)    // default picture height)
+module octave_text_blob
+   #(parameter WIDTH = 35,     // default picture width
+               HEIGHT = 9)    // default picture height)
    (input logic pixel_clk_in,
     input logic [10:0] x_in, hcount_in,
     input logic [9:0] y_in, vcount_in,
@@ -189,10 +300,9 @@ module sinewave_blob
     
     // calculate rom address and read the location
     assign image_addr = (hcount_in-x_in) + (vcount_in-y_in) * WIDTH;
-    sinewave_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
+    octave_text_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
     
-    sinewave_rcm_rom rcm (.clka(pixel_clk_in), .addra(image_bits), .douta(mapped));
-    assign pix_color = mapped[7:4];
+    assign pix_color = (image_bits == 8'h00) ? 8'hFF : 8'h00;
     
     //assign pixel_out = {pix_color, pix_color, pix_color};
     
@@ -205,9 +315,9 @@ module sinewave_blob
     end
 endmodule
 
-module trngwave_blob
-   #(parameter WIDTH = 32,     // default picture width
-               HEIGHT = 32)    // default picture height)
+module instrument_text_blob
+   #(parameter WIDTH = 55,     // default picture width
+               HEIGHT = 9)    // default picture height)
    (input logic pixel_clk_in,
     input logic [10:0] x_in, hcount_in,
     input logic [9:0] y_in, vcount_in,
@@ -220,10 +330,9 @@ module trngwave_blob
     
     // calculate rom address and read the location
     assign image_addr = (hcount_in-x_in) + (vcount_in-y_in) * WIDTH;
-    trngwave_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
+    instrument_text_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
     
-    trngwave_rcm_rom rcm (.clka(pixel_clk_in), .addra(image_bits), .douta(mapped));
-    assign pix_color = mapped[7:4];
+    assign pix_color = (image_bits == 8'h00) ? 8'hFF : 8'h00;
     
     //assign pixel_out = {pix_color, pix_color, pix_color};
     
@@ -236,3 +345,32 @@ module trngwave_blob
     end
 endmodule
 
+module volume_text_blob
+   #(parameter WIDTH = 35,     // default picture width
+               HEIGHT = 9)    // default picture height)
+   (input logic pixel_clk_in,
+    input logic [10:0] x_in, hcount_in,
+    input logic [9:0] y_in, vcount_in,
+    input logic [11:0] pixel_in,
+    output logic [11:0] pixel_out);
+
+    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [7:0] image_bits, mapped;
+    logic [3:0] pix_color;
+    
+    // calculate rom address and read the location
+    assign image_addr = (hcount_in-x_in) + (vcount_in-y_in) * WIDTH;
+    volume_text_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
+    
+    assign pix_color = (image_bits == 8'h00) ? 8'hFF : 8'h00;
+    
+    //assign pixel_out = {pix_color, pix_color, pix_color};
+    
+    // note the one clock cycle delay in pixel!
+    always_ff @ (posedge pixel_clk_in) begin
+        if ((hcount_in >= x_in && hcount_in < (x_in+WIDTH)) &&
+            (vcount_in >= y_in && vcount_in < (y_in+HEIGHT)))
+            pixel_out <= {pix_color, pix_color, pix_color};
+        else pixel_out <= pixel_in;
+    end
+endmodule

@@ -30,6 +30,8 @@ module top_level(
     
     parameter SAMPLE_COUNT = 1354;//gets approximately (will generate audio at approx 48 kHz sample rate.
  
+    logic clean_btnu, clean_btnd, clean_btnl, clean_btnr; 
+ 
     logic [15:0] sample_counter;
     logic sample_trigger;
     logic enable;
@@ -65,23 +67,28 @@ module top_level(
     logic [2:0] octave_to_play [3:0];
     logic [7:0] beat_count;
     logic [2:0] volume_to_play [3:0];
+    logic [7:0] latest_valid_beat [3:0];
+    logic metronome_main, metronome_secondary;
+    logic [7:0] metronome_raw_audio;
     assign volume_to_play[0] = sw[15:13];
     assign volume_to_play[1] = sw[12:10];
     assign volume_to_play[2] = sw[9:7];
     assign volume_to_play[3] = sw[6:4];
  
-    recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc), .rst_beat_count(btnl),
+    recorder my_rec (.clk_in(clk_65mhz), .rst_in(btnc), .rst_beat_count(clean_btnl), .rst_track(clean_btnr),
         .notes_in(notes),
         .octave_in(octave),
         .instrument_in(instrument),
-        .record(sw[1]), // CHANGE LATER
+        .record(sw[0]), // CHANGE LATER
         .track(track),
         .beat_count(beat_count),
         .notes_out(notes_to_play),
         .octave_out(octave_to_play),
-        .instrument_out(instrument_to_play));
+        .instrument_out(instrument_to_play),
+        .latest_valid_beat(latest_valid_beat),
+        .metronome_main(metronome_main),
+        .metronome_secondary(metronome_secondary));
         
- 
     octave track_0 (.clk_in(clk_65mhz), .rst_in(btnc),
         .step_in(sample_trigger),
         .amp_out(raw_audio_out[0]),
@@ -110,6 +117,12 @@ module top_level(
         .octave(octave_to_play[3]),
         .instrument(instrument_to_play[3]));
         
+      metronome my_met (.clk_in(clk_65mhz), .rst_in(btnc),
+        .step_in(sample_trigger),
+        .signal_main(metronome_main),
+        .signal_secondary(metronome_secondary),
+        .amp_out(metronome_raw_audio));
+        
 //    volume_control vc (.vol_in(sw[15:13]),
 //                       .signal_in(raw_audio_out[0]), .signal_out(vol_out));
     pwm (.clk_in(clk_65mhz), .rst_in(btnc), .level_in({~vol_out[7],vol_out[6:0]}), .pwm_out(pwm_val));
@@ -117,8 +130,6 @@ module top_level(
     
 //    logic [87:0] notes;
     logic [31:0] raw_keyboard;
-    
-    logic clean_btnu, clean_btnd, clean_btnl, clean_btnr;
 
     debounce db_btnu (.clk_in(clk_65mhz), .rst_in(btnc), .noisy_in(btnu), .clean_out(clean_btnu));
     debounce db_btnd (.clk_in(clk_65mhz), .rst_in(btnc), .noisy_in(btnd), .clean_out(clean_btnd));
@@ -136,19 +147,18 @@ module top_level(
     
     track_select track_sel_mod (.clk_in(clk_65mhz), .rst_in(btnc), .signal(track_select_signal), .track(track));
     
-    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .volume(volume_to_play),
-                     .metronome_enabled(1'b0), 
+    mixer mixer_mod (.clk_in(clk_65mhz), .rst_in(btnc), .volume(volume_to_play), .met_volume(sw[3:1]),
                      .audio0_in(raw_audio_out[0]), 
                      .audio1_in(raw_audio_out[1]), 
                      .audio2_in(raw_audio_out[2]), 
                      .audio3_in(raw_audio_out[3]), 
-                     .metronome_in(8'b0), .audio_out(vol_out));
+                     .metronome_in(metronome_raw_audio), .audio_out(vol_out));
     
-    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in(sw[0] ? raw_keyboard : {vol_out, 16'b0, beat_count}), .cat_out({1'b0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
+    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in({latest_valid_beat[0], metronome_raw_audio, 7'b0, metronome, beat_count}), .cat_out({1'b0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     
-    assign led[12:0] = {10'b0,track};
+    assign led[2:0] = {metronome_main,track};
     
     // hcount represents hcount 2 ticks in the future, hcount_reg2 is the current hcount (actually displayed)
     // this allows to predict what the image should be and initiate a rom read early

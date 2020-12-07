@@ -469,7 +469,7 @@ module octave_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [8:0] image_addr;   // num of bits for 32x32 ROM
     logic [7:0] image_bits, mapped;
     logic [3:0] pix_color;
     
@@ -525,7 +525,7 @@ module volume_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [8:0] image_addr;   // num of bits for 32x32 ROM
     logic [7:0] image_bits, mapped;
     logic [3:0] pix_color;
     
@@ -554,7 +554,7 @@ module track0_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [8:0] image_addr;   // num of bits for 32x32 ROM
     logic [7:0] image_bits, mapped;
     logic [11:0] pix_color;
     
@@ -583,7 +583,7 @@ module track1_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [8:0] image_addr;   // num of bits for 32x32 ROM
     logic [7:0] image_bits, mapped;
     logic [11:0] pix_color;
     
@@ -612,7 +612,7 @@ module track2_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [8:0] image_addr;   // num of bits for 32x32 ROM
     logic [7:0] image_bits, mapped;
     logic [11:0] pix_color;
     
@@ -641,7 +641,7 @@ module track3_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [8:0] image_addr;   // num of bits for 32x32 ROM
     logic [7:0] image_bits, mapped;
     logic [11:0] pix_color;
     

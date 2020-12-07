@@ -21,8 +21,8 @@ module metronome(input clk_in, input rst_in, input step_in, input signal_main, i
     tone_generator  #(.PHASE_INCR(32'd40000000)) met_sec(.clk_in(clk_in), .rst_in(rst_in), .octave_in(3'b100), .instrument(3'b000),  
                                .step_in(step_in), .amp_out(met_tone_secondary));
                                
-    assign amp_out = (signal_main ? (met_tone_main<<1) : 0)
-        + (signal_secondary ? (met_tone_secondary<<1) : 0);                            
+    assign amp_out = (signal_main ? (met_tone_main<<2) : 0)
+        + (signal_secondary ? (met_tone_secondary<<2) : 0);                            
 endmodule
 
 module octave( input clk_in, input rst_in,

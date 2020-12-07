@@ -21,6 +21,7 @@ module recorder( input clk_in, input rst_in, input rst_beat_count, input rst_tra
     logic [23:0] metronome_ctr = 0;
     logic [7:0] beat_ctr = 0;
     
+    // metronome signals for the strong beat and the weak beats
     assign metronome_main = ((metronome_ctr > METRONOME_INTERVAL_MAX) && (beat_ctr[1:0] == 2'b11)) 
         || ((metronome_ctr < METRONOME_INTERVAL_MIN) && (beat_ctr[1:0] == 2'b00));     
     assign metronome_secondary = (metronome_ctr > METRONOME_INTERVAL_MAX) || (metronome_ctr < METRONOME_INTERVAL_MIN);
@@ -29,16 +30,19 @@ module recorder( input clk_in, input rst_in, input rst_beat_count, input rst_tra
     logic [12:0] record_notes_out [3:0];
     logic [2:0] record_octave_out [3:0];
     logic [2:0] record_instrument_out [3:0];
+    
+    // pass input through to output if currently recording, else read the bram and set that as the output if that section of bram is valid
     genvar i;
     generate
         for (i=0; i<4; i=i+1) begin
            assign record_notes_out[i] = (record && track==i) ? notes_in : ((beat_ctr < latest_valid_beat[i]) ? record_out[i][12:0] : 0);
            assign record_octave_out[i] = (record && track==i) ? octave_in : ((beat_ctr < latest_valid_beat[i]) ? record_out[i][15:13] : 3'b100);
-           assign record_instrument_out[i] = (record && track==i) ? instrument_in : ((beat_ctr < latest_valid_beat[i]) ? record_out[i][17] : 0);
+           assign record_instrument_out[i] = (record && track==i) ? instrument_in : ((beat_ctr < latest_valid_beat[i]) ? record_out[i][19:17] : 0);
         end
     endgenerate
     logic write = 0;
-
+    
+    // four brams, one for each track. each stores the instrument, octave, and notes at each sample interval.
     blk_mem_gen_0 rec_0(.addra(beat_ctr), .clka(clk_in), 
              .dina({instrument_in, 1'b0, octave_in, notes_in}), 
              .douta(record_out[0]), .wea(write && track == 0));
@@ -78,7 +82,7 @@ module recorder( input clk_in, input rst_in, input rst_beat_count, input rst_tra
            if (record) begin
                write <= 1;
                latest_valid_beat[track] <= (latest_valid_beat[track]==LAST_VALID_BEAT) ? LAST_VALID_BEAT : 
-                   ((latest_valid_beat[track] > beat_ctr) ? latest_valid_beat[track] : beat_ctr); // might be off by one...check soon
+                   ((latest_valid_beat[track] > beat_ctr) ? latest_valid_beat[track] : beat_ctr);
            end
        end else begin
            metronome_ctr <= metronome_ctr + 1;

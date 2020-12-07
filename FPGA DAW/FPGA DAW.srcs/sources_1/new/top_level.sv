@@ -154,7 +154,7 @@ module top_level(
                      .audio3_in(raw_audio_out[3]), 
                      .metronome_in(metronome_raw_audio), .audio_out(vol_out));
     
-    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in({latest_valid_beat[0], metronome_raw_audio, 7'b0, metronome, beat_count}), .cat_out({1'b0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
+    seven_seg_controller seven_seg_mod (.clk_in(clk_65mhz), .rst_in(btnc), .val_in({latest_valid_beat[0], metronome_raw_audio, 7'b0, metronome_main, beat_count}), .cat_out({1'b0,cg,cf,ce,cd,cc,cb,ca}), .an_out(an));
 //    effects effects_mod ();
     
     

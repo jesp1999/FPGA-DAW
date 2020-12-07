@@ -135,7 +135,6 @@ module tone_generator ( input clk_in, input rst_in, //clock and reset
                         output logic [7:0] amp_out); //output phase   
     parameter PHASE_INCR = 32'b1000_0000_0000_0000_0000_0000_0000_0000>>5; 
     logic [31:0] phase_incr_octave = (PHASE_INCR>>4)<<octave_in;
-    logic [7:0] divider;
     logic [31:0] phase;
     logic [7:0] amp, amp_inst0, amp_inst1, amp_inst2, amp_inst3, amp_inst4, amp_inst5, amp_inst6, amp_inst7;
     
@@ -165,7 +164,6 @@ module tone_generator ( input clk_in, input rst_in, //clock and reset
     
     always_ff @(posedge clk_in)begin
         if (rst_in)begin
-            divider <= 8'b0;
             phase <= 32'b0;
         end else if (step_in)begin
             phase <= phase+phase_incr_octave;

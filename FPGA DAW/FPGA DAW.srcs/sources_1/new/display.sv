@@ -37,6 +37,9 @@ module display(
         blob_keyboard_track3 (.keys(keys[3]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(keyboard_track3_pixel));
        
        
+       ////////////////////////////////
+       //TRACK//CONFIG//DRAWING//CODE//
+       ////////////////////////////////
        
         logic [11:0] config_track0_pixel, config_track1_pixel, config_track2_pixel, config_track3_pixel;
         track_config_blob #(.KEYBOARD_ORIGIN_X(64 + 4), .KEYBOARD_ORIGIN_Y(350))
@@ -52,12 +55,18 @@ module display(
         blob_config_track3 (.octave(octave[3]), .instrument(instrument[3]), .volume(volume[3]), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(config_track3_pixel));
       
       
-      
+        ////////////////////////////////////
+        //WAVEFORM//HEATMAP//DRAWING//CODE//
+        ////////////////////////////////////
+        
         logic [11:0] waveform_pixel;
         waveform_blob #(.WAVEFORM_ORIGIN_X(128), .WAVEFORM_ORIGIN_Y(64), .BEAT_BAR_ORIGIN_Y(32), .BEAT_BAR_HEIGHT(244))
         blob_waveform (.clk_in(clk_in), .rst_in(rst_in), .beat(beat), .latest_valid_beat(latest_valid_beat), .notes(keys), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(waveform_pixel));
       
       
+        /////////////////////////////
+        //TEXT//ICON//DRAWING//CODE//
+        /////////////////////////////
       
         logic [11:0] octave_text_pixel, instrument_text_pixel, volume_text_pixel, track0_wfrm_text_pixel, track1_wfrm_text_pixel, track2_wfrm_text_pixel, track3_wfrm_text_pixel, track0_track_text_pixel, track1_track_text_pixel, track2_track_text_pixel, track3_track_text_pixel;
         logic [11:0] track3_track_text_pixel_reg1, track3_track_text_pixel_reg2;
@@ -85,7 +94,12 @@ module display(
         track3_text_blob blob_track3_track_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .select_in(track==2'b11), .x_in(64 + 4 + 666 + 54), .y_in(350 - 9 - 8), .pixel_in(track2_track_text_pixel), .pixel_out(track3_track_text_pixel));
        
         
+        /////////////////////////////////
+        //PIXEL//SELECTION//MULTIPLEXER//
+        /////////////////////////////////
+        
         always_ff @(posedge clk_in) begin
+            // Every section of the screen should be mutually-exclusive, so we would expect at most one to differ from the background - select the first one
             if (keyboard_track0_pixel != BACKGROUND_COLOR) begin
                 pixel_out <= keyboard_track0_pixel;
             end else if (keyboard_track1_pixel != BACKGROUND_COLOR) begin
@@ -109,6 +123,7 @@ module display(
             end else begin
                 pixel_out <= BACKGROUND_COLOR;
             end
+            // Pipelining for Image ROMs to counter 2-cycle delay
             track3_track_text_pixel_reg2 <= track3_track_text_pixel_reg1;
             track3_track_text_pixel_reg1 <= track3_track_text_pixel;
         end
@@ -116,6 +131,7 @@ module display(
 endmodule
 
 
+// Displays the waveform heatmap, indicating which notes have been recorded on which tracks
 module waveform_blob
    #(parameter WAVEFORM_ORIGIN_X = 128,
                WAVEFORM_ORIGIN_Y = 64,
@@ -143,14 +159,18 @@ module waveform_blob
     logic [11:0] note_colors [3:0];
     logic [3:0] track0_note_sum, track1_note_sum, track2_note_sum, track3_note_sum;
     
+    // Count the number of notes being played at a given instant
     sum13 track0_summer (.bit_vector(notes[0]), .sum(track0_note_sum));
     sum13 track1_summer (.bit_vector(notes[1]), .sum(track1_note_sum));
     sum13 track2_summer (.bit_vector(notes[2]), .sum(track2_note_sum));
     sum13 track3_summer (.bit_vector(notes[3]), .sum(track3_note_sum));
     
+    
+    // Converts position-on-screen to beat for indexing into notes_buffer (relies on NOTE_WIDTH = 2, no spacing)
     assign selected_beat = {hcount_in - WAVEFORM_ORIGIN_X}[8:1];
             
-            
+    
+    // Drawing of bar-lines to indicate where tracks are constrained
     logic [11:0] barline_track0_pixel, barline_track1_pixel, barline_track2_pixel, barline_track3_pixel;
     rectangle_blob  #(.WIDTH(256*NOTE_WIDTH), .HEIGHT(BAR_LINE_THICKNESS), .COLOR(BAR_LINE_COLOR))
     track0_bar_line (.x_in(WAVEFORM_ORIGIN_X), .y_in(WAVEFORM_ORIGIN_Y + (WAVEFORM_THICKNESS - BAR_LINE_THICKNESS)/2), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(pixel_in), .pixel_out(barline_track0_pixel));
@@ -165,12 +185,15 @@ module waveform_blob
     track3_bar_line (.x_in(WAVEFORM_ORIGIN_X), .y_in(WAVEFORM_ORIGIN_Y + 3*WAVEFORM_SPACING + (7*WAVEFORM_THICKNESS - BAR_LINE_THICKNESS)/2), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(barline_track2_pixel), .pixel_out(barline_track3_pixel));
     
     
+    // Neglects to draw tracks which have been erased
     logic [2:0] selector_in_track0, selector_in_track1, selector_in_track2, selector_in_track3;
     assign selector_in_track0 = (selected_beat <= latest_valid_beat[0]) ? notes_buffer[selected_beat][0] : 3'b0;
     assign selector_in_track1 = (selected_beat <= latest_valid_beat[1]) ? notes_buffer[selected_beat][1] : 3'b0;
     assign selector_in_track2 = (selected_beat <= latest_valid_beat[2]) ? notes_buffer[selected_beat][2] : 3'b0;
     assign selector_in_track3 = (selected_beat <= latest_valid_beat[3]) ? notes_buffer[selected_beat][3] : 3'b0;
     
+    
+    // Color LUT based on the number of notes being played at a given time
     color_picker track0_color (.selector_in(selector_in_track0), .background_pixel_in(barline_track3_pixel), .color_out(note_colors[0]));
     color_picker track1_color (.selector_in(selector_in_track1), .background_pixel_in(barline_track3_pixel), .color_out(note_colors[1]));
     color_picker track2_color (.selector_in(selector_in_track2), .background_pixel_in(barline_track3_pixel), .color_out(note_colors[2]));
@@ -179,14 +202,15 @@ module waveform_blob
     
     always_ff @(posedge clk_in) begin
         if (rst_in) begin
-           for (integer i = 0; i < 256; i = i + 1) begin
+            // Hard-reset empties the notes_buffer
+            for (integer i = 0; i < 256; i = i + 1) begin
                 for (integer j = 0; j < 4; j = j + 1) begin
                     notes_buffer[i][j] <= 3'b0;
                 end
             end
             prev_beat <= 8'b0;
         end else begin
-            
+            // Trigger a write to the buffer on the edge of a beat-change with the number of notes being played (only able to support 7 notes at once, limited by keyboard)
             if (beat != prev_beat) begin
                 notes_buffer[beat][0] <= track0_note_sum[2:0];
                 notes_buffer[beat][1] <= track1_note_sum[2:0];
@@ -194,24 +218,26 @@ module waveform_blob
                 notes_buffer[beat][3] <= track3_note_sum[2:0];
             end
             
+            // Draw the dynamic aspects of the waveform heatmap
             if (vcount_in >= BEAT_BAR_ORIGIN_Y && vcount_in < (BEAT_BAR_ORIGIN_Y + BEAT_BAR_HEIGHT) &&
                 hcount_in == WAVEFORM_ORIGIN_X + (beat << 1)) begin
-                //vertical bar at note
+                // Vertical bar at note
                 pixel_out <= BEAT_BAR_COLOR;
             end else if (hcount_in >= WAVEFORM_ORIGIN_X && hcount_in < WAVEFORM_ORIGIN_X + 256*NOTE_WIDTH) begin
                 if (vcount_in >= (WAVEFORM_ORIGIN_Y) && vcount_in < (WAVEFORM_ORIGIN_Y + WAVEFORM_THICKNESS)) begin
-                    //track 0 beat
+                    // Track 0 notes
                     pixel_out <= note_colors[0];
                 end else if (vcount_in >= (WAVEFORM_ORIGIN_Y + WAVEFORM_THICKNESS + WAVEFORM_SPACING) && vcount_in < (WAVEFORM_ORIGIN_Y + 2*WAVEFORM_THICKNESS + WAVEFORM_SPACING)) begin
-                    //track 1 beat
+                    // Track 1 notes
                     pixel_out <= note_colors[1];
                 end else if (vcount_in >= (WAVEFORM_ORIGIN_Y + 2*WAVEFORM_THICKNESS + 2*WAVEFORM_SPACING) && vcount_in < (WAVEFORM_ORIGIN_Y + 3*WAVEFORM_THICKNESS + 2*WAVEFORM_SPACING)) begin
-                    //track 2 beat
+                    // Track 2 notes
                     pixel_out <= note_colors[2];
                 end else if (vcount_in >= (WAVEFORM_ORIGIN_Y + 3*WAVEFORM_THICKNESS + 3*WAVEFORM_SPACING) && vcount_in < (WAVEFORM_ORIGIN_Y + 4*WAVEFORM_THICKNESS + 3*WAVEFORM_SPACING)) begin
-                    //track 3 beat
+                    // Track 3 notes
                     pixel_out <= note_colors[3];
                 end else begin
+                    // Background (what was pipelined through the barlines prior)
                     pixel_out <= barline_track3_pixel;
                 end
             end else begin
@@ -223,25 +249,27 @@ module waveform_blob
 endmodule
 
 
+// Color LUT for waveform heatmap
 module color_picker (input logic [2:0] selector_in,
                      input logic [11:0] background_pixel_in,
                      output logic [11:0] color_out);
     always_comb begin
         case(selector_in)
-        3'b000: color_out = background_pixel_in;
-        3'b001: color_out = 12'h00F;
-        3'b010: color_out = 12'h7EF;
-        3'b011: color_out = 12'h0F0;
-        3'b100: color_out = 12'hFF0;
-        3'b101: color_out = 12'hF70;
-        3'b110: color_out = 12'hF00;
-        3'b111: color_out = 12'hD43;
-        default: color_out = background_pixel_in;
+            3'b000: color_out = background_pixel_in;
+            3'b001: color_out = 12'h00F;
+            3'b010: color_out = 12'h7EF;
+            3'b011: color_out = 12'h0F0;
+            3'b100: color_out = 12'hFF0;
+            3'b101: color_out = 12'hF70;
+            3'b110: color_out = 12'hF00;
+            3'b111: color_out = 12'hD43;
+            default: color_out = background_pixel_in;
         endcase
     end
 endmodule
 
 
+// Displays a keyboard controlled by a one-hot keys bit-vector at the specified position
 module keyboard_blob
    #(parameter KEYBOARD_ORIGIN_X = 0,
                KEYBOARD_ORIGIN_Y = 0,
@@ -263,52 +291,52 @@ module keyboard_blob
     localparam BLACK_KEY_OFFSET = 3 * (WHITE_KEY_WIDTH + KEY_SPACING) / 4;
     
     
-        logic [11:0] CPix, CSharpPix, DPix, DSharpPix, EPix, FPix, FSharpPix, GPix, GSharpPix, APix, ASharpPix, BPix;
-        logic [11:0] sine_img_pixel, sine_icon_pixel, trng_img_pixel, trng_icon_pixel;
-         
-        selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_C (.x_in(KEYBOARD_ORIGIN_X), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[12]), .pixel_in(pixel_in), .pixel_out(CPix));
-        
-        selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_D (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[10]), .pixel_in(CPix), .pixel_out(DPix));
-        
-        selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
-        blob_CSharp (.x_in(KEYBOARD_ORIGIN_X + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[11]), .pixel_in(DPix), .pixel_out(CSharpPix));
-         
-        selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_E (.x_in(KEYBOARD_ORIGIN_X + 2*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[8]), .pixel_in(CSharpPix), .pixel_out(EPix));
-         
-        selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
-        blob_DSharp (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[9]), .pixel_in(EPix), .pixel_out(DSharpPix));
-       
-        selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_F (.x_in(KEYBOARD_ORIGIN_X + 3*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[7]), .pixel_in(DSharpPix), .pixel_out(FPix));
-       
-        selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_G (.x_in(KEYBOARD_ORIGIN_X + 4*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[5]), .pixel_in(FPix), .pixel_out(GPix));
-       
-        selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
-        blob_FSharp (.x_in(KEYBOARD_ORIGIN_X + 3*(WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[6]), .pixel_in(GPix), .pixel_out(FSharpPix));
-       
-        selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_A (.x_in(KEYBOARD_ORIGIN_X + 5*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[3]), .pixel_in(FSharpPix), .pixel_out(APix));
-       
-        selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
-        blob_GSharp (.x_in(KEYBOARD_ORIGIN_X + 4*(WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[4]), .pixel_in(APix), .pixel_out(GSharpPix));
-       
-        selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_B (.x_in(KEYBOARD_ORIGIN_X + 6*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[1]), .pixel_in(GSharpPix), .pixel_out(BPix));
-       
-        selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
-        blob_ASharp (.x_in(KEYBOARD_ORIGIN_X + 5*(WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[2]), .pixel_in(BPix), .pixel_out(ASharpPix));
-       
-        selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
-        blob_C2 (.x_in(KEYBOARD_ORIGIN_X + 7*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[0]), .pixel_in(ASharpPix), .pixel_out(pixel_out));
-        
-        
+    // Selectable blobs are relatively lightweight, so we pipeline a pixel through each blob on the keyboard in an order set to emulate element depth (last element is furthermost out of the screen)
+    logic [11:0] CPix, CSharpPix, DPix, DSharpPix, EPix, FPix, FSharpPix, GPix, GSharpPix, APix, ASharpPix, BPix;
+    logic [11:0] sine_img_pixel, sine_icon_pixel, trng_img_pixel, trng_icon_pixel;
+     
+    selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
+    blob_C (.x_in(KEYBOARD_ORIGIN_X), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[12]), .pixel_in(pixel_in), .pixel_out(CPix));
+    
+    selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
+    blob_D (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[10]), .pixel_in(CPix), .pixel_out(DPix));
+    
+    selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
+    blob_CSharp (.x_in(KEYBOARD_ORIGIN_X + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[11]), .pixel_in(DPix), .pixel_out(CSharpPix));
+     
+    selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
+    blob_E (.x_in(KEYBOARD_ORIGIN_X + 2*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[8]), .pixel_in(CSharpPix), .pixel_out(EPix));
+     
+    selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
+    blob_DSharp (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[9]), .pixel_in(EPix), .pixel_out(DSharpPix));
+   
+    selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
+    blob_F (.x_in(KEYBOARD_ORIGIN_X + 3*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[7]), .pixel_in(DSharpPix), .pixel_out(FPix));
+   
+    selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
+    blob_G (.x_in(KEYBOARD_ORIGIN_X + 4*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[5]), .pixel_in(FPix), .pixel_out(GPix));
+   
+    selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
+    blob_FSharp (.x_in(KEYBOARD_ORIGIN_X + 3*(WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[6]), .pixel_in(GPix), .pixel_out(FSharpPix));
+   
+    selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
+    blob_A (.x_in(KEYBOARD_ORIGIN_X + 5*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[3]), .pixel_in(FSharpPix), .pixel_out(APix));
+   
+    selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
+    blob_GSharp (.x_in(KEYBOARD_ORIGIN_X + 4*(WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[4]), .pixel_in(APix), .pixel_out(GSharpPix));
+   
+    selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
+    blob_B (.x_in(KEYBOARD_ORIGIN_X + 6*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[1]), .pixel_in(GSharpPix), .pixel_out(BPix));
+   
+    selectable_blob #(.WIDTH(BLACK_KEY_WIDTH), .HEIGHT(BLACK_KEY_HEIGHT), .COLOR(BLACK_KEY_COLOR), .SELECTED_COLOR(BLACK_SELECTED_COLOR))
+    blob_ASharp (.x_in(KEYBOARD_ORIGIN_X + 5*(WHITE_KEY_WIDTH + KEY_SPACING) + BLACK_KEY_OFFSET), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[2]), .pixel_in(BPix), .pixel_out(ASharpPix));
+   
+    selectable_blob  #(.WIDTH(WHITE_KEY_WIDTH), .HEIGHT(WHITE_KEY_HEIGHT), .COLOR(WHITE_KEY_COLOR), .SELECTED_COLOR(WHITE_SELECTED_COLOR))
+    blob_C2 (.x_in(KEYBOARD_ORIGIN_X + 7*(WHITE_KEY_WIDTH + KEY_SPACING)), .y_in(KEYBOARD_ORIGIN_Y), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(keys[0]), .pixel_in(ASharpPix), .pixel_out(pixel_out)); 
 endmodule
-   
-   
+
+
+// Displays the track configuration with volume, octave, and instrument selected per-track
 module track_config_blob
    #(parameter KEYBOARD_ORIGIN_X = 0,
                KEYBOARD_ORIGIN_Y = 0,
@@ -340,6 +368,7 @@ module track_config_blob
         logic [11:0] inst_0_pix, inst_1_pix, inst_2_pix, inst_3_pix, inst_4_pix, inst_5_pix, inst_6_pix, inst_7_pix;
         logic [11:0] vol_0_pix, vol_1_pix, vol_2_pix, vol_3_pix, vol_4_pix, vol_5_pix, vol_6_pix, vol_7_pix;
         
+        // Octave selector
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(OCTAVE_DESELECTED_COLOR), .SELECTED_COLOR(OCTAVE_SELECTED_COLOR))
         blob_8ve_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b000), .pixel_in(pixel_in), .pixel_out(octave_0_pix));
         
@@ -365,6 +394,7 @@ module track_config_blob
         blob_8ve_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(octave==3'b111), .pixel_in(octave_6_pix), .pixel_out(octave_7_pix));
         
         
+        // Instrument selector
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(INSTRUMENT_DESELECTED_COLOR), .SELECTED_COLOR(INSTRUMENT_SELECTED_COLOR))
         blob_inst_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b000), .pixel_in(octave_7_pix), .pixel_out(inst_0_pix));
         
@@ -390,6 +420,7 @@ module track_config_blob
         blob_inst_7 (.x_in(KEYBOARD_ORIGIN_X + (15*WHITE_KEY_WIDTH + 14*KEY_SPACING - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + ICON_SPACING + ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(instrument==3'b111), .pixel_in(inst_6_pix), .pixel_out(inst_7_pix));
         
         
+        // Volume selector
         selectable_blob  #(.WIDTH(ICON_WIDTH), .HEIGHT(ICON_HEIGHT), .COLOR(VOLUME_DESELECTED_COLOR), .SELECTED_COLOR(VOLUME_SELECTED_COLOR))
         blob_vol_0 (.x_in(KEYBOARD_ORIGIN_X + (WHITE_KEY_WIDTH - ICON_WIDTH)/2), .y_in(KEYBOARD_ORIGIN_Y + WHITE_KEY_HEIGHT + 32 + 2*ICON_SPACING + 2*ICON_HEIGHT), .hcount_in(hcount_in), .vcount_in(vcount_in), .selection(volume==3'b000), .pixel_in(inst_7_pix), .pixel_out(vol_0_pix));
         
@@ -418,10 +449,12 @@ module track_config_blob
         
 endmodule
 
+
+// Displays a regular rectangular blob of a given color
 module rectangle_blob
-   #(parameter WIDTH = 64,               // default width: 64 pixels
-               HEIGHT = 64,              // default height: 64 pixels
-               COLOR = 12'hFFF)          // default color: white)
+   #(parameter WIDTH = 64,
+               HEIGHT = 64,
+               COLOR = 12'hFFF)
    (input [10:0] x_in,hcount_in,
     input [9:0] y_in,vcount_in,
     input logic [11:0] pixel_in,
@@ -436,11 +469,13 @@ module rectangle_blob
     end
 endmodule
 
+
+// Displays a selectable rectangular blob with a different color depending on the selection input
 module selectable_blob
-   #(parameter WIDTH = 64,               // default width: 64 pixels
-               HEIGHT = 64,              // default height: 64 pixels
-               COLOR = 12'hFFF,          // default color: white
-               SELECTED_COLOR = 12'hF00) // default color: red
+   #(parameter WIDTH = 64,
+               HEIGHT = 64,
+               COLOR = 12'hFFF,
+               SELECTED_COLOR = 12'hF00)
    (input [10:0] x_in,hcount_in,
     input [9:0] y_in,vcount_in,
     input selection,
@@ -460,17 +495,19 @@ module selectable_blob
     end
 endmodule
 
+
+// Displays the "octave" text icon
 module octave_text_blob
-   #(parameter WIDTH = 35,     // default picture width
-               HEIGHT = 9)    // default picture height)
+   #(parameter WIDTH = 35,
+               HEIGHT = 9)
    (input logic pixel_clk_in,
     input logic [10:0] x_in, hcount_in,
     input logic [9:0] y_in, vcount_in,
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
-    logic [7:0] image_bits, mapped;
+    logic [8:0] image_addr;
+    logic [7:0] image_bits;
     logic [3:0] pix_color;
     
     logic [11:0] pix_reg1, pix_reg2;
@@ -489,17 +526,19 @@ module octave_text_blob
     end
 endmodule
 
+
+// Displays the "instrument" text icon
 module instrument_text_blob
-   #(parameter WIDTH = 55,     // default picture width
-               HEIGHT = 9)    // default picture height)
+   #(parameter WIDTH = 55,
+               HEIGHT = 9)
    (input logic pixel_clk_in,
     input logic [10:0] x_in, hcount_in,
     input logic [9:0] y_in, vcount_in,
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
-    logic [7:0] image_bits, mapped;
+    logic [9:0] image_addr;
+    logic [7:0] image_bits;
     logic [3:0] pix_color;
     
     // calculate rom address and read the location
@@ -516,17 +555,19 @@ module instrument_text_blob
     end
 endmodule
 
+
+// Displays the "volume" text icon
 module volume_text_blob
-   #(parameter WIDTH = 35,     // default picture width
-               HEIGHT = 9)    // default picture height)
+   #(parameter WIDTH = 35,
+               HEIGHT = 9)
    (input logic pixel_clk_in,
     input logic [10:0] x_in, hcount_in,
     input logic [9:0] y_in, vcount_in,
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
-    logic [7:0] image_bits, mapped;
+    logic [8:0] image_addr;
+    logic [7:0] image_bits;
     logic [3:0] pix_color;
     
     // calculate rom address and read the location
@@ -543,10 +584,12 @@ module volume_text_blob
     end
 endmodule
 
+
+// Displays the "track0" text icon
 module track0_text_blob
-   #(parameter WIDTH = 35,     // default picture width
+   #(parameter WIDTH = 35,
                HEIGHT = 9,
-               SELECTED_COLOR = 12'hFFF)    // default picture height)
+               SELECTED_COLOR = 12'hFFF)
    (input logic pixel_clk_in,
     input logic [10:0] x_in, hcount_in,
     input logic [9:0] y_in, vcount_in,
@@ -554,8 +597,8 @@ module track0_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
-    logic [7:0] image_bits, mapped;
+    logic [8:0] image_addr;
+    logic [7:0] image_bits;
     logic [11:0] pix_color;
     
     // calculate rom address and read the location
@@ -572,10 +615,12 @@ module track0_text_blob
     end
 endmodule
 
+
+// Displays the "track1" text icon
 module track1_text_blob
-   #(parameter WIDTH = 35,     // default picture width
+   #(parameter WIDTH = 35,
                HEIGHT = 9,
-               SELECTED_COLOR = 12'hFFF)    // default picture height)
+               SELECTED_COLOR = 12'hFFF)
    (input logic pixel_clk_in,
     input logic [10:0] x_in, hcount_in,
     input logic [9:0] y_in, vcount_in,
@@ -583,8 +628,8 @@ module track1_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
-    logic [7:0] image_bits, mapped;
+    logic [8:0] image_addr;
+    logic [7:0] image_bits;
     logic [11:0] pix_color;
     
     // calculate rom address and read the location
@@ -601,10 +646,12 @@ module track1_text_blob
     end
 endmodule
 
+
+// Displays the "track2" text icon
 module track2_text_blob
-   #(parameter WIDTH = 35,     // default picture width
+   #(parameter WIDTH = 35,
                HEIGHT = 9,
-               SELECTED_COLOR = 12'hFFF)    // default picture height)
+               SELECTED_COLOR = 12'hFFF)
    (input logic pixel_clk_in,
     input logic [10:0] x_in, hcount_in,
     input logic [9:0] y_in, vcount_in,
@@ -612,8 +659,8 @@ module track2_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
-    logic [7:0] image_bits, mapped;
+    logic [8:0] image_addr;
+    logic [7:0] image_bits;
     logic [11:0] pix_color;
     
     // calculate rom address and read the location
@@ -630,10 +677,12 @@ module track2_text_blob
     end
 endmodule
 
+
+// Displays the "track3" text icon
 module track3_text_blob
-   #(parameter WIDTH = 35,     // default picture width
+   #(parameter WIDTH = 35,
                HEIGHT = 9,
-               SELECTED_COLOR = 12'hFFF)    // default picture height)
+               SELECTED_COLOR = 12'hFFF)
    (input logic pixel_clk_in,
     input logic [10:0] x_in, hcount_in,
     input logic [9:0] y_in, vcount_in,
@@ -641,8 +690,8 @@ module track3_text_blob
     input logic [11:0] pixel_in,
     output logic [11:0] pixel_out);
 
-    logic [9:0] image_addr;   // num of bits for 32x32 ROM
-    logic [7:0] image_bits, mapped;
+    logic [8:0] image_addr;
+    logic [7:0] image_bits;
     logic [11:0] pix_color;
     
     // calculate rom address and read the location

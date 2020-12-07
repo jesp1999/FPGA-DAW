@@ -33,7 +33,7 @@ module mixer(
      (audio1_mix_in>>>TRACK_MULTIPLER) +
      (audio2_mix_in>>>TRACK_MULTIPLER) +
      (audio3_mix_in>>>TRACK_MULTIPLER) + 
-     (metronome_mix_in>>>TRACK_MULTIPLER); // add metronome
+     (metronome_mix_in>>>(TRACK_MULTIPLER+1)); // add metronome
     
 endmodule
 

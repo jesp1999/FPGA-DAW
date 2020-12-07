@@ -1,10 +1,10 @@
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2019.2 (win64) Build 2708876 Wed Nov  6 21:40:23 MST 2019
-// Date        : Sat Dec  5 01:01:14 2020
+// Date        : Sun Dec  6 21:35:14 2020
 // Host        : DESKTOP-5PA8C12 running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub {g:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA-DAW/FPGA DAW/FPGA
-//               DAW.srcs/sources_1/ip/octave_text_image_rom/octave_text_image_rom_stub.v}
+// Command     : write_verilog -force -mode synth_stub {G:/My Drive/Coursework/MIT/Fall 2020/6.111/FPGA/FPGA-DAW/FPGA
+//               DAW/FPGA DAW.srcs/sources_1/ip/octave_text_image_rom/octave_text_image_rom_stub.v}
 // Design      : octave_text_image_rom
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a100tcsg324-1

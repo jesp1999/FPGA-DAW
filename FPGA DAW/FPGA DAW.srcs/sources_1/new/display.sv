@@ -7,7 +7,9 @@ module display(
                input logic [9:0] vcount_next_in,
                input logic [10:0] hcount_curr_in,
                input logic [9:0] vcount_curr_in,
+               input logic [1:0] track,
                input logic [7:0] beat,
+               input logic [7:0] latest_valid_beat [3:0],
                input logic [2:0] octave [3:0],
                input logic [2:0] instrument [3:0],
                input logic [2:0] volume [3:0],
@@ -53,18 +55,34 @@ module display(
       
         logic [11:0] waveform_pixel;
         waveform_blob #(.WAVEFORM_ORIGIN_X(128), .WAVEFORM_ORIGIN_Y(64), .BEAT_BAR_ORIGIN_Y(32), .BEAT_BAR_HEIGHT(244))
-        blob_waveform (.clk_in(clk_in), .rst_in(rst_in), .beat(beat), .notes(keys), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(waveform_pixel));
+        blob_waveform (.clk_in(clk_in), .rst_in(rst_in), .beat(beat), .latest_valid_beat(latest_valid_beat), .notes(keys), .hcount_in(hcount_curr_in), .vcount_in(vcount_curr_in), .pixel_in(BACKGROUND_COLOR), .pixel_out(waveform_pixel));
       
       
       
-        logic [11:0] octave_text_pixel, instrument_text_pixel, volume_text_pixel;
-        logic [11:0] volume_text_pixel_reg1, volume_text_pixel_reg2;
+        logic [11:0] octave_text_pixel, instrument_text_pixel, volume_text_pixel, track0_wfrm_text_pixel, track1_wfrm_text_pixel, track2_wfrm_text_pixel, track3_wfrm_text_pixel, track0_track_text_pixel, track1_track_text_pixel, track2_track_text_pixel, track3_track_text_pixel;
+        logic [11:0] track3_track_text_pixel_reg1, track3_track_text_pixel_reg2;
         
         octave_text_blob blob_octave_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .x_in(2), .y_in(350 + 96 + 32 + 2), .pixel_in(BACKGROUND_COLOR), .pixel_out(octave_text_pixel));
 
         instrument_text_blob blob_instrument_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .x_in(2), .y_in(350 + 96 + 64 + 2), .pixel_in(octave_text_pixel), .pixel_out(instrument_text_pixel));
 
         volume_text_blob blob_volume_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .x_in(2), .y_in(350 + 96 + 96 + 2), .pixel_in(instrument_text_pixel), .pixel_out(volume_text_pixel));
+
+        track0_text_blob blob_track0_wfrm_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .select_in(track==2'b00), .x_in(128 - 35 - 16), .y_in(64 + (16 - 8)/2), .pixel_in(volume_text_pixel), .pixel_out(track0_wfrm_text_pixel));
+
+        track1_text_blob blob_track1_wfrm_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .select_in(track==2'b01), .x_in(128 - 35 - 16), .y_in(64 + 48 + (16 - 8)/2), .pixel_in(track0_wfrm_text_pixel), .pixel_out(track1_wfrm_text_pixel));
+
+        track2_text_blob blob_track2_wfrm_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .select_in(track==2'b10), .x_in(128 - 35 - 16), .y_in(64 + 96 + (16 - 8)/2), .pixel_in(track1_wfrm_text_pixel), .pixel_out(track2_wfrm_text_pixel));
+
+        track3_text_blob blob_track3_wfrm_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .select_in(track==2'b11), .x_in(128 - 35 - 16), .y_in(64 + 144 + (16 - 8)/2), .pixel_in(track2_wfrm_text_pixel), .pixel_out(track3_wfrm_text_pixel));
+
+        track0_text_blob blob_track0_track_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .select_in(track==2'b00), .x_in(64 + 4), .y_in(350 - 9 - 8), .pixel_in(track3_wfrm_text_pixel), .pixel_out(track0_track_text_pixel));
+
+        track1_text_blob blob_track1_track_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .select_in(track==2'b01), .x_in(64 + 4 + 222 + 18), .y_in(350 - 9 - 8), .pixel_in(track0_track_text_pixel), .pixel_out(track1_track_text_pixel));
+
+        track2_text_blob blob_track2_track_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .select_in(track==2'b10), .x_in(64 + 4 + 444 + 36), .y_in(350 - 9 - 8), .pixel_in(track1_track_text_pixel), .pixel_out(track2_track_text_pixel));
+
+        track3_text_blob blob_track3_track_text (.pixel_clk_in(clk_in), .hcount_in(hcount_next_in), .vcount_in(vcount_next_in), .select_in(track==2'b11), .x_in(64 + 4 + 666 + 54), .y_in(350 - 9 - 8), .pixel_in(track2_track_text_pixel), .pixel_out(track3_track_text_pixel));
        
         
         always_ff @(posedge clk_in) begin
@@ -84,15 +102,15 @@ module display(
                 pixel_out <= config_track2_pixel;
             end else if (config_track3_pixel != BACKGROUND_COLOR) begin
                 pixel_out <= config_track3_pixel;
-            end else if (volume_text_pixel_reg2 != BACKGROUND_COLOR) begin
-                pixel_out <= volume_text_pixel_reg2;
+            end else if (track3_track_text_pixel_reg2 != BACKGROUND_COLOR) begin
+                pixel_out <= track3_track_text_pixel_reg2;
             end else if (waveform_pixel != BACKGROUND_COLOR) begin
                 pixel_out <= waveform_pixel;
             end else begin
                 pixel_out <= BACKGROUND_COLOR;
             end
-            volume_text_pixel_reg2 <= volume_text_pixel_reg1;
-            volume_text_pixel_reg1 <= volume_text_pixel;
+            track3_track_text_pixel_reg2 <= track3_track_text_pixel_reg1;
+            track3_track_text_pixel_reg1 <= track3_track_text_pixel;
         end
        
 endmodule
@@ -103,14 +121,16 @@ module waveform_blob
                WAVEFORM_ORIGIN_Y = 64,
                BEAT_BAR_ORIGIN_Y = 32,
                BEAT_BAR_HEIGHT = 244,
-               NOTE_SPACING = 0,
                NOTE_WIDTH = 2,
                WAVEFORM_THICKNESS = 16,
                WAVEFORM_SPACING = 32,
-               BEAT_BAR_COLOR = 12'h333)
+               BAR_LINE_THICKNESS = 4,
+               BEAT_BAR_COLOR = 12'h333,
+               BAR_LINE_COLOR = 12'h666)
    (input logic clk_in,
     input logic rst_in,
     input logic [7:0] beat,
+    input logic [7:0] latest_valid_beat [3:0],
     input logic [12:0] notes [3:0],
     input logic [10:0] hcount_in,
     input logic [9:0] vcount_in,
@@ -130,16 +150,38 @@ module waveform_blob
     
     assign selected_beat = {hcount_in - WAVEFORM_ORIGIN_X}[8:1];
             
-    color_picker track0_color (.selector_in(notes_buffer[selected_beat][0]), .color_out(note_colors[0]));
-    color_picker track1_color (.selector_in(notes_buffer[selected_beat][1]), .color_out(note_colors[1]));
-    color_picker track2_color (.selector_in(notes_buffer[selected_beat][2]), .color_out(note_colors[2]));
-    color_picker track3_color (.selector_in(notes_buffer[selected_beat][3]), .color_out(note_colors[3]));
+            
+    logic [11:0] barline_track0_pixel, barline_track1_pixel, barline_track2_pixel, barline_track3_pixel;
+    rectangle_blob  #(.WIDTH(256*NOTE_WIDTH), .HEIGHT(BAR_LINE_THICKNESS), .COLOR(BAR_LINE_COLOR))
+    track0_bar_line (.x_in(WAVEFORM_ORIGIN_X), .y_in(WAVEFORM_ORIGIN_Y + (WAVEFORM_THICKNESS - BAR_LINE_THICKNESS)/2), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(pixel_in), .pixel_out(barline_track0_pixel));
+    
+    rectangle_blob  #(.WIDTH(256*NOTE_WIDTH), .HEIGHT(BAR_LINE_THICKNESS), .COLOR(BAR_LINE_COLOR))
+    track1_bar_line (.x_in(WAVEFORM_ORIGIN_X), .y_in(WAVEFORM_ORIGIN_Y + WAVEFORM_SPACING + (3*WAVEFORM_THICKNESS - BAR_LINE_THICKNESS)/2), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(barline_track0_pixel), .pixel_out(barline_track1_pixel));
+    
+    rectangle_blob  #(.WIDTH(256*NOTE_WIDTH), .HEIGHT(BAR_LINE_THICKNESS), .COLOR(BAR_LINE_COLOR))
+    track2_bar_line (.x_in(WAVEFORM_ORIGIN_X), .y_in(WAVEFORM_ORIGIN_Y + 2*WAVEFORM_SPACING + (5*WAVEFORM_THICKNESS - BAR_LINE_THICKNESS)/2), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(barline_track1_pixel), .pixel_out(barline_track2_pixel));
+    
+    rectangle_blob  #(.WIDTH(256*NOTE_WIDTH), .HEIGHT(BAR_LINE_THICKNESS), .COLOR(BAR_LINE_COLOR))
+    track3_bar_line (.x_in(WAVEFORM_ORIGIN_X), .y_in(WAVEFORM_ORIGIN_Y + 3*WAVEFORM_SPACING + (7*WAVEFORM_THICKNESS - BAR_LINE_THICKNESS)/2), .hcount_in(hcount_in), .vcount_in(vcount_in), .pixel_in(barline_track2_pixel), .pixel_out(barline_track3_pixel));
+    
+    
+    logic [2:0] selector_in_track0, selector_in_track1, selector_in_track2, selector_in_track3;
+    assign selector_in_track0 = (selected_beat <= latest_valid_beat[0]) ? notes_buffer[selected_beat][0] : 3'b0;
+    assign selector_in_track1 = (selected_beat <= latest_valid_beat[1]) ? notes_buffer[selected_beat][1] : 3'b0;
+    assign selector_in_track2 = (selected_beat <= latest_valid_beat[2]) ? notes_buffer[selected_beat][2] : 3'b0;
+    assign selector_in_track3 = (selected_beat <= latest_valid_beat[3]) ? notes_buffer[selected_beat][3] : 3'b0;
+    
+    color_picker track0_color (.selector_in(selector_in_track0), .background_pixel_in(barline_track3_pixel), .color_out(note_colors[0]));
+    color_picker track1_color (.selector_in(selector_in_track1), .background_pixel_in(barline_track3_pixel), .color_out(note_colors[1]));
+    color_picker track2_color (.selector_in(selector_in_track2), .background_pixel_in(barline_track3_pixel), .color_out(note_colors[2]));
+    color_picker track3_color (.selector_in(selector_in_track3), .background_pixel_in(barline_track3_pixel), .color_out(note_colors[3]));
+    
     
     always_ff @(posedge clk_in) begin
         if (rst_in) begin
-           for (integer i = 0; i < 4; i = i + 1) begin
-                for (integer j = 0; j < 256; j = j + 1) begin
-                    notes_buffer[i][j] = 3'b0;
+           for (integer i = 0; i < 256; i = i + 1) begin
+                for (integer j = 0; j < 4; j = j + 1) begin
+                    notes_buffer[i][j] <= 3'b0;
                 end
             end
             prev_beat <= 8'b0;
@@ -170,10 +212,10 @@ module waveform_blob
                     //track 3 beat
                     pixel_out <= note_colors[3];
                 end else begin
-                    pixel_out <= pixel_in;
+                    pixel_out <= barline_track3_pixel;
                 end
             end else begin
-                pixel_out <= pixel_in;
+                pixel_out <= barline_track3_pixel;
             end
             prev_beat <= beat;
         end
@@ -182,10 +224,11 @@ endmodule
 
 
 module color_picker (input logic [2:0] selector_in,
+                     input logic [11:0] background_pixel_in,
                      output logic [11:0] color_out);
     always_comb begin
         case(selector_in)
-        3'b000: color_out = 12'h777;
+        3'b000: color_out = background_pixel_in;
         3'b001: color_out = 12'h00F;
         3'b010: color_out = 12'h7EF;
         3'b011: color_out = 12'h0F0;
@@ -193,7 +236,7 @@ module color_picker (input logic [2:0] selector_in,
         3'b101: color_out = 12'hF70;
         3'b110: color_out = 12'hF00;
         3'b111: color_out = 12'hD43;
-        default: color_out = 12'h777;
+        default: color_out = background_pixel_in;
         endcase
     end
 endmodule
@@ -375,6 +418,24 @@ module track_config_blob
         
 endmodule
 
+module rectangle_blob
+   #(parameter WIDTH = 64,               // default width: 64 pixels
+               HEIGHT = 64,              // default height: 64 pixels
+               COLOR = 12'hFFF)          // default color: white)
+   (input [10:0] x_in,hcount_in,
+    input [9:0] y_in,vcount_in,
+    input logic [11:0] pixel_in,
+    output logic [11:0] pixel_out);
+
+    always_comb begin
+        if  ((hcount_in >= x_in && hcount_in < (x_in+WIDTH)) &&
+            (vcount_in >= y_in && vcount_in < (y_in+HEIGHT)))
+            pixel_out = COLOR;
+        else 
+            pixel_out = pixel_in;
+    end
+endmodule
+
 module selectable_blob
    #(parameter WIDTH = 64,               // default width: 64 pixels
                HEIGHT = 64,              // default height: 64 pixels
@@ -412,20 +473,19 @@ module octave_text_blob
     logic [7:0] image_bits, mapped;
     logic [3:0] pix_color;
     
+    logic [11:0] pix_reg1, pix_reg2;
+    
     // calculate rom address and read the location
     assign image_addr = (hcount_in-x_in) + (vcount_in-y_in) * WIDTH;
     octave_text_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
     
     assign pix_color = (image_bits == 8'h00) ? 8'hFF : 8'h00;
     
-    //assign pixel_out = {pix_color, pix_color, pix_color};
-    
-    // note the one clock cycle delay in pixel!
-    always_ff @ (posedge pixel_clk_in) begin
-        if ((hcount_in >= x_in && hcount_in < (x_in+WIDTH)) &&
-            (vcount_in >= y_in && vcount_in < (y_in+HEIGHT)))
-            pixel_out <= {pix_color, pix_color, pix_color};
-        else pixel_out <= pixel_in;
+    always_comb begin
+        if ((hcount_in >= (x_in+2) && hcount_in < (x_in+WIDTH+2)) &&
+            (vcount_in >= (y_in) && vcount_in < (y_in+HEIGHT)))
+            pixel_out = {pix_color, pix_color, pix_color};
+        else pixel_out = pixel_in;
     end
 endmodule
 
@@ -448,14 +508,11 @@ module instrument_text_blob
     
     assign pix_color = (image_bits == 8'h00) ? 8'hFF : 8'h00;
     
-    //assign pixel_out = {pix_color, pix_color, pix_color};
-    
-    // note the one clock cycle delay in pixel!
-    always_ff @ (posedge pixel_clk_in) begin
-        if ((hcount_in >= x_in && hcount_in < (x_in+WIDTH)) &&
-            (vcount_in >= y_in && vcount_in < (y_in+HEIGHT)))
-            pixel_out <= {pix_color, pix_color, pix_color};
-        else pixel_out <= pixel_in;
+    always_comb begin
+        if ((hcount_in >= (x_in+2) && hcount_in < (x_in+WIDTH+2)) &&
+            (vcount_in >= (y_in) && vcount_in < (y_in+HEIGHT)))
+            pixel_out = {pix_color, pix_color, pix_color};
+        else pixel_out = pixel_in;
     end
 endmodule
 
@@ -478,13 +535,126 @@ module volume_text_blob
     
     assign pix_color = (image_bits == 8'h00) ? 8'hFF : 8'h00;
     
-    //assign pixel_out = {pix_color, pix_color, pix_color};
+    always_comb begin
+        if ((hcount_in >= (x_in+2) && hcount_in < (x_in+WIDTH+2)) &&
+            (vcount_in >= (y_in) && vcount_in < (y_in+HEIGHT)))
+            pixel_out = {pix_color, pix_color, pix_color};
+        else pixel_out = pixel_in;
+    end
+endmodule
+
+module track0_text_blob
+   #(parameter WIDTH = 35,     // default picture width
+               HEIGHT = 9,
+               SELECTED_COLOR = 12'hFFF)    // default picture height)
+   (input logic pixel_clk_in,
+    input logic [10:0] x_in, hcount_in,
+    input logic [9:0] y_in, vcount_in,
+    input logic select_in,
+    input logic [11:0] pixel_in,
+    output logic [11:0] pixel_out);
+
+    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [7:0] image_bits, mapped;
+    logic [11:0] pix_color;
     
-    // note the one clock cycle delay in pixel!
-    always_ff @ (posedge pixel_clk_in) begin
-        if ((hcount_in >= x_in && hcount_in < (x_in+WIDTH)) &&
-            (vcount_in >= y_in && vcount_in < (y_in+HEIGHT)))
-            pixel_out <= {pix_color, pix_color, pix_color};
-        else pixel_out <= pixel_in;
+    // calculate rom address and read the location
+    assign image_addr = (hcount_in-x_in) + (vcount_in-y_in) * WIDTH;
+    track0_text_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
+    
+    assign pix_color = (image_bits == 8'h00) ? 12'hFFF : (select_in ? 12'hF00 : 12'h000);
+    
+    always_comb begin
+        if ((hcount_in >= (x_in+2) && hcount_in < (x_in+WIDTH+2)) &&
+            (vcount_in >= (y_in) && vcount_in < (y_in+HEIGHT)))
+            pixel_out = pix_color;
+        else pixel_out = pixel_in;
+    end
+endmodule
+
+module track1_text_blob
+   #(parameter WIDTH = 35,     // default picture width
+               HEIGHT = 9,
+               SELECTED_COLOR = 12'hFFF)    // default picture height)
+   (input logic pixel_clk_in,
+    input logic [10:0] x_in, hcount_in,
+    input logic [9:0] y_in, vcount_in,
+    input logic select_in,
+    input logic [11:0] pixel_in,
+    output logic [11:0] pixel_out);
+
+    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [7:0] image_bits, mapped;
+    logic [11:0] pix_color;
+    
+    // calculate rom address and read the location
+    assign image_addr = (hcount_in-x_in) + (vcount_in-y_in) * WIDTH;
+    track1_text_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
+    
+    assign pix_color = (image_bits == 8'h00) ? 12'hFFF : (select_in ? 12'hF00 : 12'h000);
+    
+    always_comb begin
+        if ((hcount_in >= (x_in+2) && hcount_in < (x_in+WIDTH+2)) &&
+            (vcount_in >= (y_in) && vcount_in < (y_in+HEIGHT)))
+            pixel_out = pix_color;
+        else pixel_out = pixel_in;
+    end
+endmodule
+
+module track2_text_blob
+   #(parameter WIDTH = 35,     // default picture width
+               HEIGHT = 9,
+               SELECTED_COLOR = 12'hFFF)    // default picture height)
+   (input logic pixel_clk_in,
+    input logic [10:0] x_in, hcount_in,
+    input logic [9:0] y_in, vcount_in,
+    input logic select_in,
+    input logic [11:0] pixel_in,
+    output logic [11:0] pixel_out);
+
+    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [7:0] image_bits, mapped;
+    logic [11:0] pix_color;
+    
+    // calculate rom address and read the location
+    assign image_addr = (hcount_in-x_in) + (vcount_in-y_in) * WIDTH;
+    track2_text_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
+    
+    assign pix_color = (image_bits == 8'h00) ? 12'hFFF : (select_in ? 12'hF00 : 12'h000);
+    
+    always_comb begin
+        if ((hcount_in >= (x_in+2) && hcount_in < (x_in+WIDTH+2)) &&
+            (vcount_in >= (y_in) && vcount_in < (y_in+HEIGHT)))
+            pixel_out = pix_color;
+        else pixel_out = pixel_in;
+    end
+endmodule
+
+module track3_text_blob
+   #(parameter WIDTH = 35,     // default picture width
+               HEIGHT = 9,
+               SELECTED_COLOR = 12'hFFF)    // default picture height)
+   (input logic pixel_clk_in,
+    input logic [10:0] x_in, hcount_in,
+    input logic [9:0] y_in, vcount_in,
+    input logic select_in,
+    input logic [11:0] pixel_in,
+    output logic [11:0] pixel_out);
+
+    logic [9:0] image_addr;   // num of bits for 32x32 ROM
+    logic [7:0] image_bits, mapped;
+    logic [11:0] pix_color;
+    
+    // calculate rom address and read the location
+    assign image_addr = (hcount_in-x_in) + (vcount_in-y_in) * WIDTH;
+    track3_text_image_rom  rom(.clka(pixel_clk_in), .addra(image_addr), .douta(image_bits));
+    
+    assign pix_color = (image_bits == 8'h00) ? 12'hFFF : (select_in ? 12'hF00 : 12'h000);
+    
+    always_comb begin
+        if ((hcount_in >= (x_in+2) && hcount_in < (x_in+WIDTH+2)) &&
+            (vcount_in >= (y_in) && vcount_in < (y_in+HEIGHT)))
+            pixel_out = pix_color;
+        else pixel_out = pixel_in;
     end
 endmodule

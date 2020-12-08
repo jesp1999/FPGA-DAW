@@ -12,8 +12,6 @@ module mixer(
              input logic [7:0] metronome_in,
              output logic [7:0] audio_out);
     
-    logic [2:0] track_count;
-    
     parameter TRACK_MULTIPLER = 2;
     
     logic signed [7:0] audio0_mix_in;
@@ -28,6 +26,7 @@ module mixer(
     volume_control track3 (.vol_in(volume[3]), .signal_in(audio3_in), .signal_out(audio3_mix_in));
     volume_control metronome0 (.vol_in(met_volume), .signal_in(metronome_in), .signal_out(metronome_mix_in));
     
+    // mix by adding, need to shift to not overload
     assign audio_out = 
      (audio0_mix_in>>>TRACK_MULTIPLER) +
      (audio1_mix_in>>>TRACK_MULTIPLER) +

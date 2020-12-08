@@ -11,6 +11,7 @@ module pwm (input clk_in, input rst_in, input [7:0] level_in, output logic pwm_o
     end
 endmodule
 
+// creates the two metronome sounds, one for the main beats and one for the secondary beats
 module metronome(input clk_in, input rst_in, input step_in, input signal_main, input signal_secondary, output logic [7:0] amp_out);
     logic [7:0] met_tone_main;
     logic [7:0] met_tone_secondary;
@@ -25,6 +26,7 @@ module metronome(input clk_in, input rst_in, input step_in, input signal_main, i
         + (signal_secondary ? (met_tone_secondary<<2) : 0);                            
 endmodule
 
+// generates audio output from notes, octave, and instrument
 module octave( input clk_in, input rst_in,
                 input step_in,
                 input logic [12:0] notes,
@@ -101,7 +103,7 @@ module octave( input clk_in, input rst_in,
         notes[1] +
         notes[0];
         
-    logic [3:0] note_multiplier;
+    logic [3:0] note_multiplier; // need to bit shift before summing to not overload the output
     always_comb begin
         if (note_count <= 1) note_multiplier = 1;
         else if (note_count <= 2) note_multiplier = 2;
@@ -109,7 +111,8 @@ module octave( input clk_in, input rst_in,
         else if (note_count <= 8) note_multiplier = 4;
         else note_multiplier = 5;
     end
-         
+    
+    // only add the notes that are currently being pressed
     assign amp_out = 
     (notes[12] ? (tone_C4>>note_multiplier) : 0) + 
     (notes[11] ? (tone_Cs4>>note_multiplier) : 0) + 
@@ -153,6 +156,8 @@ module tone_generator ( input clk_in, input rst_in, //clock and reset
     end
     
     assign amp_out = {~amp[7],amp[6:0]};
+    
+    // one look up table for each instrument
     lut0 lut_0(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp_inst0));
     lut1 lut_1(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp_inst1));
     lut2 lut_2(.clk_in(clk_in), .phase_in(phase[31:24]), .amp_out(amp_inst2));

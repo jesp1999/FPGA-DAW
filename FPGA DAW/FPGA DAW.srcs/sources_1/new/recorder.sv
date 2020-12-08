@@ -68,7 +68,7 @@ module recorder( input clk_in, input rst_in, input rst_beat_count, input rst_tra
        if (rst_in || rst_beat_count) begin
            metronome_ctr <= 0;
            beat_ctr <= 0;
-           if (rst_in) begin
+           if (rst_in) begin // reset counts for latest valid beat
                latest_valid_beat[0] <= 0;
                latest_valid_beat[1] <= 0;
                latest_valid_beat[2] <= 0;
@@ -81,6 +81,7 @@ module recorder( input clk_in, input rst_in, input rst_beat_count, input rst_tra
            beat_ctr <= beat_ctr + 1;
            if (record) begin
                write <= 1;
+               // increment latest_valid_beat if necessary
                latest_valid_beat[track] <= (latest_valid_beat[track]==LAST_VALID_BEAT) ? LAST_VALID_BEAT : 
                    ((latest_valid_beat[track] > beat_ctr) ? latest_valid_beat[track] : beat_ctr);
            end

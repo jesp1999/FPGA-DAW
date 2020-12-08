@@ -1,4 +1,4 @@
-//8bit func8 lookup, 8bit depth
+//8bit normalized sin(2x)+sin(3x)+0.5*sin(5x)+0.5*sin(7x) lookup, 8bit depth
 module lut7(input[7:0] phase_in, input clk_in, output logic[7:0] amp_out);
   always_ff @(posedge clk_in)begin
     case(phase_in)

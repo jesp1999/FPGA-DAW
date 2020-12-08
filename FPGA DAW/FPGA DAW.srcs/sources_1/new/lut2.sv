@@ -1,4 +1,4 @@
-//8bit func5 lookup, 8bit depth
+//8bit normalized sin(2x)+sin(3x)+sin(5x) lookup, 8bit depth
 module lut2(input[7:0] phase_in, input clk_in, output logic[7:0] amp_out);
   always_ff @(posedge clk_in)begin
     case(phase_in)
